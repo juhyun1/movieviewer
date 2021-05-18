@@ -1,4 +1,4 @@
-package com.themovieviewer
+package com.themovieviewer.presentation
 
 import android.os.Bundle
 import android.view.Menu
@@ -11,8 +11,11 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.themovieviewer.R
 import com.themovieviewer.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
