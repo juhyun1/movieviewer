@@ -1,7 +1,10 @@
 package com.themovieviewer.network.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class MovieDto(
     @SerializedName("poster_path")
     val poster_path: String,
@@ -16,7 +19,7 @@ data class MovieDto(
     val release_date: String,
 
     @SerializedName("genre_ids")
-    val genre_ids: String,
+    val genre_ids: List<Int>,
 
     @SerializedName("id")
     val id: Int,
@@ -28,7 +31,7 @@ data class MovieDto(
     val backdrop_path: String?,
 
     @SerializedName("popularity")
-    val popularity: Int,
+    val popularity: Float,
 
     @SerializedName("vote_count")
     val vote_count: Int,
@@ -36,6 +39,6 @@ data class MovieDto(
     @SerializedName("video")
     val video: Boolean,
 
-    @SerializedName("video_average")
-    val video_average: Int,
-)
+    @SerializedName("vote_average")
+    val vote_average: Float,
+) : Parcelable

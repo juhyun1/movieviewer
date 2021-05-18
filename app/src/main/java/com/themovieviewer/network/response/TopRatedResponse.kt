@@ -1,14 +1,14 @@
 package com.themovieviewer.network.response
 
 import com.google.gson.annotations.SerializedName
-import com.themovieviewer.momain.model.Movie
+import com.themovieviewer.network.model.MovieDto
 
 data class TopRatedResponse(
     @SerializedName("page")
     val page: Int,
 
     @SerializedName("results")
-    val results: List<Movie>,
+    val results: List<MovieDto>,
 
     @SerializedName("total_results")
     val total_results: Int,
