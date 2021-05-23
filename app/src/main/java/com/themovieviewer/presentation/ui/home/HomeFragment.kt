@@ -9,14 +9,20 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.themovieviewer.databinding.FragmentHomeBinding
+import com.themovieviewer.presentation.paging.TopRatedAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private val homeViewModel: HomeViewModel by viewModels()
     private var _binding: FragmentHomeBinding? = null
+    @Inject lateinit var topRatedAdapter: TopRatedAdapter
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -29,13 +35,12 @@ class HomeFragment : Fragment() {
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-
-        homeViewModel.getTopRated()
+        binding.topRatedList.adapter = topRatedAdapter
+        lifecycleScope.launch {
+            homeViewModel.topRatedList.collectLatest { pagedData ->
+                topRatedAdapter.submitData(pagedData)
+            }
+        }
         return root
     }
 

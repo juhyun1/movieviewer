@@ -17,12 +17,10 @@ object RepositoryModule {
     @Singleton
     @Provides
     fun provideRecipeRepository(
-        movieService: MovieService,
-        movieMapper: MovieDtoMapper,
+        movieService: MovieService
     ): MovieRepository{
         return MovieRepositoryImpl(
-            movieService = movieService,
-            mapper = movieMapper
+            movieService = movieService
         )
     }
 }

@@ -1,7 +1,7 @@
 package com.themovieviewer.repository
 
-import com.themovieviewer.momain.model.Movie
+import com.themovieviewer.network.response.TopRatedResponse
 
 interface MovieRepository {
-    suspend fun getTopRated(language: String, page : Int): List<Movie>
+    suspend fun getTopRated(language: String, page : Int): TopRatedResponse
 }
