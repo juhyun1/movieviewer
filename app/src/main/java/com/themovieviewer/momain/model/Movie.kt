@@ -1,7 +1,7 @@
 package com.themovieviewer.momain.model
 
 data class Movie (
-    val poster_path: String,
+    val poster_path: String?,
     val adult: Boolean,
     val overview: String,
     val release_date: String,

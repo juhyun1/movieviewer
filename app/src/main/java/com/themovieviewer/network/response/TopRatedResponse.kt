@@ -1,6 +1,7 @@
 package com.themovieviewer.network.response
 
 import com.google.gson.annotations.SerializedName
+import com.themovieviewer.network.model.DatesDto
 import com.themovieviewer.network.model.MovieDto
 
 data class TopRatedResponse(
@@ -9,6 +10,9 @@ data class TopRatedResponse(
 
     @SerializedName("results")
     val results: List<MovieDto>,
+
+    @SerializedName("dates")
+    val dates: DatesDto,
 
     @SerializedName("total_results")
     val total_results: Int,

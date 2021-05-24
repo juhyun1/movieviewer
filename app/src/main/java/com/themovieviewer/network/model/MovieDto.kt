@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class MovieDto(
     @SerializedName("poster_path")
-    val poster_path: String,
+    val poster_path: String?,
 
     @SerializedName("adult")
     val adult: Boolean,

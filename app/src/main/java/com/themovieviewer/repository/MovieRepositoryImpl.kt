@@ -12,4 +12,9 @@ class MovieRepositoryImpl(
         val apiKey = "1139b15b6e07c636d6a411506eea3362"
         return movieService.topRated(api_key = apiKey, language = language,page = page)
     }
+
+    override suspend fun getNowPlaying(language: String, page : Int): TopRatedResponse {
+        val apiKey = "1139b15b6e07c636d6a411506eea3362"
+        return movieService.nowPlaying(api_key = apiKey, language = language,page = page)
+    }
 }

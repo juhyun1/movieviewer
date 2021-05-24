@@ -64,19 +64,12 @@ class MovieViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
 
         movie = item
         item?.let{
-            poster.loadImage(it.poster_path)
+            if (it.poster_path != null) {
+                poster.loadImage(it.poster_path)
+                poster.clipToOutline = true;
+            }
             originalTitle.text = it.original_title
             releaseDate.text = it.release_date
-        }
-    }
-
-    object PassengersComparator : DiffUtil.ItemCallback<Movie>() {
-        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-            return oldItem == newItem
         }
     }
 }
