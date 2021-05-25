@@ -56,7 +56,9 @@ class MainFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        homeFragment.onDestroyView()
-        galleryFragment.onDestroyView()
+
+        //recycle fragments which have been made once
+        homeFragment.onDetach()
+        galleryFragment.onDetach()
     }
 }
