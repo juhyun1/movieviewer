@@ -11,7 +11,7 @@ import com.themovieviewer.R
 import com.themovieviewer.momain.model.Movie
 import com.themovieviewer.util.loadImage
 
-class TopRatedAdapter : PagingDataAdapter<Movie, MovieViewHolder>(diffCallback) {
+class MovieTwoColumnsAdapter : PagingDataAdapter<Movie, MovieTwoColumnsAdapter.MovieViewHolder>(diffCallback) {
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.bindTo(getItem(position))
@@ -46,30 +46,33 @@ class TopRatedAdapter : PagingDataAdapter<Movie, MovieViewHolder>(diffCallback) 
             }
         }
     }
-}
 
-class MovieViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
-    LayoutInflater.from(parent.context).inflate(R.layout.widget_movie_card, parent, false)
-) {
-    var movie: Movie? = null
-    private val poster = itemView.findViewById<ImageView>(R.id.poster)
-    private val originalTitle = itemView.findViewById<TextView>(R.id.originalTitle)
-    private val releaseDate = itemView.findViewById<TextView>(R.id.releaseDate)
 
-    /**
-     * Items might be null if they are not paged in yet. PagedListAdapter will re-bind the
-     * ViewHolder when Item is loaded.
-     */
-    fun bindTo(item: Movie?) {
+    class MovieViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
+//    LayoutInflater.from(parent.context).inflate(R.layout.widget_movie_card, parent, false)
+        LayoutInflater.from(parent.context).inflate(R.layout.widget_movie_card, parent, false)
+    ) {
+        var movie: Movie? = null
+        private val poster = itemView.findViewById<ImageView>(R.id.poster)
+        private val originalTitle = itemView.findViewById<TextView>(R.id.originalTitle)
+        private val releaseDate = itemView.findViewById<TextView>(R.id.releaseDate)
 
-        movie = item
-        item?.let{
-            if (it.poster_path != null) {
-                poster.loadImage(it.poster_path)
-                poster.clipToOutline = true;
+        /**
+         * Items might be null if they are not paged in yet. PagedListAdapter will re-bind the
+         * ViewHolder when Item is loaded.
+         */
+        fun bindTo(item: Movie?) {
+
+            movie = item
+            item?.let{
+                if (it.poster_path != null) {
+                    poster.loadImage(it.poster_path)
+                    poster.clipToOutline = true;
+                }
+                originalTitle.text = it.original_title
+                releaseDate.text = it.release_date
             }
-            originalTitle.text = it.original_title
-            releaseDate.text = it.release_date
         }
     }
 }
+

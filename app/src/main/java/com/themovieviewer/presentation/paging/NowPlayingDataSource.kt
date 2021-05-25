@@ -4,7 +4,9 @@ import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.themovieviewer.momain.model.Movie
+import com.themovieviewer.network.model.MovieDetailsDto
 import com.themovieviewer.network.model.MovieDtoMapper
+import com.themovieviewer.network.response.MovieDetailsResponse
 import com.themovieviewer.network.response.TopRatedResponse
 import com.themovieviewer.repository.MovieRepository
 import com.themovieviewer.util.TAG
@@ -24,8 +26,16 @@ class NowPlayingDataSource(private val movieRepository: MovieRepository, private
                 language = language,
                 page = requestPage
             )
+
+
             for (movie in movieListResponse.results) {
                 Log.d(TAG, movie.toString())
+
+//                val movieDetailsResponse: MovieDetailsDto = movieRepository.getMovieDetails(
+//                    language = language,
+//                    movie_id = movie.id
+//                )
+//                Log.d(TAG, movieDetailsResponse.toString())
             }
 
             LoadResult.Page(

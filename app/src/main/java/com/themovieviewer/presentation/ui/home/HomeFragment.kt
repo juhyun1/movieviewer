@@ -4,14 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.themovieviewer.databinding.FragmentHomeBinding
-import com.themovieviewer.presentation.paging.TopRatedAdapter
+import com.themovieviewer.presentation.paging.MovieOneRowAdapter
+import com.themovieviewer.presentation.paging.MovieTwoColumnsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -22,7 +20,7 @@ class HomeFragment : Fragment() {
 
     private val homeViewModel: HomeViewModel by viewModels()
     private var _binding: FragmentHomeBinding? = null
-    @Inject lateinit var topRatedAdapter: TopRatedAdapter
+    @Inject lateinit var oneRowAdapter: MovieOneRowAdapter
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -35,10 +33,10 @@ class HomeFragment : Fragment() {
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        binding.topRatedList.adapter = topRatedAdapter
+        binding.topRatedList.adapter = oneRowAdapter
         lifecycleScope.launch {
             homeViewModel.topRatedList.collectLatest { pagedData ->
-                topRatedAdapter.submitData(pagedData)
+                oneRowAdapter.submitData(pagedData)
             }
         }
         return root
