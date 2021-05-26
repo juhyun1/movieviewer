@@ -4,9 +4,10 @@ import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.themovieviewer.momain.model.Movie
-import com.themovieviewer.network.model.MovieDetailsDto
+import com.themovieviewer.network.model.MovieDetailsResponse
 import com.themovieviewer.network.model.MovieDtoMapper
-import com.themovieviewer.network.response.MovieDetailsResponse
+import com.themovieviewer.network.response.MovieCreditsResponse
+import com.themovieviewer.network.response.PeopleDetailsResponse
 import com.themovieviewer.network.response.TopRatedResponse
 import com.themovieviewer.repository.MovieRepository
 import com.themovieviewer.util.TAG
@@ -27,15 +28,27 @@ class NowPlayingDataSource(private val movieRepository: MovieRepository, private
                 page = requestPage
             )
 
-
             for (movie in movieListResponse.results) {
                 Log.d(TAG, movie.toString())
-
-//                val movieDetailsResponse: MovieDetailsDto = movieRepository.getMovieDetails(
+//
+//                val movieDetailsResponse: MovieDetailsResponse = movieRepository.getMovieDetails(
 //                    language = language,
 //                    movie_id = movie.id
 //                )
-//                Log.d(TAG, movieDetailsResponse.toString())
+//
+//                Log.d(TAG, "budget : " + movieDetailsResponse.budget + " revenue : " + movieDetailsResponse.revenue)
+//
+//                val movieCreditsResponse: MovieCreditsResponse = movieRepository.getMovieCredits(
+//                    language = language,
+//                    movie_id = movie.id
+//                )
+//                Log.d(TAG, "Name : " + movieCreditsResponse.cast[0].name)
+//
+//                val peopleDetailsResponse: PeopleDetailsResponse = movieRepository.getPeopleDetails(
+//                    language = language,
+//                    person_id = movieCreditsResponse.cast[0].id
+//                )
+//                Log.d(TAG, "Name : " + peopleDetailsResponse.name + " birthday " + peopleDetailsResponse.birthday)
             }
 
             LoadResult.Page(

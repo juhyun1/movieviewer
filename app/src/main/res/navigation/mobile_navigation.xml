@@ -12,6 +12,12 @@
         tools:layout="@layout/fragment_main" />
 
     <fragment
+        android:id="@+id/nav_movie_details"
+        android:name="com.themovieviewer.presentation.ui.main.MainFragment"
+        android:label="@string/menu_movie_details"
+        tools:layout="@layout/fragment_movie_details" />
+
+    <fragment
         android:id="@+id/nav_home"
         android:name="com.themovieviewer.presentation.ui.home.HomeFragment"
         android:label="@string/menu_home"

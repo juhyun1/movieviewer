@@ -12,13 +12,11 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object FragmentModule {
 
-    @Singleton
     @Provides
     fun provideHomeFragment(): HomeFragment {
         return HomeFragment()
     }
 
-    @Singleton
     @Provides
     fun provideGalleryFragment(): GalleryFragment {
         return GalleryFragment()

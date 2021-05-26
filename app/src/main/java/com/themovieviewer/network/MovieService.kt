@@ -1,7 +1,9 @@
 package com.themovieviewer.network
 
-import com.themovieviewer.network.model.MovieDetailsDto
-import com.themovieviewer.network.response.MovieDetailsResponse
+import android.provider.Contacts
+import com.themovieviewer.network.model.MovieDetailsResponse
+import com.themovieviewer.network.response.MovieCreditsResponse
+import com.themovieviewer.network.response.PeopleDetailsResponse
 import com.themovieviewer.network.response.TopRatedResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -27,6 +29,20 @@ interface MovieService {
         @Path("movie_id") movie_id: Int,
         @Query("api_key") api_key: String,
         @Query("language") language: String
-    ): MovieDetailsDto
+    ): MovieDetailsResponse
+
+    @GET("movie/{movie_id}/credits")
+    suspend fun getCredits(
+        @Path("movie_id") movie_id: Int,
+        @Query("api_key") api_key: String,
+        @Query("language") language: String
+    ): MovieCreditsResponse
+
+    @GET("person/{person_id}")
+    suspend fun getPeopleDetails(
+        @Path("person_id") person_id: Int,
+        @Query("api_key") api_key: String,
+        @Query("language") language: String
+    ): PeopleDetailsResponse
 }
 
