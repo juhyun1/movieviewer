@@ -1,5 +1,9 @@
-package com.themovieviewer.momain.model
+package com.themovieviewer.domain.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class Movie (
     val poster_path: String?,
     val adult: Boolean,
@@ -13,4 +17,4 @@ data class Movie (
     val vote_count: Int,
     val video: Boolean,
     val vote_average: Float,
-)
+) : Parcelable

@@ -8,7 +8,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.themovieviewer.R
-import com.themovieviewer.momain.model.Movie
+import com.themovieviewer.domain.model.Movie
 import com.themovieviewer.util.loadImage
 
 class MovieOneRowAdapter: PagingDataAdapter<Movie, MovieOneRowAdapter.MovieViewHolder>(diffCallback) {
@@ -18,7 +18,19 @@ class MovieOneRowAdapter: PagingDataAdapter<Movie, MovieOneRowAdapter.MovieViewH
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        return MovieViewHolder(parent)
+        return MovieViewHolder(parent, ::onClick)
+    }
+
+    lateinit var onItemClick: (Movie) -> Unit
+
+    /**
+     * Callback implementation to send back the selected GitHub user.
+     */
+    private fun onClick(position: Int) {
+        if (::onItemClick.isInitialized) {
+            val movie = getItem(position)
+            movie?.let { onItemClick(it) }
+        }
     }
 
     companion object {
@@ -47,7 +59,7 @@ class MovieOneRowAdapter: PagingDataAdapter<Movie, MovieOneRowAdapter.MovieViewH
         }
     }
 
-    class MovieViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
+    class MovieViewHolder(parent: ViewGroup, private val onItemClick: (Int) -> Unit) : RecyclerView.ViewHolder(
 //    LayoutInflater.from(parent.context).inflate(R.layout.widget_movie_card, parent, false)
         LayoutInflater.from(parent.context).inflate(R.layout.widget_movie_main_horizontal, parent, false)
     ) {
@@ -65,14 +77,23 @@ class MovieOneRowAdapter: PagingDataAdapter<Movie, MovieOneRowAdapter.MovieViewH
         fun bindTo(item: Movie?) {
 
             movie = item
-            item?.let{
-                if (it.poster_path != null) {
-                    poster.loadImage(it.poster_path)
-                    poster.clipToOutline = true;
+
+            with(itemView) {
+                item?.let{
+                    if (it.poster_path != null) {
+                        poster.loadImage(it.poster_path)
+                        poster.clipToOutline = true;
+                    }
+                    originalTitle.text = it.original_title
+                    releaseDate.text = it.release_date
+                    overView.text = it.overview
                 }
-                originalTitle.text = it.original_title
-                releaseDate.text = it.release_date
-                overView.text = it.overview
+
+                setOnClickListener {
+                    if (layoutPosition != RecyclerView.NO_POSITION) {
+                        onItemClick(layoutPosition)
+                    }
+                }
             }
         }
     }

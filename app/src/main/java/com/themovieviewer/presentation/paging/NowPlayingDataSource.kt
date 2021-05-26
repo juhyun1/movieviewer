@@ -3,11 +3,8 @@ package com.themovieviewer.presentation.paging
 import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.themovieviewer.momain.model.Movie
-import com.themovieviewer.network.model.MovieDetailsResponse
+import com.themovieviewer.domain.model.Movie
 import com.themovieviewer.network.model.MovieDtoMapper
-import com.themovieviewer.network.response.MovieCreditsResponse
-import com.themovieviewer.network.response.PeopleDetailsResponse
 import com.themovieviewer.network.response.TopRatedResponse
 import com.themovieviewer.repository.MovieRepository
 import com.themovieviewer.util.TAG

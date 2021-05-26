@@ -1,21 +1,23 @@
 package com.themovieviewer.presentation.ui.moviedetails
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.themovieviewer.databinding.FragmentMovieDetailsBinding
-import com.themovieviewer.presentation.ui.gallery.GalleryViewModel
+import com.themovieviewer.util.TAG
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MovieDetailsFragment : Fragment() {
 
-    private val galleryViewModel: GalleryViewModel by viewModels()
+    private val movieDetailsFragmentViewModel: MovieDetailsFragmentViewModel by viewModels()
     private var _binding: FragmentMovieDetailsBinding? = null
+    private val args by navArgs<MovieDetailsFragmentArgs>()
 //    @Inject
 //    lateinit var twoColumns: MovieOneRowAdapter
 
@@ -30,12 +32,8 @@ class MovieDetailsFragment : Fragment() {
     ): View {
         _binding = FragmentMovieDetailsBinding.inflate(inflater, container, false)
         val root: View = binding.root
-//        binding.nowPlayingList.adapter = twoColumns
-//        lifecycleScope.launch {
-//            galleryViewModel.nowPlayingList.collectLatest { pagedData ->
-//                twoColumns.submitData(pagedData)
-//            }
-//        }
+//        Log.d(TAG, "Selected Movie : " + args.movie.toString())
+        movieDetailsFragmentViewModel.test(args.movie)
         return root
     }
 

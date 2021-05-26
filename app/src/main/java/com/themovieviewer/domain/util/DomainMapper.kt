@@ -1,4 +1,4 @@
-package com.themovieviewer.momain.util
+package com.themovieviewer.domain.util
 
 interface DomainMapper <T, DomainModel>{
     fun mapToDomainModel(model: T): DomainModel
