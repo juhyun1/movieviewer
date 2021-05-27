@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.themovieviewer.databinding.FragmentGalleryBinding
+import com.themovieviewer.presentation.BaseApplication
 import com.themovieviewer.presentation.paging.MovieOneRowAdapter
 import com.themovieviewer.presentation.ui.main.MainFragmentDirections
 import com.themovieviewer.util.TAG
@@ -24,7 +25,9 @@ class GalleryFragment : Fragment() {
     private val galleryViewModel: GalleryViewModel by viewModels()
     private var _binding: FragmentGalleryBinding? = null
     @Inject
-    lateinit var twoColumns: MovieOneRowAdapter
+    lateinit var oneRowAdapter: MovieOneRowAdapter
+    @Inject
+    lateinit var application: BaseApplication
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -37,22 +40,20 @@ class GalleryFragment : Fragment() {
     ): View {
         _binding = FragmentGalleryBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        binding.nowPlayingList.adapter = twoColumns
+        binding.nowPlayingList.adapter = oneRowAdapter
         (binding.nowPlayingList.adapter as MovieOneRowAdapter).onItemClick = {
-
-            Log.d(TAG, "Fragment : $it")
+            application.selectedMovie = it
             try {
                 val action = MainFragmentDirections.actionMainFragmentToMovieDetailsFragment(it)
                 findNavController().navigate(action)
             } catch(e: Exception) {
                 e.printStackTrace()
             }
-
         }
 
         lifecycleScope.launch {
             galleryViewModel.nowPlayingList.collectLatest { pagedData ->
-                twoColumns.submitData(pagedData)
+                oneRowAdapter.submitData(pagedData)
             }
         }
         return root

@@ -18,6 +18,7 @@ import com.themovieviewer.network.model.MovieDetailsResponse
 import com.themovieviewer.network.model.MovieDtoMapper
 import com.themovieviewer.network.response.MovieCreditsResponse
 import com.themovieviewer.network.response.PeopleDetailsResponse
+import com.themovieviewer.presentation.BaseApplication
 import com.themovieviewer.presentation.paging.CreditsDataSource
 import com.themovieviewer.presentation.paging.NowPlayingDataSource
 import com.themovieviewer.repository.MovieRepository
@@ -36,25 +37,27 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieDetailsFragmentViewModel @Inject constructor(
     private val movieRepository: MovieRepository,
-    private val movieDtoMapper: MovieDtoMapper
+    private val movieDtoMapper: MovieDtoMapper,
+    private val application: BaseApplication
 ): ViewModel() {
 
     val overview: MutableLiveData<String> = MutableLiveData("")
     val tagline: MutableLiveData<String> = MutableLiveData("")
     val genres: MutableLiveData<String> = MutableLiveData("")
+    val voteAverage: MutableLiveData<String> = MutableLiveData("")
     val runtime: MutableLiveData<String> = MutableLiveData("")
     val releaseDate: MutableLiveData<String> = MutableLiveData("")
     val title: MutableLiveData<String> = MutableLiveData("")
     val backdropImage: MutableLiveData<Drawable> = MutableLiveData()
     val posterImage: MutableLiveData<Drawable> = MutableLiveData()
+    val creditsList = Pager(PagingConfig(pageSize = 100)) {
+        CreditsDataSource(movieRepository, movieDtoMapper, application.selectedMovie.id)
+    }.flow.cachedIn(viewModelScope)
 
-    lateinit var creditsList: Flow<PagingData<CreditsCastCrewDto>>
-
-    fun getCredits(movie: Movie) {
-        creditsList = Pager(PagingConfig(pageSize = 100)) {
-            CreditsDataSource(movieRepository, movieDtoMapper, movie.id)
-        }.flow.cachedIn(viewModelScope)
+    init {
+        init(application.selectedMovie)
     }
+
     fun init(movie: Movie) {
         val language = "en-US"
         viewModelScope.launch {
@@ -67,19 +70,13 @@ class MovieDetailsFragmentViewModel @Inject constructor(
             movieDetailsResponse.let{
                 title.value = it.original_title
                 releaseDate.value = it.release_date
-                val temp = movieDetailsResponse.runtime.toString()
+                val temp = movieDetailsResponse.runtime?.div(60)
+                val temp2 = movieDetailsResponse.runtime?.rem(60)
                 val b = StringBuilder()
-                if (temp.length == 3) {
-                    b.append(temp[0])
-                    b.append("h ")
-                    b.append(temp[1])
-                    b.append(temp[2])
-                    b.append("m")
-                } else {
-                    b.append(temp[0])
-                    b.append(temp[1])
-                    b.append("m")
-                }
+                b.append(temp)
+                b.append("h ")
+                b.append(temp2)
+                b.append("m")
                 runtime.value = b.toString()
 
                 val list = ArrayList<String>()
@@ -88,6 +85,8 @@ class MovieDetailsFragmentViewModel @Inject constructor(
                 }
 
                 genres.value = TextUtils.join(",", list)
+                val temp3 = (it.vote_average * 10).toInt().toString()
+                voteAverage.value = "User Score $temp3%"
                 tagline.value = it.tagline
                 overview.value = it.overview
             }

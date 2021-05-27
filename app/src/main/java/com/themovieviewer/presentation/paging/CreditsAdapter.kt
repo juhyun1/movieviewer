@@ -3,6 +3,7 @@ package com.themovieviewer.presentation.paging
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +11,7 @@ import com.themovieviewer.R
 import com.themovieviewer.network.model.CreditsCastCrewDto
 import com.themovieviewer.util.loadImage
 
-class CreditsAdapter: PagingDataAdapter<CreditsCastCrewDto, CreditsAdapter.ViewHolder>(CreditsAdapter.diffCallback) {
+class CreditsAdapter: PagingDataAdapter<CreditsCastCrewDto, CreditsAdapter.ViewHolder>(diffCallback) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindTo(getItem(position))
@@ -60,9 +61,12 @@ class CreditsAdapter: PagingDataAdapter<CreditsCastCrewDto, CreditsAdapter.ViewH
 
     class ViewHolder(parent: ViewGroup, private val onItemClick: (Int) -> Unit) : RecyclerView.ViewHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.widget_credits_vertical, parent, false)
+
     ) {
-        private val poster = itemView.findViewById<ImageView>(R.id.profile)
-//        private val originalTitle = itemView.findViewById<TextView>(R.id.originalTitle)
+        private val profile = itemView.findViewById<ImageView>(R.id.profile)
+        private val originalName = itemView.findViewById<TextView>(R.id.originalName)
+        private val character = itemView.findViewById<TextView>(R.id.character)
+
 //        private val releaseDate = itemView.findViewById<TextView>(R.id.releaseDate)
 //        private val overView = itemView.findViewById<TextView>(R.id.overView)
 
@@ -75,8 +79,10 @@ class CreditsAdapter: PagingDataAdapter<CreditsCastCrewDto, CreditsAdapter.ViewH
             with(itemView) {
                 item?.let{
                     if (it.profile_path != null) {
-                        poster.loadImage(it.profile_path)
-                        poster.clipToOutline = true;
+                        profile.loadImage(it.profile_path)
+                        profile.clipToOutline = true;
+                        originalName.text = it.original_name
+                        character.text = it.character
                     }
 //                    originalTitle.text = it.original_title
 //                    releaseDate.text = it.release_date

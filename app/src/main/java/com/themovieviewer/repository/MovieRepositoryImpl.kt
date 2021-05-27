@@ -9,6 +9,7 @@ import com.themovieviewer.network.response.TopRatedResponse
 class MovieRepositoryImpl(
     private val movieService: MovieService
 ): MovieRepository {
+
     private val apiKey = "1139b15b6e07c636d6a411506eea3362"
     override suspend fun getTopRated(language: String, page : Int): TopRatedResponse {
         return movieService.topRated(api_key = apiKey, language = language,page = page)

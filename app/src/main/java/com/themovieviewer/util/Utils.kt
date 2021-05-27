@@ -11,7 +11,7 @@ fun View.visible(isVisible: Boolean) {
 
 fun ImageView.loadImage(url: String) {
 
-    val base = "https://image.tmdb.org/t/p/w500/"
+    val base = "https://image.tmdb.org/t/p/w500"
 
     Glide.with(this)
         .load(base + url)

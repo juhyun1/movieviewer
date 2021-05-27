@@ -1,6 +1,5 @@
 package com.themovieviewer.presentation.ui.moviedetails
 
-import android.nfc.Tag
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,10 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.themovieviewer.R
 import com.themovieviewer.databinding.FragmentMovieDetailsBinding
 import com.themovieviewer.presentation.paging.CreditsAdapter
-import com.themovieviewer.presentation.paging.MovieOneRowAdapter
 import com.themovieviewer.util.TAG
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -55,7 +52,7 @@ class MovieDetailsFragment : Fragment() {
         val root: View = dataBinding.root
         Log.d(TAG, "Selected Movie : " + args.movie.toString())
 
-        movieDetailsFragmentViewModel.getCredits(args.movie)
+//        movieDetailsFragmentViewModel.getCredits(args.movie)
 
         lifecycleScope.launch {
             movieDetailsFragmentViewModel.creditsList.collectLatest { pagedData ->
@@ -63,7 +60,7 @@ class MovieDetailsFragment : Fragment() {
             }
         }
 
-        movieDetailsFragmentViewModel.init(args.movie)
+//        movieDetailsFragmentViewModel.init(args.movie)
         return dataBinding.root
     }
 
