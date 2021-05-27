@@ -1,5 +1,6 @@
 package com.themovieviewer.di
 
+import com.themovieviewer.presentation.paging.CreditsAdapter
 import com.themovieviewer.presentation.paging.MovieOneRowAdapter
 import com.themovieviewer.presentation.paging.MovieTwoColumnsAdapter
 import dagger.Module
@@ -20,4 +21,11 @@ object PagingModule {
     fun provideOneRowAdapter(): MovieOneRowAdapter {
         return MovieOneRowAdapter()
     }
+
+    @Provides
+    fun provideCreditsAdapter(): CreditsAdapter {
+        return CreditsAdapter()
+    }
+
+
 }
