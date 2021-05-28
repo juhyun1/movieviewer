@@ -1,7 +1,10 @@
 package com.themovieviewer.di
 
+import com.themovieviewer.data.FavoritesDao
+import com.themovieviewer.data.FavoritesMovieDao
 import com.themovieviewer.network.MovieService
-import com.themovieviewer.network.model.MovieDtoMapper
+import com.themovieviewer.repository.FavoritesMovieRepository
+import com.themovieviewer.repository.FavoritesRepository
 import com.themovieviewer.repository.MovieRepository
 import com.themovieviewer.repository.MovieRepositoryImpl
 import dagger.Module
@@ -16,11 +19,31 @@ object RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideRecipeRepository(
+    fun provideMovieRepository(
         movieService: MovieService
     ): MovieRepository{
         return MovieRepositoryImpl(
             movieService = movieService
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideFavoritesRepository(
+        favoritesDao: FavoritesDao
+    ): FavoritesRepository{
+        return FavoritesRepository(
+            favoritesDao = favoritesDao
+        )
+    }
+
+    @Singleton
+    @Provides
+    fun provideFavoritesMovieRepository(
+        favoritesMovieDao: FavoritesMovieDao
+    ): FavoritesMovieRepository{
+        return FavoritesMovieRepository(
+            favoritesMovieDao = favoritesMovieDao
         )
     }
 }

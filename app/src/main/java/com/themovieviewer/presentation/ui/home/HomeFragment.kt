@@ -38,6 +38,7 @@ class HomeFragment : Fragment() {
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
         binding.topRatedList.adapter = oneRowAdapter
         (binding.topRatedList.adapter as MovieOneRowAdapter).onItemClick = {
             application.selectedMovie = it
