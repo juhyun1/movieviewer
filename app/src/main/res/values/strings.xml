@@ -11,5 +11,5 @@
     <string name="menu_movie_details">Movie Details</string>
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_slideshow">Favorites Movies</string>
 </resources>

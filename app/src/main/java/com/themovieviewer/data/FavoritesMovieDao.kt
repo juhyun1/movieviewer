@@ -1,5 +1,6 @@
 package com.themovieviewer.data
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
@@ -8,5 +9,8 @@ import kotlinx.coroutines.flow.Flow
 interface FavoritesMovieDao : BaseDao<FavoritesMovie> {
 
     @Query("SELECT * FROM movies")
-    fun getFavoritesMovies(): Flow<List<FavoritesMovie>>
+    fun getFavoritesMovies(): PagingSource<Int, FavoritesMovie>
+
+    @Query("SELECT * FROM movies WHERE id = :id")
+    fun getFavoritesMovies(id: Int): FavoritesMovie
 }

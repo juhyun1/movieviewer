@@ -11,14 +11,20 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
+import com.themovieviewer.data.*
 import com.themovieviewer.databinding.FragmentGalleryBinding
+import com.themovieviewer.domain.model.Movie
 import com.themovieviewer.presentation.BaseApplication
 import com.themovieviewer.presentation.paging.MovieOneRowAdapter
 import com.themovieviewer.presentation.ui.main.MainFragmentDirections
+import com.themovieviewer.repository.FavoritesMovieRepository
+import com.themovieviewer.repository.FavoritesRepository
 import com.themovieviewer.util.TAG
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -26,17 +32,16 @@ class GalleryFragment : Fragment() {
 
     private val galleryViewModel: GalleryViewModel by viewModels()
     private var _binding: FragmentGalleryBinding? = null
-    @Inject
-    lateinit var oneRowAdapter: MovieOneRowAdapter
-    @Inject
-    lateinit var application: BaseApplication
+    @Inject lateinit var oneRowAdapter: MovieOneRowAdapter
+    @Inject lateinit var application: BaseApplication
+    @Inject lateinit var daoMapper: DaoMapper
 
     private val tracker by lazy {
         with(binding) {
             SelectionTracker.Builder(
                 "Selection",
                 nowPlayingList,
-                MovieOneRowAdapter.SelectionKeyProvider(nowPlayingList),
+                MovieOneRowAdapter.SelectionKeyProvider(oneRowAdapter),
                 MovieOneRowAdapter.SelectionDetailsLookup(nowPlayingList),
                 StorageStrategy.createLongStorage()
             ).withSelectionPredicate(
@@ -46,34 +51,25 @@ class GalleryFragment : Fragment() {
                     override fun onSelectionChanged() {
                         super.onSelectionChanged()
                         val tracker = this@apply
+                        val adapter = (nowPlayingList.adapter as MovieOneRowAdapter)
+                        var movie_: Movie? = null
+                        tracker.selection.forEach {
+                            val movie = adapter.peek(it.toInt())
+                            movie_ = movie
+                            Log.d(TAG, "position : $it Selection : $movie")
+                        }
 
-                        val sel = tracker.selection
-                        val sel2 = tracker.selection
-//                        if (tracker.hasSelection() && menu.findItem(MENU_DELETE) == null) {
-//                            menu.add(Menu.NONE, MENU_DELETE, Menu.NONE, "Delete")
-//                                .setIcon(R.drawable.ic_delete)
-//                                .setOnMenuItemClickListener {
-//                                    tracker.selection.forEach {
-//                                        val holder = recyclerView.findViewHolderForItemId(it)
-//                                        if (holder is SelectionAdapter.SelectionHolder) {
-//                                            list.remove(holder.element)
-//                                        }
-//                                    }
-//
-//                                    tracker.clearSelection()
-//                                    adapter.notifyDataSetChanged()
-//                                    true
-//                                }
-//                                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
-//                        } else if (!tracker.hasSelection() && menu.findItem(MENU_DELETE) != null){
-//                            menu.removeItem(MENU_DELETE)
-//                        }
+                        val fa = Favorites(name = movie_!!.original_title, kind = "movie", kindId = movie_!!.id, date = movie_!!.release_date)
+                        val fmovie = daoMapper.mapFromDomainModel(movie_!!)
 
+                        //just db test, have to implement insert movie to favorite db
+                        galleryViewModel.test(fa, fmovie)
                     }
                 })
             }
         }
     }
+
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -88,17 +84,22 @@ class GalleryFragment : Fragment() {
         val root: View = binding.root
 
         binding.nowPlayingList.adapter = oneRowAdapter
-        oneRowAdapter.tracker = tracker
+        oneRowAdapter.useTracker = false
 
-        (binding.nowPlayingList.adapter as MovieOneRowAdapter).onItemClick = {
-            application.selectedMovie = it
-            try {
-                val action = MainFragmentDirections.actionMainFragmentToMovieDetailsFragment(it)
-                findNavController().navigate(action)
-            } catch(e: Exception) {
-                e.printStackTrace()
+        if (oneRowAdapter.useTracker) {
+            tracker
+        } else {
+            oneRowAdapter.onItemClick = {
+                application.selectedMovie = it
+                try {
+                    val action = MainFragmentDirections.actionMainFragmentToMovieDetailsFragment(it)
+                    findNavController().navigate(action)
+                } catch(e: Exception) {
+                    e.printStackTrace()
+                }
             }
         }
+
 
         lifecycleScope.launch {
             galleryViewModel.nowPlayingList.collectLatest { pagedData ->

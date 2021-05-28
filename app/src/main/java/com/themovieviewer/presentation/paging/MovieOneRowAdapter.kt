@@ -2,26 +2,27 @@ package com.themovieviewer.presentation.paging
 
 import android.view.LayoutInflater
 import android.view.MotionEvent
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.Nullable
 import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.selection.ItemDetailsLookup
-import androidx.recyclerview.selection.ItemKeyProvider
-import androidx.recyclerview.selection.Selection
-import androidx.recyclerview.selection.SelectionTracker
+import androidx.recyclerview.selection.*
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.themovieviewer.R
 import com.themovieviewer.domain.model.Movie
 import com.themovieviewer.util.loadImage
 
+
 class MovieOneRowAdapter: PagingDataAdapter<Movie, MovieOneRowAdapter.MovieViewHolder>(diffCallback) {
-    var tracker: SelectionTracker<Long>? = null
+
+    var useTracker: Boolean = false
 
     //region PagingDataAdapter
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.bindTo(getItem(position))
+        holder.bindTo(getItem(position), position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -79,19 +80,29 @@ class MovieOneRowAdapter: PagingDataAdapter<Movie, MovieOneRowAdapter.MovieViewH
         LayoutInflater.from(parent.context).inflate(R.layout.widget_movie_main_horizontal, parent, false)
     ) {
         var movie: Movie? = null
+        var position: Int? = null
         private val poster = itemView.findViewById<ImageView>(R.id.poster)
         private val originalTitle = itemView.findViewById<TextView>(R.id.originalTitle)
         private val releaseDate = itemView.findViewById<TextView>(R.id.releaseDate)
         private val overView = itemView.findViewById<TextView>(R.id.overView)
 
+        fun getItemDetails(): ItemDetailsLookup.ItemDetails<Long> =
+            object : ItemDetailsLookup.ItemDetails<Long>() {
+                override fun getPosition(): Int = bindingAdapterPosition
+                override fun getSelectionKey(): Long = position.toLong()
+                override fun inSelectionHotspot(e: MotionEvent): Boolean {
+                    return true
+                }
+            }
 
         /**
          * Items might be null if they are not paged in yet. PagedListAdapter will re-bind the
          * ViewHolder when Item is loaded.
          */
-        fun bindTo(item: Movie?) {
+        fun bindTo(item: Movie?, pos: Int) {
 
             movie = item
+            position = pos
 
             with(itemView) {
                 item?.let{
@@ -104,66 +115,49 @@ class MovieOneRowAdapter: PagingDataAdapter<Movie, MovieOneRowAdapter.MovieViewH
                     overView.text = it.overview
                 }
 
-                tracker?.isSelected(itemId) ?: false
-//                setOnClickListener {
-//                    if (layoutPosition != RecyclerView.NO_POSITION) {
-//                        onItemClick(layoutPosition)
-//                    }
-//                }
+                if (!useTracker) {
+                    setOnClickListener {
+                        if (layoutPosition != RecyclerView.NO_POSITION) {
+                            onItemClick(layoutPosition)
+                        }
+                    }
+                }
             }
         }
     }
     //endregion
 
     //region selection
-    class SelectionKeyProvider(private val recyclerView: RecyclerView) : ItemKeyProvider<Long>(
+    class SelectionKeyProvider(private val movieOneRowAdapter: MovieOneRowAdapter) : ItemKeyProvider<Long>(
         SCOPE_MAPPED
     ) {
+
         override fun getKey(position: Int): Long {
-            val holder = recyclerView.findViewHolderForAdapterPosition(position)
-            return holder?.itemId ?: throw IllegalStateException("No Holder")
+            return position.toLong()
         }
 
         override fun getPosition(key: Long): Int {
-            val holder = recyclerView.findViewHolderForItemId(key)
-            return if (holder is MovieOneRowAdapter.MovieViewHolder) {
-                holder.adapterPosition
-            } else {
-                RecyclerView.NO_POSITION
-            }
+            return key.toInt()
         }
     }
 
     class SelectionDetailsLookup(private val recyclerView: RecyclerView) : ItemDetailsLookup<Long>() {
+        @Nullable
         override fun getItemDetails(e: MotionEvent): ItemDetails<Long>? {
-            val view = recyclerView.findChildViewUnder(e.x, e.y) ?: return null
-
-            val holder = recyclerView.getChildViewHolder(view)
-            return if (holder is MovieViewHolder) {
-                object : ItemDetails<Long>() {
-                    override fun getPosition(): Int {
-                        return holder.adapterPosition
-                    }
-
-                    override fun getSelectionKey(): Long {
-                        return holder.itemId
-                    }
+            val view: View? = recyclerView.findChildViewUnder(e.x, e.y)
+            if (view != null) {
+                val holder: RecyclerView.ViewHolder = recyclerView.getChildViewHolder(view)
+                if (holder is MovieOneRowAdapter.MovieViewHolder) {
+                    return holder.getItemDetails()
                 }
-            } else {
-                null
             }
+            return null
         }
     }
 
     class SelectionPredicate(private val recyclerView: RecyclerView) : SelectionTracker.SelectionPredicate<Long>() {
         override fun canSetStateForKey(key: Long, nextState: Boolean): Boolean {
-            val holder = recyclerView.findViewHolderForItemId(key)
-            return if (holder is MovieOneRowAdapter.MovieViewHolder) {
-//                holder.element.text == "YES"
-                true
-            } else {
-                false
-            }
+            return true
         }
 
         override fun canSetStateAtPosition(position: Int, nextState: Boolean): Boolean {
