@@ -16,6 +16,7 @@ import com.themovieviewer.data.Favorites
 import com.themovieviewer.databinding.FragmentSlideshowBinding
 import com.themovieviewer.presentation.BaseApplication
 import com.themovieviewer.presentation.paging.MovieOneRowAdapter
+import com.themovieviewer.presentation.ui.main.MainFragmentDirections
 import com.themovieviewer.util.TAG
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -65,7 +66,8 @@ class SlideshowFragment : Fragment() {
                                     movie?.let {
                                         application.selectedMovie = movie
                                         try {
-                                            val action = SlideshowFragmentDirections.actionSlideshowFragmentToMovieDetailsFragment(movie)
+                                            val action = MainFragmentDirections.actionMainFragmentToMovieDetailsFragment(movie)
+//                                            val action = SlideshowFragmentDirections.actionSlideshowFragmentToMovieDetailsFragment(movie)
                                             findNavController().navigate(action)
                                         } catch(e: Exception) {
                                             e.printStackTrace()

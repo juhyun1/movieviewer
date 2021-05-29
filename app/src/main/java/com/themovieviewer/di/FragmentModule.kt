@@ -2,6 +2,7 @@ package com.themovieviewer.di
 
 import com.themovieviewer.presentation.ui.gallery.GalleryFragment
 import com.themovieviewer.presentation.ui.home.HomeFragment
+import com.themovieviewer.presentation.ui.slideshow.SlideshowFragment
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,5 +21,10 @@ object FragmentModule {
     @Provides
     fun provideGalleryFragment(): GalleryFragment {
         return GalleryFragment()
+    }
+
+    @Provides
+    fun provideSlideshowFragment(): SlideshowFragment {
+        return SlideshowFragment()
     }
 }

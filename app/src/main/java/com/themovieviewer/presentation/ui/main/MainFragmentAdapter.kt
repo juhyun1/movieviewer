@@ -7,7 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 class MainFragmentAdapter(private val fa: FragmentActivity, private val fragments: List<Fragment>): FragmentStateAdapter(fa) {
 
     companion object {
-        private const val PAGES = 2
+        private const val PAGES = 3
     }
 
     override fun getItemCount() = PAGES

@@ -10,6 +10,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.themovieviewer.databinding.FragmentMainBinding
 import com.themovieviewer.presentation.ui.gallery.GalleryFragment
 import com.themovieviewer.presentation.ui.home.HomeFragment
+import com.themovieviewer.presentation.ui.slideshow.SlideshowFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -22,6 +23,9 @@ class MainFragment : Fragment() {
     lateinit var homeFragment: HomeFragment
     @Inject
     lateinit var galleryFragment: GalleryFragment
+
+    @Inject
+    lateinit var slideshowFragment: SlideshowFragment
 //    @Inject
 //    lateinit var topRatedAdapter: TopRatedAdapter
 
@@ -40,14 +44,17 @@ class MainFragment : Fragment() {
 
         fragmentList.add(homeFragment)
         fragmentList.add(galleryFragment)
+        fragmentList.add(slideshowFragment)
 
         binding.viewPager.adapter = MainFragmentAdapter(requireActivity(), fragmentList)
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text =
                 if (position == 0) {
                     "Top Rated"
-                } else {
+                } else if (position == 1){
                     "Now Playing"
+                } else {
+                    "Favorite Movies"
                 }
         }.attach()
         return root
