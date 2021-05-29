@@ -7,8 +7,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.Nullable
+import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.selection.*
+import androidx.recyclerview.selection.ItemDetailsLookup
+import androidx.recyclerview.selection.ItemKeyProvider
+import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.themovieviewer.R
@@ -17,12 +20,12 @@ import com.themovieviewer.util.loadImage
 
 
 class MovieOneRowAdapter: PagingDataAdapter<Movie, MovieOneRowAdapter.MovieViewHolder>(diffCallback) {
-
-    var useTracker: Boolean = false
+    var tracker: SelectionTracker<Long>? = null
+    var useTracker = false
 
     //region PagingDataAdapter
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.bindTo(getItem(position), position)
+        holder.bindTo(getItem(position), position, tracker?.isSelected(position.toLong()) ?: false)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -76,7 +79,6 @@ class MovieOneRowAdapter: PagingDataAdapter<Movie, MovieOneRowAdapter.MovieViewH
 
     //region viewHolder
     inner class MovieViewHolder(parent: ViewGroup, private val onItemClick: (Int) -> Unit) : RecyclerView.ViewHolder(
-//    LayoutInflater.from(parent.context).inflate(R.layout.widget_movie_card, parent, false)
         LayoutInflater.from(parent.context).inflate(R.layout.widget_movie_main_horizontal, parent, false)
     ) {
         var movie: Movie? = null
@@ -85,6 +87,11 @@ class MovieOneRowAdapter: PagingDataAdapter<Movie, MovieOneRowAdapter.MovieViewH
         private val originalTitle = itemView.findViewById<TextView>(R.id.originalTitle)
         private val releaseDate = itemView.findViewById<TextView>(R.id.releaseDate)
         private val overView = itemView.findViewById<TextView>(R.id.overView)
+        private val selectionView = itemView.findViewById<View>(R.id.selection)
+
+        private fun setSelected(isSelect: Boolean) {
+            selectionView.visibility = if(isSelect) View.VISIBLE else View.GONE
+        }
 
         fun getItemDetails(): ItemDetailsLookup.ItemDetails<Long> =
             object : ItemDetailsLookup.ItemDetails<Long>() {
@@ -99,11 +106,11 @@ class MovieOneRowAdapter: PagingDataAdapter<Movie, MovieOneRowAdapter.MovieViewH
          * Items might be null if they are not paged in yet. PagedListAdapter will re-bind the
          * ViewHolder when Item is loaded.
          */
-        fun bindTo(item: Movie?, pos: Int) {
+        fun bindTo(item: Movie?, pos: Int, isSelect: Boolean) {
 
             movie = item
             position = pos
-
+            setSelected(isSelect)
             with(itemView) {
                 item?.let{
                     if (it.poster_path != null) {
@@ -154,19 +161,4 @@ class MovieOneRowAdapter: PagingDataAdapter<Movie, MovieOneRowAdapter.MovieViewH
             return null
         }
     }
-
-    class SelectionPredicate(private val recyclerView: RecyclerView) : SelectionTracker.SelectionPredicate<Long>() {
-        override fun canSetStateForKey(key: Long, nextState: Boolean): Boolean {
-            return true
-        }
-
-        override fun canSetStateAtPosition(position: Int, nextState: Boolean): Boolean {
-            return true
-        }
-
-        override fun canSelectMultiple(): Boolean {
-            return true
-        }
-    }
-    //endregion
 }

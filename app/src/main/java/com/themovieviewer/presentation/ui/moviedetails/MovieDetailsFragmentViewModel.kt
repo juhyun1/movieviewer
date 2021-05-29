@@ -51,70 +51,72 @@ class MovieDetailsFragmentViewModel @Inject constructor(
     val backdropImage: MutableLiveData<Drawable> = MutableLiveData()
     val posterImage: MutableLiveData<Drawable> = MutableLiveData()
     val creditsList = Pager(PagingConfig(pageSize = 100)) {
-        CreditsDataSource(movieRepository, movieDtoMapper, application.selectedMovie.id)
+        CreditsDataSource(movieRepository, movieDtoMapper, application.selectedMovie!!.id)
     }.flow.cachedIn(viewModelScope)
 
     init {
         init(application.selectedMovie)
     }
 
-    fun init(movie: Movie) {
+    fun init(movie: Movie?) {
         val language = "en-US"
         viewModelScope.launch {
             // Coroutine that will be canceled when the ViewModel is cleared.
-            val movieDetailsResponse: MovieDetailsResponse = movieRepository.getMovieDetails(
-                language = language,
-                movie_id = movie.id
-            )
+            movie?.let{
+                val movieDetailsResponse: MovieDetailsResponse = movieRepository.getMovieDetails(
+                    language = language,
+                    movie_id = movie.id
+                )
 
-            movieDetailsResponse.let{
-                title.value = it.original_title
-                releaseDate.value = it.release_date
-                val temp = movieDetailsResponse.runtime?.div(60)
-                val temp2 = movieDetailsResponse.runtime?.rem(60)
-                val b = StringBuilder()
-                b.append(temp)
-                b.append("h ")
-                b.append(temp2)
-                b.append("m")
-                runtime.value = b.toString()
+                movieDetailsResponse.let{
+                    title.value = it.original_title
+                    releaseDate.value = it.release_date
+                    val temp = movieDetailsResponse.runtime?.div(60)
+                    val temp2 = movieDetailsResponse.runtime?.rem(60)
+                    val b = StringBuilder()
+                    b.append(temp)
+                    b.append("h ")
+                    b.append(temp2)
+                    b.append("m")
+                    runtime.value = b.toString()
 
-                val list = ArrayList<String>()
-                for (genres in it.genres) {
-                    list.add(genres.name)
-                }
-
-                genres.value = TextUtils.join(",", list)
-                val temp3 = (it.vote_average * 10).toInt().toString()
-                voteAverage.value = "User Score $temp3%"
-                tagline.value = it.tagline
-                overview.value = it.overview
-            }
-
-
-            val base: String = "https://image.tmdb.org/t/p/w500"
-            val imageURL: String = base
-            var backdropBitmap: Drawable? = null
-            var posterBitmap: Drawable? = null
-
-            withContext(Dispatchers.IO){
-                try {
-                    // Download Image from URL
-                    val input: InputStream = URL(base + movieDetailsResponse.backdrop_path).openStream()
-                    backdropBitmap = BitmapDrawable(BitmapFactory.decodeStream(input))
-
-                    val input2: InputStream = URL(base + movieDetailsResponse.poster_path).openStream()
-                    posterBitmap = BitmapDrawable(BitmapFactory.decodeStream(input2))
-
-                    withContext(Dispatchers.Main){
-                        backdropImage.value = backdropBitmap
-                        posterImage.value = posterBitmap
+                    val list = ArrayList<String>()
+                    for (genres in it.genres) {
+                        list.add(genres.name)
                     }
-                } catch (e: Exception) {
-                    e.printStackTrace()
+
+                    genres.value = TextUtils.join(",", list)
+                    val temp3 = (it.vote_average * 10).toInt().toString()
+                    voteAverage.value = "User Score $temp3%"
+                    tagline.value = it.tagline
+                    overview.value = it.overview
                 }
+
+
+                val base: String = "https://image.tmdb.org/t/p/w500"
+                val imageURL: String = base
+                var backdropBitmap: Drawable? = null
+                var posterBitmap: Drawable? = null
+
+                withContext(Dispatchers.IO){
+                    try {
+                        // Download Image from URL
+                        val input: InputStream = URL(base + movieDetailsResponse.backdrop_path).openStream()
+                        backdropBitmap = BitmapDrawable(BitmapFactory.decodeStream(input))
+
+                        val input2: InputStream = URL(base + movieDetailsResponse.poster_path).openStream()
+                        posterBitmap = BitmapDrawable(BitmapFactory.decodeStream(input2))
+
+                        withContext(Dispatchers.Main){
+                            backdropImage.value = backdropBitmap
+                            posterImage.value = posterBitmap
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+                Log.d(TAG, "budget : " + movieDetailsResponse.budget + " revenue : " + movieDetailsResponse.revenue)
             }
-            Log.d(TAG, "budget : " + movieDetailsResponse.budget + " revenue : " + movieDetailsResponse.revenue)
         }
     }
 }

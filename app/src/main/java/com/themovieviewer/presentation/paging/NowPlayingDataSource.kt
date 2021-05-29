@@ -27,25 +27,6 @@ class NowPlayingDataSource(private val movieRepository: MovieRepository, private
 
             for (movie in movieListResponse.results) {
                 Log.d(TAG, movie.toString())
-//
-//                val movieDetailsResponse: MovieDetailsResponse = movieRepository.getMovieDetails(
-//                    language = language,
-//                    movie_id = movie.id
-//                )
-//
-//                Log.d(TAG, "budget : " + movieDetailsResponse.budget + " revenue : " + movieDetailsResponse.revenue)
-//
-//                val movieCreditsResponse: MovieCreditsResponse = movieRepository.getMovieCredits(
-//                    language = language,
-//                    movie_id = movie.id
-//                )
-//                Log.d(TAG, "Name : " + movieCreditsResponse.cast[0].name)
-//
-//                val peopleDetailsResponse: PeopleDetailsResponse = movieRepository.getPeopleDetails(
-//                    language = language,
-//                    person_id = movieCreditsResponse.cast[0].id
-//                )
-//                Log.d(TAG, "Name : " + peopleDetailsResponse.name + " birthday " + peopleDetailsResponse.birthday)
             }
 
             LoadResult.Page(

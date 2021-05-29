@@ -6,6 +6,9 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="action_add">Add</string>
+    <string name="action_remove">remove</string>
+    <string name="action_done">Done</string>
 
     <string name="menu_main">Main Pager2</string>
     <string name="menu_movie_details">Movie Details</string>

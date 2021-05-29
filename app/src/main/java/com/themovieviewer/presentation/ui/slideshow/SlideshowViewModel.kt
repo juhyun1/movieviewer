@@ -7,10 +7,13 @@ import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.themovieviewer.data.DaoMapper
+import com.themovieviewer.data.Favorites
+import com.themovieviewer.data.FavoritesMovie
 import com.themovieviewer.repository.FavoritesMovieRepository
 import com.themovieviewer.repository.FavoritesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,18 +22,20 @@ class SlideshowViewModel @Inject constructor(
     private val favoritesMovieRepository: FavoritesMovieRepository,
     private val daoMapper: DaoMapper
 ): ViewModel() {
-
+    var favoriteRemoveMode = false
     val favoritesList = Pager(PagingConfig(pageSize = 100)) {
         favoritesMovieRepository.getFavoritesMovies()
-//        val list: ArrayList<FavoritesMovie> = ArrayList()
-//        for(favorite in favoritesList) {
-//            list.add(favoritesMovieRepository.getFavoritesMovies(favorite.kindId))
-//        }
-//        FavoritesDataSource(favoritesRepository, favoritesMovieRepository, daoMapper)
     }.flow
         .map { pagingData ->
             pagingData
-                .map { cheese -> daoMapper.mapToDomainModel(cheese) }
+                .map { movie -> daoMapper.mapToDomainModel(movie) }
         }
         .cachedIn(viewModelScope)
+
+    fun deleteFavoriteMovie(favorites: Favorites, favoritesMovie: FavoritesMovie) {
+        viewModelScope.launch {
+            favoritesRepository.deleteFavorites(favorites)
+            favoritesMovieRepository.deleteFavoritesMovie(favoritesMovie)
+        }
+    }
 }

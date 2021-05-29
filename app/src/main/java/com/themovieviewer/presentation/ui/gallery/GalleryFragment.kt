@@ -2,29 +2,24 @@ package com.themovieviewer.presentation.ui.gallery
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
+import com.themovieviewer.R
 import com.themovieviewer.data.*
 import com.themovieviewer.databinding.FragmentGalleryBinding
-import com.themovieviewer.domain.model.Movie
 import com.themovieviewer.presentation.BaseApplication
 import com.themovieviewer.presentation.paging.MovieOneRowAdapter
 import com.themovieviewer.presentation.ui.main.MainFragmentDirections
-import com.themovieviewer.repository.FavoritesMovieRepository
-import com.themovieviewer.repository.FavoritesRepository
 import com.themovieviewer.util.TAG
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -45,35 +40,47 @@ class GalleryFragment : Fragment() {
                 MovieOneRowAdapter.SelectionDetailsLookup(nowPlayingList),
                 StorageStrategy.createLongStorage()
             ).withSelectionPredicate(
-                MovieOneRowAdapter.SelectionPredicate(nowPlayingList)
+                SelectionPredicates.createSelectSingleAnything()
             ).build().apply {
                 addObserver(object : SelectionTracker.SelectionObserver<Long>() {
                     override fun onSelectionChanged() {
                         super.onSelectionChanged()
                         val tracker = this@apply
                         val adapter = (nowPlayingList.adapter as MovieOneRowAdapter)
-                        var movie_: Movie? = null
                         tracker.selection.forEach {
                             val movie = adapter.peek(it.toInt())
-                            movie_ = movie
                             Log.d(TAG, "position : $it Selection : $movie")
+                            if(galleryViewModel.favoriteAddMode) {
+                                if (movie == null) {
+                                    application.selectedMovie = null
+                                } else {
+                                    application.selectedMovie = movie
+                                    Log.d(TAG, "set Favorite Movie to application.selectedMovie")
+                                }
+                            } else {
+                                movie?.let {
+                                    application.selectedMovie = movie
+                                    try {
+                                        val action = MainFragmentDirections.actionMainFragmentToMovieDetailsFragment(movie)
+                                        findNavController().navigate(action)
+                                    } catch(e: Exception) {
+                                        e.printStackTrace()
+                                    }
+                                }
+                            }
                         }
-
-                        val fa = Favorites(name = movie_!!.original_title, kind = "movie", kindId = movie_!!.id, date = movie_!!.release_date)
-                        val fmovie = daoMapper.mapFromDomainModel(movie_!!)
-
-                        //just db test, have to implement insert movie to favorite db
-                        galleryViewModel.test(fa, fmovie)
                     }
                 })
             }
         }
     }
 
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -84,10 +91,10 @@ class GalleryFragment : Fragment() {
         val root: View = binding.root
 
         binding.nowPlayingList.adapter = oneRowAdapter
-        oneRowAdapter.useTracker = false
+        oneRowAdapter.useTracker = true
 
         if (oneRowAdapter.useTracker) {
-            tracker
+            oneRowAdapter.tracker = tracker
         } else {
             oneRowAdapter.onItemClick = {
                 application.selectedMovie = it
@@ -100,7 +107,6 @@ class GalleryFragment : Fragment() {
             }
         }
 
-
         lifecycleScope.launch {
             galleryViewModel.nowPlayingList.collectLatest { pagedData ->
                 oneRowAdapter.submitData(pagedData)
@@ -112,5 +118,63 @@ class GalleryFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.movie, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+
+        R.id.action_add -> {
+            galleryViewModel.favoriteAddMode = true
+            requireActivity().invalidateOptionsMenu()
+            true
+        }
+
+        R.id.action_remove -> {
+            // User chose the "Favorite" action, mark the current item
+            // as a favorite...
+            true
+        }
+
+        R.id.action_done -> {
+            galleryViewModel.favoriteAddMode = false
+            application.selectedMovie?.let{
+                val favorite = Favorites(name = it.original_title, kind = "movie", kindId = it.id, date = it.release_date)
+                val favoriteMovie = daoMapper.mapFromDomainModel(it)
+
+                //just db test, have to implement insert movie to favorite db
+                galleryViewModel.insertFavoriteMovie(favorite, favoriteMovie)
+                Log.d(TAG, "Inserted Favorite Movie to DB")
+            }
+
+            tracker.clearSelection()
+            // User chose the "Favorite" action, mark the current item
+            // as a favorite...
+            requireActivity().invalidateOptionsMenu()
+            true
+        }
+        else -> {
+            // If we got here, the user's action was not recognized.
+            // Invoke the superclass to handle it.
+            super.onOptionsItemSelected(item)
+        }
+
+    }
+
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        val addItem = menu.findItem(R.id.action_add)
+        val doneItem = menu.findItem(R.id.action_done)
+
+        if (galleryViewModel.favoriteAddMode) {
+            addItem.isVisible = false
+            doneItem.isVisible = true
+        } else {
+            addItem.isVisible = true
+            doneItem.isVisible = false
+        }
     }
 }

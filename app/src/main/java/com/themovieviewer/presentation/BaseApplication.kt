@@ -6,5 +6,5 @@ import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class BaseApplication : Application() {
-    lateinit var selectedMovie: Movie
+    var selectedMovie: Movie? = null
 }
