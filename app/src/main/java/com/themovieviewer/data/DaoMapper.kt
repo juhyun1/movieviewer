@@ -1,5 +1,6 @@
 package com.themovieviewer.data
 
+import com.themovieviewer.data.vo.FavoritesMovie
 import com.themovieviewer.domain.model.Movie
 import com.themovieviewer.domain.util.DomainMapper
 

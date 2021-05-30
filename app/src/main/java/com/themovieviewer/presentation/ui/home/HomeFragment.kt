@@ -12,11 +12,10 @@ import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import com.themovieviewer.R
 import com.themovieviewer.data.DaoMapper
-import com.themovieviewer.data.Favorites
+import com.themovieviewer.data.vo.Favorites
 import com.themovieviewer.databinding.FragmentHomeBinding
 import com.themovieviewer.presentation.BaseApplication
 import com.themovieviewer.presentation.paging.MovieOneRowAdapter
-import com.themovieviewer.presentation.paging.MovieTwoColumnsAdapter
 import com.themovieviewer.presentation.ui.main.MainFragmentDirections
 import com.themovieviewer.util.TAG
 import dagger.hilt.android.AndroidEntryPoint
@@ -81,9 +80,7 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        //FIXME Test
-        setHasOptionsMenu(false)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(

@@ -3,6 +3,8 @@ package com.themovieviewer.data
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.themovieviewer.data.vo.Favorites
+import com.themovieviewer.data.vo.FavoritesMovie
 import com.themovieviewer.util.Converters
 
 @TypeConverters(Converters::class)

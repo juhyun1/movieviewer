@@ -7,8 +7,8 @@ import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.themovieviewer.data.DaoMapper
-import com.themovieviewer.data.Favorites
-import com.themovieviewer.data.FavoritesMovie
+import com.themovieviewer.data.vo.Favorites
+import com.themovieviewer.data.vo.FavoritesMovie
 import com.themovieviewer.repository.FavoritesMovieRepository
 import com.themovieviewer.repository.FavoritesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

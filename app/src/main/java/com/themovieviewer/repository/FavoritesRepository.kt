@@ -1,7 +1,7 @@
 package com.themovieviewer.repository
 
 import androidx.annotation.WorkerThread
-import com.themovieviewer.data.Favorites
+import com.themovieviewer.data.vo.Favorites
 import com.themovieviewer.data.FavoritesDao
 import javax.inject.Inject
 

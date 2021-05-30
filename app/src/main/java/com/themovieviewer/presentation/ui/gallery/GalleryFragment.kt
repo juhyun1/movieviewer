@@ -12,6 +12,7 @@ import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import com.themovieviewer.R
 import com.themovieviewer.data.*
+import com.themovieviewer.data.vo.Favorites
 import com.themovieviewer.databinding.FragmentGalleryBinding
 import com.themovieviewer.presentation.BaseApplication
 import com.themovieviewer.presentation.paging.MovieOneRowAdapter

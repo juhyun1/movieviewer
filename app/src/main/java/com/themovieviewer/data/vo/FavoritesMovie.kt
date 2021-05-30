@@ -1,4 +1,4 @@
-package com.themovieviewer.data
+package com.themovieviewer.data.vo
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

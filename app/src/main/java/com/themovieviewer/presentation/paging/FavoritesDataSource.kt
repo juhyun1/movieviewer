@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.themovieviewer.data.DaoMapper
-import com.themovieviewer.data.FavoritesMovie
+import com.themovieviewer.data.vo.FavoritesMovie
 import com.themovieviewer.domain.model.Movie
 import com.themovieviewer.repository.FavoritesMovieRepository
 import com.themovieviewer.repository.FavoritesRepository

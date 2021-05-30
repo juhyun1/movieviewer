@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
-import com.themovieviewer.data.Favorites
-import com.themovieviewer.data.FavoritesMovie
+import com.themovieviewer.data.vo.Favorites
+import com.themovieviewer.data.vo.FavoritesMovie
 import com.themovieviewer.network.model.MovieDtoMapper
 import com.themovieviewer.presentation.paging.TopRatedListDataSource
 import com.themovieviewer.repository.FavoritesMovieRepository

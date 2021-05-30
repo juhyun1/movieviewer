@@ -12,7 +12,7 @@ import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import com.themovieviewer.R
 import com.themovieviewer.data.DaoMapper
-import com.themovieviewer.data.Favorites
+import com.themovieviewer.data.vo.Favorites
 import com.themovieviewer.databinding.FragmentSlideshowBinding
 import com.themovieviewer.presentation.BaseApplication
 import com.themovieviewer.presentation.paging.MovieOneRowAdapter
@@ -49,7 +49,6 @@ class SlideshowFragment : Fragment() {
                 addObserver(object : SelectionTracker.SelectionObserver<Long>() {
                     override fun onSelectionChanged() {
                         super.onSelectionChanged()
-                        try {
                             val tracker = this@apply
                             val adapter = (favoritesList.adapter as MovieOneRowAdapter)
                             tracker.selection.forEach {
@@ -75,9 +74,6 @@ class SlideshowFragment : Fragment() {
                                     }
                                 }
                             }
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                        }
                     }
                 })
             }

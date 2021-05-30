@@ -1,4 +1,4 @@
-package com.themovieviewer.data
+package com.themovieviewer.data.vo
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
