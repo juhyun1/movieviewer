@@ -19,10 +19,10 @@ class FavoritesDataSource(private val favoritesRepository: FavoritesRepository, 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
         return try {
 
-            val favoritesList =  favoritesRepository.getFavorites()
+            val favoritesList = favoritesRepository.getFavorites()
 
             val list: ArrayList<FavoritesMovie> = ArrayList()
-            for(favorite in favoritesList) {
+            for (favorite in favoritesList) {
                 list.add(favoritesMovieRepository.getFavoritesMovies(favorite.kindId))
             }
 
@@ -32,7 +32,7 @@ class FavoritesDataSource(private val favoritesRepository: FavoritesRepository, 
                 nextKey = null
             )
         } catch (e: Exception) {
-            Log.e(TAG, "launchJob: Exception: ${e}, ${e.cause}")
+            Log.e(TAG, "launchJob: Exception: $e, ${e.cause}")
             e.printStackTrace()
             LoadResult.Error(e)
         }

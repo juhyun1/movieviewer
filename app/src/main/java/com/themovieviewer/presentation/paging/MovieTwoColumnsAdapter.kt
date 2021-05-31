@@ -47,7 +47,6 @@ class MovieTwoColumnsAdapter : PagingDataAdapter<Movie, MovieTwoColumnsAdapter.M
         }
     }
 
-
     class MovieViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
 //    LayoutInflater.from(parent.context).inflate(R.layout.widget_movie_card, parent, false)
         LayoutInflater.from(parent.context).inflate(R.layout.widget_movie_card, parent, false)
@@ -64,10 +63,10 @@ class MovieTwoColumnsAdapter : PagingDataAdapter<Movie, MovieTwoColumnsAdapter.M
         fun bindTo(item: Movie?) {
 
             movie = item
-            item?.let{
+            item?.let {
                 if (it.poster_path != null) {
                     poster.loadImage(it.poster_path)
-                    poster.clipToOutline = true;
+                    poster.clipToOutline = true
                 }
                 originalTitle.text = it.original_title
                 releaseDate.text = it.release_date
@@ -75,4 +74,3 @@ class MovieTwoColumnsAdapter : PagingDataAdapter<Movie, MovieTwoColumnsAdapter.M
         }
     }
 }
-

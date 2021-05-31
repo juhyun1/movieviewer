@@ -39,12 +39,11 @@ class DaoMapper : DomainMapper<FavoritesMovie, Movie> {
         )
     }
 
-    fun toDomainList(initial: List<FavoritesMovie>): List<Movie>{
+    fun toDomainList(initial: List<FavoritesMovie>): List<Movie> {
         return initial.map { mapToDomainModel(it) }
     }
 
-    fun fromDomainList(initial: List<Movie>): List<FavoritesMovie>{
+    fun fromDomainList(initial: List<Movie>): List<FavoritesMovie> {
         return initial.map { mapFromDomainModel(it) }
     }
-
 }

@@ -38,12 +38,11 @@ class MovieDtoMapper : DomainMapper<MovieDto, Movie> {
         )
     }
 
-    fun toDomainList(initial: List<MovieDto>): List<Movie>{
+    fun toDomainList(initial: List<MovieDto>): List<Movie> {
         return initial.map { mapToDomainModel(it) }
     }
 
-    fun fromDomainList(initial: List<Movie>): List<MovieDto>{
+    fun fromDomainList(initial: List<Movie>): List<MovieDto> {
         return initial.map { mapFromDomainModel(it) }
     }
-
 }

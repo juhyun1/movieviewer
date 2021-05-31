@@ -26,6 +26,4 @@ object PagingModule {
     fun provideCreditsAdapter(): CreditsAdapter {
         return CreditsAdapter()
     }
-
-
 }

@@ -1,8 +1,8 @@
 package com.themovieviewer.repository
 
 import androidx.annotation.WorkerThread
-import com.themovieviewer.data.vo.Favorites
 import com.themovieviewer.data.FavoritesDao
+import com.themovieviewer.data.vo.Favorites
 import javax.inject.Inject
 
 class FavoritesRepository @Inject constructor(private val favoritesDao: FavoritesDao) {

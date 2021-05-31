@@ -15,7 +15,7 @@ import javax.inject.Inject
 class MainFragmentViewModel @Inject constructor(
     private val movieRepository: MovieRepository,
     private val movieDtoMapper: MovieDtoMapper
-): ViewModel() {
+) : ViewModel() {
 
     val nowPlayingList = Pager(PagingConfig(pageSize = 100)) {
         NowPlayingDataSource(movieRepository, movieDtoMapper)

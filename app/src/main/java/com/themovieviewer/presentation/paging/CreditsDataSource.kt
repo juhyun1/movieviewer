@@ -36,7 +36,7 @@ class CreditsDataSource(private val movieRepository: MovieRepository, private va
                 nextKey = null
             )
         } catch (e: Exception) {
-            Log.e(TAG, "launchJob: Exception: ${e}, ${e.cause}")
+            Log.e(TAG, "launchJob: Exception: $e, ${e.cause}")
             e.printStackTrace()
             LoadResult.Error(e)
         }

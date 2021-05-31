@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.Nullable
-import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.selection.ItemDetailsLookup
 import androidx.recyclerview.selection.ItemKeyProvider
@@ -18,8 +17,7 @@ import com.themovieviewer.R
 import com.themovieviewer.domain.model.Movie
 import com.themovieviewer.util.loadImage
 
-
-class MovieOneRowAdapter: PagingDataAdapter<Movie, MovieOneRowAdapter.MovieViewHolder>(diffCallback) {
+class MovieOneRowAdapter : PagingDataAdapter<Movie, MovieOneRowAdapter.MovieViewHolder>(diffCallback) {
     var tracker: SelectionTracker<Long>? = null
     var useTracker = false
 
@@ -90,7 +88,7 @@ class MovieOneRowAdapter: PagingDataAdapter<Movie, MovieOneRowAdapter.MovieViewH
         private val selectionView = itemView.findViewById<View>(R.id.selection)
 
         private fun setSelected(isSelect: Boolean) {
-            selectionView.visibility = if(isSelect) View.VISIBLE else View.GONE
+            selectionView.visibility = if (isSelect) View.VISIBLE else View.GONE
         }
 
         fun getItemDetails(): ItemDetailsLookup.ItemDetails<Long> =
@@ -112,10 +110,10 @@ class MovieOneRowAdapter: PagingDataAdapter<Movie, MovieOneRowAdapter.MovieViewH
             position = pos
             setSelected(isSelect)
             with(itemView) {
-                item?.let{
+                item?.let {
                     if (it.poster_path != null) {
                         poster.loadImage(it.poster_path)
-                        poster.clipToOutline = true;
+                        poster.clipToOutline = true
                     }
                     originalTitle.text = it.original_title
                     releaseDate.text = it.release_date

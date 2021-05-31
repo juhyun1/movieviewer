@@ -21,7 +21,7 @@ object RepositoryModule {
     @Provides
     fun provideMovieRepository(
         movieService: MovieService
-    ): MovieRepository{
+    ): MovieRepository {
         return MovieRepositoryImpl(
             movieService = movieService
         )
@@ -31,7 +31,7 @@ object RepositoryModule {
     @Provides
     fun provideFavoritesRepository(
         favoritesDao: FavoritesDao
-    ): FavoritesRepository{
+    ): FavoritesRepository {
         return FavoritesRepository(
             favoritesDao = favoritesDao
         )
@@ -41,7 +41,7 @@ object RepositoryModule {
     @Provides
     fun provideFavoritesMovieRepository(
         favoritesMovieDao: FavoritesMovieDao
-    ): FavoritesMovieRepository{
+    ): FavoritesMovieRepository {
         return FavoritesMovieRepository(
             favoritesMovieDao = favoritesMovieDao
         )

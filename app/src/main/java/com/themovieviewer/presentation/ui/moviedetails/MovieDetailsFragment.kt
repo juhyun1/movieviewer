@@ -2,7 +2,12 @@ package com.themovieviewer.presentation.ui.moviedetails
 
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -74,8 +79,6 @@ class MovieDetailsFragment : Fragment() {
         _binding = null
     }
 
-
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.movie, menu)
     }
@@ -83,22 +86,22 @@ class MovieDetailsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
 
         R.id.action_add -> {
-            args.movie.let{
+            args.movie.let {
                 val favorite = Favorites(name = it.original_title, kind = "movie", kindId = it.id, date = it.release_date)
                 val favoriteMovie = daoMapper.mapFromDomainModel(it)
 
-                //just db test, have to implement insert movie to favorite db
+                // just db test, have to implement insert movie to favorite db
                 movieDetailsFragmentViewModel.insertFavoriteMovie(favorite, favoriteMovie)
             }
             true
         }
 
         R.id.action_remove -> {
-            args.movie.let{
+            args.movie.let {
                 val favorite = Favorites(name = it.original_title, kind = "movie", kindId = it.id, date = it.release_date)
                 val favoriteMovie = daoMapper.mapFromDomainModel(it)
 
-                //just db test, have to implement insert movie to favorite db
+                // just db test, have to implement insert movie to favorite db
                 movieDetailsFragmentViewModel.deleteFavoriteMovie(favorite, favoriteMovie)
                 Log.d(TAG, "Inserted Favorite Movie to DB")
             }
@@ -111,12 +114,10 @@ class MovieDetailsFragment : Fragment() {
         }
     }
 
-
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         val addItem = menu.findItem(R.id.action_add)
         val removeItem = menu.findItem(R.id.action_remove)
-
 
         if (args.fromFavoriteScreen) {
             addItem.isVisible = false

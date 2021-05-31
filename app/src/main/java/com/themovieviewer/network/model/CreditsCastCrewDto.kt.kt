@@ -14,7 +14,7 @@ data class CreditsCastCrewDto(
     val credit_id: String,
     val order: Int,
 
-    //the bellow is crew attribute
+    // the bellow is crew attribute
     val department: String,
     val job: String
 )

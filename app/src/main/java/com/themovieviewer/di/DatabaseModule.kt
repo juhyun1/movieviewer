@@ -6,7 +6,6 @@ import com.themovieviewer.data.AppDatabase
 import com.themovieviewer.data.DaoMapper
 import com.themovieviewer.data.FavoritesDao
 import com.themovieviewer.data.FavoritesMovieDao
-import com.themovieviewer.network.model.MovieDtoMapper
 import com.themovieviewer.util.DATABASE_NAME
 import dagger.Module
 import dagger.Provides
@@ -23,7 +22,7 @@ object DatabaseModule {
     @Provides
     fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
         return Room
-            .databaseBuilder(context,AppDatabase::class.java,DATABASE_NAME)
+            .databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
             .fallbackToDestructiveMigration()
             .build()
     }

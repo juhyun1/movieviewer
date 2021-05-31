@@ -2,7 +2,10 @@ package com.themovieviewer.presentation.ui.slideshow
 
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -48,22 +51,22 @@ class SlideshowFragment : Fragment() {
                 addObserver(object : SelectionTracker.SelectionObserver<Long>() {
                     override fun onSelectionChanged() {
                         super.onSelectionChanged()
-                            val tracker = this@apply
-                            val adapter = (favoritesList.adapter as MovieOneRowAdapter)
-                            tracker.selection.forEach {
-                                val movie = adapter.peek(it.toInt())
-                                Log.d(TAG, "position : $it Selection : $movie")
-                                    movie?.let {
-                                        application.selectedMovie = movie
-                                        try {
-                                            val action = MainFragmentDirections.actionMainFragmentToMovieDetailsFragment(movie, true)
+                        val tracker = this@apply
+                        val adapter = (favoritesList.adapter as MovieOneRowAdapter)
+                        tracker.selection.forEach {
+                            val movie = adapter.peek(it.toInt())
+                            Log.d(TAG, "position : $it Selection : $movie")
+                            movie?.let {
+                                application.selectedMovie = movie
+                                try {
+                                    val action = MainFragmentDirections.actionMainFragmentToMovieDetailsFragment(movie, true)
 //                                            val action = SlideshowFragmentDirections.actionSlideshowFragmentToMovieDetailsFragment(movie)
-                                            findNavController().navigate(action)
-                                        } catch(e: Exception) {
-                                            e.printStackTrace()
-                                        }
-                                    }
+                                    findNavController().navigate(action)
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                }
                             }
+                        }
                     }
                 })
             }
@@ -93,7 +96,7 @@ class SlideshowFragment : Fragment() {
                 try {
                     val action = SlideshowFragmentDirections.actionSlideshowFragmentToMovieDetailsFragment(it, true)
                     findNavController().navigate(action)
-                } catch(e: Exception) {
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
@@ -120,6 +123,5 @@ class SlideshowFragment : Fragment() {
         else -> {
             super.onOptionsItemSelected(item)
         }
-
     }
 }

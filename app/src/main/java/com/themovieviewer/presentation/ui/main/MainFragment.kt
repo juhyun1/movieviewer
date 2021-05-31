@@ -51,7 +51,7 @@ class MainFragment : Fragment() {
             tab.text =
                 if (position == 0) {
                     "Top Rated"
-                } else if (position == 1){
+                } else if (position == 1) {
                     "Now Playing"
                 } else {
                     "Favorite Movies"

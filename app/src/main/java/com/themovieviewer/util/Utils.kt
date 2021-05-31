@@ -5,7 +5,6 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.themovieviewer.R
 
-
 fun View.visible(isVisible: Boolean) {
     visibility = if (isVisible) View.VISIBLE else View.GONE
 }

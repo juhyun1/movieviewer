@@ -1,6 +1,5 @@
 package com.themovieviewer.network
 
-import android.provider.Contacts
 import com.themovieviewer.network.model.MovieDetailsResponse
 import com.themovieviewer.network.response.MovieCreditsResponse
 import com.themovieviewer.network.response.PeopleDetailsResponse
@@ -45,4 +44,3 @@ interface MovieService {
         @Query("language") language: String
     ): PeopleDetailsResponse
 }
-

@@ -35,7 +35,7 @@ class NowPlayingDataSource(private val movieRepository: MovieRepository, private
                 nextKey = if (nextPageNumber < movieListResponse.total_pages) nextPageNumber + 1 else null
             )
         } catch (e: Exception) {
-            Log.e(TAG, "launchJob: Exception: ${e}, ${e.cause}")
+            Log.e(TAG, "launchJob: Exception: $e, ${e.cause}")
             e.printStackTrace()
             LoadResult.Error(e)
         }

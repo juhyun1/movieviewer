@@ -6,7 +6,7 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 
 @BindingAdapter("loadImage")
-fun loadImage(imageView: ImageView, url:String) {
+fun loadImage(imageView: ImageView, url: String) {
 
     val base = "https://image.tmdb.org/t/p/w500"
     Glide.with(imageView)
@@ -15,7 +15,7 @@ fun loadImage(imageView: ImageView, url:String) {
 }
 
 @BindingAdapter("itemSelected")
-fun itemSelected(view: View, selected:Boolean) {
+fun itemSelected(view: View, selected: Boolean) {
     if (selected) {
         view.visibility = View.VISIBLE
     } else {

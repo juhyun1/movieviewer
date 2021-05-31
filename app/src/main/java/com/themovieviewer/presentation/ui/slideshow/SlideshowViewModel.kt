@@ -16,7 +16,7 @@ import javax.inject.Inject
 class SlideshowViewModel @Inject constructor(
     private val favoritesMovieRepository: FavoritesMovieRepository,
     private val daoMapper: DaoMapper
-): ViewModel() {
+) : ViewModel() {
     var favoriteRemoveMode = false
     val favoritesList = Pager(PagingConfig(pageSize = 100)) {
         favoritesMovieRepository.getFavoritesMovies()
@@ -26,5 +26,4 @@ class SlideshowViewModel @Inject constructor(
                 .map { movie -> daoMapper.mapToDomainModel(movie) }
         }
         .cachedIn(viewModelScope)
-
 }

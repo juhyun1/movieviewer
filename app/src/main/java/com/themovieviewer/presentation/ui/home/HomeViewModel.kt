@@ -15,7 +15,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val movieRepository: MovieRepository,
     private val movieDtoMapper: MovieDtoMapper
-): ViewModel() {
+) : ViewModel() {
     var favoriteAddMode = false
 
     val topRatedList = Pager(PagingConfig(pageSize = 10)) {

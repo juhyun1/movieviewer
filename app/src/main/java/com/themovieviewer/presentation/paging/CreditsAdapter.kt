@@ -11,7 +11,7 @@ import com.themovieviewer.R
 import com.themovieviewer.network.model.CreditsCastCrewDto
 import com.themovieviewer.util.loadImage
 
-class CreditsAdapter: PagingDataAdapter<CreditsCastCrewDto, CreditsAdapter.ViewHolder>(diffCallback) {
+class CreditsAdapter : PagingDataAdapter<CreditsCastCrewDto, CreditsAdapter.ViewHolder>(diffCallback) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindTo(getItem(position))
@@ -70,17 +70,16 @@ class CreditsAdapter: PagingDataAdapter<CreditsCastCrewDto, CreditsAdapter.ViewH
 //        private val releaseDate = itemView.findViewById<TextView>(R.id.releaseDate)
 //        private val overView = itemView.findViewById<TextView>(R.id.overView)
 
-
         /**
          * Items might be null if they are not paged in yet. PagedListAdapter will re-bind the
          * ViewHolder when Item is loaded.
          */
         fun bindTo(item: CreditsCastCrewDto?) {
             with(itemView) {
-                item?.let{
+                item?.let {
                     if (it.profile_path != null) {
                         profile.loadImage(it.profile_path)
-                        profile.clipToOutline = true;
+                        profile.clipToOutline = true
                         originalName.text = it.original_name
                         character.text = it.character
                     }
@@ -98,4 +97,3 @@ class CreditsAdapter: PagingDataAdapter<CreditsCastCrewDto, CreditsAdapter.ViewH
         }
     }
 }
-

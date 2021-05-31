@@ -4,9 +4,6 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.text.TextUtils
 import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -34,7 +31,6 @@ import java.io.InputStream
 import java.net.URL
 import javax.inject.Inject
 
-
 @HiltViewModel
 class MovieDetailsFragmentViewModel @Inject constructor(
     private val movieRepository: MovieRepository,
@@ -42,7 +38,7 @@ class MovieDetailsFragmentViewModel @Inject constructor(
     private val application: BaseApplication,
     private val favoritesRepository: FavoritesRepository,
     private val favoritesMovieRepository: FavoritesMovieRepository
-): ViewModel() {
+) : ViewModel() {
 
     val overview: MutableLiveData<String> = MutableLiveData("")
     val tagline: MutableLiveData<String> = MutableLiveData("")
@@ -65,13 +61,13 @@ class MovieDetailsFragmentViewModel @Inject constructor(
         val language = "en-US"
         viewModelScope.launch {
             // Coroutine that will be canceled when the ViewModel is cleared.
-            movie?.let{
+            movie?.let {
                 val movieDetailsResponse: MovieDetailsResponse = movieRepository.getMovieDetails(
                     language = language,
                     movie_id = movie.id
                 )
 
-                movieDetailsResponse.let{
+                movieDetailsResponse.let {
                     title.value = it.original_title
                     releaseDate.value = it.release_date
                     val temp = movieDetailsResponse.runtime?.div(60)
@@ -95,13 +91,12 @@ class MovieDetailsFragmentViewModel @Inject constructor(
                     overview.value = it.overview
                 }
 
-
                 val base: String = "https://image.tmdb.org/t/p/w500"
                 val imageURL: String = base
                 var backdropBitmap: Drawable? = null
                 var posterBitmap: Drawable? = null
 
-                withContext(Dispatchers.IO){
+                withContext(Dispatchers.IO) {
                     try {
                         // Download Image from URL
                         val input: InputStream = URL(base + movieDetailsResponse.backdrop_path).openStream()
@@ -110,7 +105,7 @@ class MovieDetailsFragmentViewModel @Inject constructor(
                         val input2: InputStream = URL(base + movieDetailsResponse.poster_path).openStream()
                         posterBitmap = BitmapDrawable(null, input2)
 
-                        withContext(Dispatchers.Main){
+                        withContext(Dispatchers.Main) {
                             backdropImage.value = backdropBitmap
                             posterImage.value = posterBitmap
                         }
@@ -129,7 +124,6 @@ class MovieDetailsFragmentViewModel @Inject constructor(
             favoritesMovieRepository.insertFavoritesMovie(favoritesMovie)
         }
     }
-
 
     fun deleteFavoriteMovie(favorites: Favorites, favoritesMovie: FavoritesMovie) {
         viewModelScope.launch {

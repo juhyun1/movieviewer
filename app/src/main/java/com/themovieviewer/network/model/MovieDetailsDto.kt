@@ -1,4 +1,5 @@
- package com.themovieviewer.network.model
+
+package com.themovieviewer.network.model
 
 data class MovieSpokenLanguagesDto(
     val iso_639_1: String,

@@ -2,7 +2,11 @@ package com.themovieviewer.presentation.ui.gallery
 
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -11,8 +15,7 @@ import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import com.themovieviewer.R
-import com.themovieviewer.data.*
-import com.themovieviewer.data.vo.Favorites
+import com.themovieviewer.data.DaoMapper
 import com.themovieviewer.databinding.FragmentGalleryBinding
 import com.themovieviewer.presentation.BaseApplication
 import com.themovieviewer.presentation.paging.MovieOneRowAdapter
@@ -51,15 +54,15 @@ class GalleryFragment : Fragment() {
                         tracker.selection.forEach {
                             val movie = adapter.peek(it.toInt())
                             Log.d(TAG, "position : $it Selection : $movie")
-                                movie?.let {
-                                    application.selectedMovie = movie
-                                    try {
-                                        val action = MainFragmentDirections.actionMainFragmentToMovieDetailsFragment(movie, false)
-                                        findNavController().navigate(action)
-                                    } catch(e: Exception) {
-                                        e.printStackTrace()
-                                    }
+                            movie?.let {
+                                application.selectedMovie = movie
+                                try {
+                                    val action = MainFragmentDirections.actionMainFragmentToMovieDetailsFragment(movie, false)
+                                    findNavController().navigate(action)
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
                                 }
+                            }
                         }
                     }
                 })
@@ -88,7 +91,7 @@ class GalleryFragment : Fragment() {
                 try {
                     val action = MainFragmentDirections.actionMainFragmentToMovieDetailsFragment(it, false)
                     findNavController().navigate(action)
-                } catch(e: Exception) {
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
@@ -119,9 +122,7 @@ class GalleryFragment : Fragment() {
             // Invoke the superclass to handle it.
             super.onOptionsItemSelected(item)
         }
-
     }
-
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)

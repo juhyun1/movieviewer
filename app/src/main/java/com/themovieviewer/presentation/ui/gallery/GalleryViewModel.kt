@@ -20,7 +20,7 @@ import javax.inject.Inject
 class GalleryViewModel @Inject constructor(
     private val movieRepository: MovieRepository,
     private val movieDtoMapper: MovieDtoMapper
-): ViewModel() {
+) : ViewModel() {
     @Inject lateinit var favoritesRepository: FavoritesRepository
     @Inject lateinit var favoritesMovieRepository: FavoritesMovieRepository
     var favoriteAddMode = false
