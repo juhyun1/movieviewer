@@ -51,24 +51,15 @@ class HomeFragment : Fragment() {
                         tracker.selection.forEach {
                             val movie = adapter.peek(it.toInt())
                             Log.d(TAG, "position : $it Selection : $movie")
-                            if(homeViewModel.favoriteAddMode) {
-                                if (movie == null) {
-                                    application.selectedMovie = null
-                                } else {
-                                    application.selectedMovie = movie
-                                    Log.d(TAG, "set Favorite Movie to application.selectedMovie")
-                                }
-                            } else {
                                 movie?.let {
                                     application.selectedMovie = movie
                                     try {
-                                        val action = MainFragmentDirections.actionMainFragmentToMovieDetailsFragment(movie)
+                                        val action = MainFragmentDirections.actionMainFragmentToMovieDetailsFragment(movie, false)
                                         findNavController().navigate(action)
                                     } catch(e: Exception) {
                                         e.printStackTrace()
                                     }
                                 }
-                            }
                         }
                     }
                 })
@@ -77,11 +68,6 @@ class HomeFragment : Fragment() {
     }
 
     private val binding get() = _binding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -100,7 +86,7 @@ class HomeFragment : Fragment() {
             oneRowAdapter.onItemClick = {
                 application.selectedMovie = it
                 try {
-                    val action = MainFragmentDirections.actionMainFragmentToMovieDetailsFragment(it)
+                    val action = MainFragmentDirections.actionMainFragmentToMovieDetailsFragment(it, false)
                     findNavController().navigate(action)
                 } catch(e: Exception) {
                     e.printStackTrace()
@@ -121,39 +107,9 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.movie, menu)
-    }
-
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
 
-        R.id.action_add -> {
-            homeViewModel.favoriteAddMode = true
-            requireActivity().invalidateOptionsMenu()
-            true
-        }
-
-        R.id.action_remove -> {
-            // User chose the "Favorite" action, mark the current item
-            // as a favorite...
-            true
-        }
-
-        R.id.action_done -> {
-            homeViewModel.favoriteAddMode = false
-            application.selectedMovie?.let{
-                val favorite = Favorites(name = it.original_title, kind = "movie", kindId = it.id, date = it.release_date)
-                val favoriteMovie = daoMapper.mapFromDomainModel(it)
-
-                //just db test, have to implement insert movie to favorite db
-                homeViewModel.insertFavoriteMovie(favorite, favoriteMovie)
-                Log.d(TAG, "Inserted Favorite Movie to DB")
-            }
-
-            tracker.clearSelection()
-            // User chose the "Favorite" action, mark the current item
-            // as a favorite...
-            requireActivity().invalidateOptionsMenu()
+        R.id.action_settings -> {
             true
         }
         else -> {
@@ -162,20 +118,5 @@ class HomeFragment : Fragment() {
             super.onOptionsItemSelected(item)
         }
 
-    }
-
-
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        super.onPrepareOptionsMenu(menu)
-        val addItem = menu.findItem(R.id.action_add)
-        val doneItem = menu.findItem(R.id.action_done)
-
-        if (homeViewModel.favoriteAddMode) {
-            addItem.isVisible = false
-            doneItem.isVisible = true
-        } else {
-            addItem.isVisible = true
-            doneItem.isVisible = false
-        }
     }
 }

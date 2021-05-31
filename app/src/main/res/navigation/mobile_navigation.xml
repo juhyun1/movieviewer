@@ -23,6 +23,9 @@
         <argument
             android:name="movie"
             app:argType="com.themovieviewer.domain.model.Movie" />
+        <argument
+            android:name="fromFavoriteScreen"
+            app:argType="boolean" />
     </fragment>
 
     <fragment

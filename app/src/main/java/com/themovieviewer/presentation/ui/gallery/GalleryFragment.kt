@@ -51,24 +51,15 @@ class GalleryFragment : Fragment() {
                         tracker.selection.forEach {
                             val movie = adapter.peek(it.toInt())
                             Log.d(TAG, "position : $it Selection : $movie")
-                            if(galleryViewModel.favoriteAddMode) {
-                                if (movie == null) {
-                                    application.selectedMovie = null
-                                } else {
-                                    application.selectedMovie = movie
-                                    Log.d(TAG, "set Favorite Movie to application.selectedMovie")
-                                }
-                            } else {
                                 movie?.let {
                                     application.selectedMovie = movie
                                     try {
-                                        val action = MainFragmentDirections.actionMainFragmentToMovieDetailsFragment(movie)
+                                        val action = MainFragmentDirections.actionMainFragmentToMovieDetailsFragment(movie, false)
                                         findNavController().navigate(action)
                                     } catch(e: Exception) {
                                         e.printStackTrace()
                                     }
                                 }
-                            }
                         }
                     }
                 })
@@ -77,11 +68,6 @@ class GalleryFragment : Fragment() {
     }
 
     private val binding get() = _binding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -100,7 +86,7 @@ class GalleryFragment : Fragment() {
             oneRowAdapter.onItemClick = {
                 application.selectedMovie = it
                 try {
-                    val action = MainFragmentDirections.actionMainFragmentToMovieDetailsFragment(it)
+                    val action = MainFragmentDirections.actionMainFragmentToMovieDetailsFragment(it, false)
                     findNavController().navigate(action)
                 } catch(e: Exception) {
                     e.printStackTrace()
@@ -121,38 +107,10 @@ class GalleryFragment : Fragment() {
         _binding = null
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.movie, menu)
-    }
-
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
 
-        R.id.action_add -> {
+        R.id.action_settings -> {
             galleryViewModel.favoriteAddMode = true
-            requireActivity().invalidateOptionsMenu()
-            true
-        }
-
-        R.id.action_remove -> {
-            // User chose the "Favorite" action, mark the current item
-            // as a favorite...
-            true
-        }
-
-        R.id.action_done -> {
-            galleryViewModel.favoriteAddMode = false
-            application.selectedMovie?.let{
-                val favorite = Favorites(name = it.original_title, kind = "movie", kindId = it.id, date = it.release_date)
-                val favoriteMovie = daoMapper.mapFromDomainModel(it)
-
-                //just db test, have to implement insert movie to favorite db
-                galleryViewModel.insertFavoriteMovie(favorite, favoriteMovie)
-                Log.d(TAG, "Inserted Favorite Movie to DB")
-            }
-
-            tracker.clearSelection()
-            // User chose the "Favorite" action, mark the current item
-            // as a favorite...
             requireActivity().invalidateOptionsMenu()
             true
         }
