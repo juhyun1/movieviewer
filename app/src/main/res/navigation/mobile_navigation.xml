@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_main">
+
+    <fragment
+        android:id="@+id/nav_main"
+        android:name="com.themovieviewer.presentation.ui.main.MainFragment"
+        android:label="@string/menu_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_MainFragment_to_MovieDetailsFragment"
+            app:destination="@+id/nav_movie_details" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_movie_details"
+        android:name="com.themovieviewer.presentation.ui.moviedetails.MovieDetailsFragment"
+        android:label="@string/menu_movie_details"
+        tools:layout="@layout/fragment_movie_details" >
+        <action
+            android:id="@+id/action_movie_details_to_movie_details"
+            app:destination="@+id/nav_movie_details" />
+        <argument
+            android:name="movie"
+            app:argType="com.themovieviewer.domain.model.Movie" />
+        <argument
+            android:name="fromFavoriteScreen"
+            app:argType="boolean" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.themovieviewer.presentation.ui.home.HomeFragment"
+        android:label="@string/menu_tv_show"
+        tools:layout="@layout/fragment_movie">
+        <action
+            android:id="@+id/action_HomeFragment_to_MovieDetailsFragment"
+            app:destination="@+id/nav_movie_details" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_gallery"
+        android:name="com.themovieviewer.presentation.ui.gallery.GalleryFragment"
+        android:label="@string/menu_gallery"
+        tools:layout="@layout/fragment_gallery">
+        <action
+            android:id="@+id/action_GalleryFragment_to_MovieDetailsFragment"
+            app:destination="@+id/nav_movie_details" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_slideshow"
+        android:name="com.themovieviewer.presentation.ui.slideshow.SlideshowFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_slideshow" >
+        <action
+            android:id="@+id/action_SlideshowFragment_to_MovieDetailsFragment"
+            app:destination="@+id/nav_movie_details" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_popular"
+        android:name="com.themovieviewer.presentation.ui.popular.MoviePopularFragment"
+        android:label="@string/menu_Popular"
+        tools:layout="@layout/fragment_slideshow" >
+        <action
+            android:id="@+id/action_MoviePopularFragment_to_MovieDetailsFragment"
+            app:destination="@+id/nav_movie_details" />
+    </fragment></navigation>

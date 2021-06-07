@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">TheMovieViewer</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_add">Add</string>
+    <string name="action_remove">remove</string>
+    <string name="action_done">Done</string>
+    <string name="action_top_billed_cast">Top Billed Cast</string>
+    <string name="action_recommendations">Recommendations</string>
+    <string name="action_status">Status</string>
+    <string name="action_original_language">Original Language</string>
+    <string name="action_budget">Budget</string>
+    <string name="action_revenue">Revenue</string>
+    <string name="action_keywords">Keywords</string>
+
+
+    <string name="menu_main">Movie</string>
+    <string name="menu_movie_details">Movie Details</string>
+    <string name="menu_tv_show">TV Shows</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_Popular">Popular</string>
+    <string name="menu_slideshow">Favorites Movies</string>
+</resources>
