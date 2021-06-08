@@ -3,6 +3,7 @@ package com.themovieviewer.repository
 import com.themovieviewer.network.model.MovieDetailsResponse
 import com.themovieviewer.network.response.MovieCreditsResponse
 import com.themovieviewer.network.response.PeopleDetailsResponse
+import com.themovieviewer.network.response.PeopleExternalIdsResponse
 import com.themovieviewer.network.response.TopRatedResponse
 
 interface MovieRepository {
@@ -13,4 +14,5 @@ interface MovieRepository {
     suspend fun getMovieCredits(language: String, movie_id: Int): MovieCreditsResponse
     suspend fun getPeopleDetails(language: String, person_id: Int): PeopleDetailsResponse
     suspend fun getRecommendations(language: String, page: Int, movieId: Int): TopRatedResponse
+    suspend fun getExternalIds(language: String, personId: Int): PeopleExternalIdsResponse
 }

@@ -4,6 +4,7 @@ import com.themovieviewer.network.MovieService
 import com.themovieviewer.network.model.MovieDetailsResponse
 import com.themovieviewer.network.response.MovieCreditsResponse
 import com.themovieviewer.network.response.PeopleDetailsResponse
+import com.themovieviewer.network.response.PeopleExternalIdsResponse
 import com.themovieviewer.network.response.TopRatedResponse
 
 class MovieRepositoryImpl(
@@ -11,7 +12,7 @@ class MovieRepositoryImpl(
 ) : MovieRepository {
 
 //    https://developers.themoviedb.org/3/getting-started/introduction
-    private val apiKey = "your api key"
+    private val apiKey = "1139b15b6e07c636d6a411506eea3362"
 
     override suspend fun getTopRated(language: String?, page: Int): TopRatedResponse {
         return movieService.topRated(api_key = apiKey, language = language, page = page)
@@ -39,5 +40,9 @@ class MovieRepositoryImpl(
 
     override suspend fun getRecommendations(language: String, page: Int, movieId: Int): TopRatedResponse {
         return movieService.recommendations(api_key = apiKey, language = language, page = page, movie_id = movieId)
+    }
+
+    override suspend fun getExternalIds(language: String, personId: Int): PeopleExternalIdsResponse {
+        return movieService.getExternalIds(api_key = apiKey, language = language, person_id = personId)
     }
 }

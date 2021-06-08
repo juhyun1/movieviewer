@@ -3,6 +3,7 @@ package com.themovieviewer.network
 import com.themovieviewer.network.model.MovieDetailsResponse
 import com.themovieviewer.network.response.MovieCreditsResponse
 import com.themovieviewer.network.response.PeopleDetailsResponse
+import com.themovieviewer.network.response.PeopleExternalIdsResponse
 import com.themovieviewer.network.response.TopRatedResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -58,4 +59,11 @@ interface MovieService {
         @Query("api_key") api_key: String,
         @Query("language") language: String
     ): PeopleDetailsResponse
+
+    @GET("person/{person_id}/external_ids")
+    suspend fun getExternalIds(
+        @Path("person_id") person_id: Int,
+        @Query("api_key") api_key: String,
+        @Query("language") language: String
+    ): PeopleExternalIdsResponse
 }
