@@ -8,6 +8,7 @@ interface MovieRepository {
     suspend fun getNowPlaying(language: String, page: Int): TopRatedResponse
     suspend fun getPopular(language: String?, page: Int): TopRatedResponse
     suspend fun getMovieDetails(language: String, movie_id: Int): MovieDetailsResponse
+    suspend fun getVideos(language: String, movie_id: Int): VideosResponse
     suspend fun getMovieCredits(language: String, movie_id: Int): MovieCreditsResponse
     suspend fun getPeopleDetails(language: String, person_id: Int): PeopleDetailsResponse
     suspend fun getPeopleMovieCredits(language: String, person_id: Int): PeopleMovieCreditsResponse

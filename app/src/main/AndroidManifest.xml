@@ -20,6 +20,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".presentation.TrailerActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.TheMovieViewer.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

@@ -6,6 +6,9 @@
         <variable
             name="viewModel"
             type="com.themovieviewer.presentation.ui.moviedetails.MovieDetailsFragmentViewModel" />
+        <variable
+            name="fragment"
+            type="com.themovieviewer.presentation.ui.moviedetails.MovieDetailsFragment"/>
     </data>
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -64,13 +67,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{viewModel.title}"
-
                 tools:text="motal aaaa"
                 android:textSize="20sp"
                 android:textColor="@android:color/white"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintTop_toBottomOf="@+id/backdropImage"
+                app:layout_constraintEnd_toStartOf="@+id/playTrailer"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <Button
+                android:id="@+id/playTrailer"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:onClick="@{fragment::playTrailer}"
+                android:background="@drawable/ic_trailer_payler"
+                app:trailerVisible="@{viewModel.isTrailer}"
                 app:layout_constraintTop_toBottomOf="@+id/backdropImage"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toEndOf="@+id/title"/>
 
             <TextView
                 android:id="@+id/releaseDate"

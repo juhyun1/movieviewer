@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.youtube.player.YouTubeStandalonePlayer
 import com.themovieviewer.R
 import com.themovieviewer.data.DaoMapper
 import com.themovieviewer.data.vo.Favorites
@@ -51,6 +52,7 @@ class MovieDetailsFragment : Fragment() {
 //        val _bind = FragmentMovieDetailsBinding.inflate(inflater, container, false)
         val dataBinding: FragmentMovieDetailsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_details, container, false)
         dataBinding.viewModel = movieDetailsFragmentViewModel
+        dataBinding.fragment = this
         dataBinding.lifecycleOwner = this
         _binding = dataBinding
         val rv: RecyclerView = dataBinding.root.findViewById(R.id.creditsRecyclerView)
@@ -92,6 +94,27 @@ class MovieDetailsFragment : Fragment() {
 
 //        movieDetailsFragmentViewModel.init(args.movie)
         return dataBinding.root
+    }
+
+    fun playTrailer(view: View) {
+//        trailer.let {
+//            val sendIntent = Intent(requireContext(), TrailerActivity::class.java)
+//            sendIntent.putExtra("trailer", movieDetailsFragmentViewModel.trailer)
+//            startActivity(sendIntent)
+//        }
+
+        val trailer = movieDetailsFragmentViewModel.trailer
+        trailer?.let{
+            val intent = YouTubeStandalonePlayer.createVideoIntent(requireActivity(),
+                trailer.id, //유튜브 api 키
+                trailer.key, //비디오 id
+                0, //몇초후 재생
+                true, //자동실행 할지 말지
+                true //작은 뷰박스에서 재생할지 말지 false하면 풀화면으로 재생된다.
+            )
+            view.context.startActivity(intent)
+        }
+
     }
 
     override fun onDestroyView() {

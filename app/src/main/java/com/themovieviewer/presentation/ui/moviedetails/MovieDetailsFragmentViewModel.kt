@@ -10,8 +10,11 @@ import androidx.paging.cachedIn
 import com.themovieviewer.data.vo.Favorites
 import com.themovieviewer.data.vo.FavoritesMovie
 import com.themovieviewer.domain.model.Movie
+import com.themovieviewer.domain.model.Trailer
 import com.themovieviewer.network.model.MovieDetailsResponse
 import com.themovieviewer.network.model.MovieDtoMapper
+import com.themovieviewer.network.model.VideosDtoMapper
+import com.themovieviewer.network.response.VideosResponse
 import com.themovieviewer.presentation.BaseApplication
 import com.themovieviewer.presentation.paging.CreditsDataSource
 import com.themovieviewer.presentation.paging.RecommendationsDataSource
@@ -27,6 +30,7 @@ import javax.inject.Inject
 class MovieDetailsFragmentViewModel @Inject constructor(
     private val movieRepository: MovieRepository,
     private val movieDtoMapper: MovieDtoMapper,
+    private val videosDtoMapper: VideosDtoMapper,
     private val application: BaseApplication,
     private val favoritesRepository: FavoritesRepository,
     private val favoritesMovieRepository: FavoritesMovieRepository
@@ -46,6 +50,8 @@ class MovieDetailsFragmentViewModel @Inject constructor(
     val title: MutableLiveData<String> = MutableLiveData("")
     val backdropImage: MutableLiveData<String> = MutableLiveData("")
     val posterImage: MutableLiveData<String> = MutableLiveData("")
+    var trailer: Trailer? = null
+    val isTrailer: MutableLiveData<Boolean> = MutableLiveData(false)
     val creditsList = Pager(PagingConfig(pageSize = 100)) {
         CreditsDataSource(movieRepository, movieDtoMapper, application.selectedMovie!!.id)
     }.flow.cachedIn(viewModelScope)
@@ -95,12 +101,21 @@ class MovieDetailsFragmentViewModel @Inject constructor(
                     val format = DecimalFormat("###,###,###,###")
                     budget.value = "$${format.format(it.budget)}"
                     revenue.value = "$${format.format(it.revenue)}"
+
+                    val base = "https://image.tmdb.org/t/p/w500"
+                    backdropImage.value = base + movieDetailsResponse.backdrop_path
+                    posterImage.value = base + movieDetailsResponse.poster_path
                 }
 
-                val base = "https://image.tmdb.org/t/p/w500"
-                backdropImage.value = base + movieDetailsResponse.backdrop_path
-                posterImage.value = base + movieDetailsResponse.poster_path
+                val videosResponse: VideosResponse = movieRepository.getVideos(
+                    language = language,
+                    movie_id = movie.id
+                )
 
+                if (videosResponse.results.isNotEmpty()) {
+                    trailer = videosDtoMapper.mapToDomainModel(videosResponse.results[0])
+                    isTrailer.value = true
+                }
             }
         }
     }

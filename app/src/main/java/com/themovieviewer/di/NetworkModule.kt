@@ -3,6 +3,7 @@ package com.themovieviewer.di
 import com.google.gson.GsonBuilder
 import com.themovieviewer.network.MovieService
 import com.themovieviewer.network.model.MovieDtoMapper
+import com.themovieviewer.network.model.VideosDtoMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,6 +20,12 @@ object NetworkModule {
     @Provides
     fun provideMovieDtoMapper(): MovieDtoMapper {
         return MovieDtoMapper()
+    }
+
+    @Singleton
+    @Provides
+    fun provideVideosDtoMapper(): VideosDtoMapper {
+        return VideosDtoMapper()
     }
 
     @Singleton

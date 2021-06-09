@@ -27,6 +27,11 @@ class MovieRepositoryImpl(
         return movieService.getDetails(api_key = apiKey, language = language, movie_id = movie_id)
     }
 
+    override suspend fun getVideos(language: String, movie_id: Int): VideosResponse {
+        return movieService.getVideos(api_key = apiKey, language = language, movie_id = movie_id)
+    }
+
+
     override suspend fun getMovieCredits(language: String, movie_id: Int): MovieCreditsResponse {
         return movieService.getCredits(api_key = apiKey, language = language, movie_id = movie_id)
     }
