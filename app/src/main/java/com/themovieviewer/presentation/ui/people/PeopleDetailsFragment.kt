@@ -30,9 +30,9 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class PeopleDetailsFragment : Fragment() {
 
-    private val movieDetailsFragmentViewModel: MovieDetailsFragmentViewModel by viewModels()
+    private val peopleDetailsFragmentViewModel: PeopleDetailsFragmentViewModel by viewModels()
     private var _binding: FragmentPeopleBinding? = null
-    private val args by navArgs<MovieDetailsFragmentArgs>()
+    private val args by navArgs<PeopleDetailsFragmentArgs>()
     @Inject
     lateinit var creditsAdapter: CreditsAdapter
     @Inject
@@ -46,18 +46,13 @@ class PeopleDetailsFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         val dataBinding: FragmentPeopleBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_people, container, false)
-        dataBinding.viewModel = movieDetailsFragmentViewModel
+        dataBinding.viewModel = peopleDetailsFragmentViewModel
         dataBinding.lifecycleOwner = this
         _binding = dataBinding
 

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.themovieviewer.presentation.ui.moviedetails.MovieDetailsFragmentViewModel" />
+            type="com.themovieviewer.presentation.ui.people.PeopleDetailsFragmentViewModel" />
     </data>
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -44,7 +44,7 @@
                 android:layout_margin="20dp"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                app:imageFromUrl="@{viewModel.posterImage}"
+                app:imageFromUrl="@{viewModel.profileImage}"
                 tools:src="@drawable/test"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -58,6 +58,7 @@
                 android:textColor="@android:color/black"
                 android:textStyle="bold"
                 android:textSize="20sp"
+                android:text="@{viewModel.name}"
                 tools:text="Ma Dong-seok"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -77,27 +78,27 @@
                     android:layout_margin="5dp"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    tools:background="@drawable/facebook"/>
+                    android:background="@drawable/facebook"/>
                 <Button
                     android:id="@+id/twitter"
                     android:layout_margin="5dp"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    tools:background="@drawable/twitter"/>
+                    android:background="@drawable/twitter"/>
 
                 <Button
                     android:id="@+id/instagram"
                     android:layout_margin="5dp"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    tools:background="@drawable/instagram"/>
+                    android:background="@drawable/instagram"/>
 
                 <Button
                     android:id="@+id/link"
                     android:layout_margin="5dp"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    tools:background="@drawable/link"/>
+                    android:background="@drawable/link"/>
             </LinearLayout>
 
             <LinearLayout
@@ -110,17 +111,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/externalIds">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
-                    android:textStyle="bold"
-                    android:text="@string/tv_personal_info"/>
-                <TextView
                     android:id="@+id/tv_personal_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
-                    tools:text="AAAAAAAA"/>
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="@string/tv_personal_info"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -134,6 +131,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
+                    android:text="@{viewModel.knownCredits}"
                     tools:text="AAAAAAAA"/>
 
                 <TextView
@@ -148,6 +146,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
+                    android:text="@{viewModel.gender}"
                     tools:text="AAAAAAAA"/>
 
                 <TextView
@@ -162,6 +161,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
+                    android:text="@{viewModel.birthday}"
                     tools:text="AAAAAAAA"/>
 
                 <TextView
@@ -176,6 +176,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
+                    android:text="@{viewModel.placeOfBirths}"
                     tools:text="AAAAAAAA"/>
 
                 <TextView
@@ -190,6 +191,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
+                    android:text="@{viewModel.knownFor}"
                     tools:text="AAAAAAAA"/>
             </LinearLayout>
 
@@ -209,6 +211,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
+                android:text="@{viewModel.biography}"
                 tools:text="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                 app:layout_constraintStart_toStartOf="@+id/startGuideLine"
                 app:layout_constraintEnd_toEndOf="@+id/endGuideLine"

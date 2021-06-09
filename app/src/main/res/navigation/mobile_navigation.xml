@@ -23,12 +23,25 @@
         <action
             android:id="@+id/action_movie_details_to_movie_details"
             app:destination="@+id/nav_movie_details" />
+        <action
+            android:id="@+id/action_movie_details_to_people_details"
+            app:destination="@+id/nav_people_details" />
         <argument
             android:name="movie"
             app:argType="com.themovieviewer.domain.model.Movie" />
         <argument
             android:name="fromFavoriteScreen"
             app:argType="boolean" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_people_details"
+        android:name="com.themovieviewer.presentation.ui.people.PeopleDetailsFragment"
+        android:label="@string/menu_people_details"
+        tools:layout="@layout/fragment_people" >
+        <argument
+            android:name="personId"
+            app:argType="integer" />
     </fragment>
 
     <fragment

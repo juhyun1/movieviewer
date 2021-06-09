@@ -1,7 +1,6 @@
 package com.themovieviewer.presentation.ui.moviedetails
 
 import android.text.TextUtils
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,10 +18,8 @@ import com.themovieviewer.presentation.paging.RecommendationsDataSource
 import com.themovieviewer.repository.FavoritesMovieRepository
 import com.themovieviewer.repository.FavoritesRepository
 import com.themovieviewer.repository.MovieRepository
-import com.themovieviewer.util.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import java.text.DecimalFormat
 import javax.inject.Inject
 

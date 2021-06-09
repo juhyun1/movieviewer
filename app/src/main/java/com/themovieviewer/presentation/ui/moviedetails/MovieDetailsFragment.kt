@@ -2,12 +2,7 @@ package com.themovieviewer.presentation.ui.moviedetails
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -22,7 +17,6 @@ import com.themovieviewer.databinding.FragmentMovieDetailsBinding
 import com.themovieviewer.presentation.BaseApplication
 import com.themovieviewer.presentation.paging.CreditsAdapter
 import com.themovieviewer.presentation.paging.MovieRecommendationsAdapter
-import com.themovieviewer.presentation.ui.main.MainFragmentDirections
 import com.themovieviewer.util.TAG
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -63,6 +57,9 @@ class MovieDetailsFragment : Fragment() {
         rv.adapter = creditsAdapter
         creditsAdapter.onItemClick = {
             Log.d(TAG, it.toString())
+            application.selectedPerson = it.id
+            val action = MovieDetailsFragmentDirections.actionMovieDetailsToPeopleDetails(it.id)
+            findNavController().navigate(action)
         }
 
         val recommendationRv: RecyclerView = dataBinding.root.findViewById(R.id.recommendationsRecyclerView)
