@@ -2,10 +2,7 @@ package com.themovieviewer.repository
 
 import com.themovieviewer.network.MovieService
 import com.themovieviewer.network.model.MovieDetailsResponse
-import com.themovieviewer.network.response.MovieCreditsResponse
-import com.themovieviewer.network.response.PeopleDetailsResponse
-import com.themovieviewer.network.response.PeopleExternalIdsResponse
-import com.themovieviewer.network.response.TopRatedResponse
+import com.themovieviewer.network.response.*
 
 class MovieRepositoryImpl(
     private val movieService: MovieService
@@ -36,6 +33,10 @@ class MovieRepositoryImpl(
 
     override suspend fun getPeopleDetails(language: String, person_id: Int): PeopleDetailsResponse {
         return movieService.getPeopleDetails(api_key = apiKey, language = language, person_id = person_id)
+    }
+
+    override suspend fun getPeopleMovieCredits(language: String, person_id: Int): PeopleMovieCreditsResponse {
+        return movieService.getPeopleMovieCredits(api_key = apiKey, language = language, person_id = person_id)
     }
 
     override suspend fun getRecommendations(language: String, page: Int, movieId: Int): TopRatedResponse {

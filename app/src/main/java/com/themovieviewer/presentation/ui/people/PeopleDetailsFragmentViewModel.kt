@@ -1,15 +1,22 @@
 package com.themovieviewer.presentation.ui.people
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
 import com.themovieviewer.network.model.MovieDtoMapper
 import com.themovieviewer.network.response.PeopleDetailsResponse
 import com.themovieviewer.presentation.BaseApplication
+import com.themovieviewer.presentation.paging.PeopleMovieCreditsDataSource
 import com.themovieviewer.repository.FavoritesMovieRepository
 import com.themovieviewer.repository.FavoritesRepository
 import com.themovieviewer.repository.MovieRepository
+import com.themovieviewer.util.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,6 +38,11 @@ class PeopleDetailsFragmentViewModel @Inject constructor(
     val biography: MutableLiveData<String> = MutableLiveData("")
     val acting: MutableLiveData<String> = MutableLiveData("")
     val name: MutableLiveData<String> = MutableLiveData("")
+
+    val movieList = Pager(PagingConfig(pageSize = 100)) {
+        PeopleMovieCreditsDataSource(movieRepository, movieDtoMapper, application.selectedPerson!!.toInt())
+    }.flow.cachedIn(viewModelScope)
+
 
     init {
         init(application.selectedPerson)

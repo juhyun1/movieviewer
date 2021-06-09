@@ -9,5 +9,5 @@ data class Favorites(
     @PrimaryKey @ColumnInfo(name = "id") val kindId: Int,
     val name: String,
     val kind: String,
-    val date: String,
+    val date: String?,
 )

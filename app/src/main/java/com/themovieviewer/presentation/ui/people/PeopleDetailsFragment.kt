@@ -34,8 +34,6 @@ class PeopleDetailsFragment : Fragment() {
     private var _binding: FragmentPeopleBinding? = null
     private val args by navArgs<PeopleDetailsFragmentArgs>()
     @Inject
-    lateinit var creditsAdapter: CreditsAdapter
-    @Inject
     lateinit var application: BaseApplication
     @Inject
     lateinit var movieRecommendationsAdapter: MovieRecommendationsAdapter
@@ -56,41 +54,26 @@ class PeopleDetailsFragment : Fragment() {
         dataBinding.lifecycleOwner = this
         _binding = dataBinding
 
-        //region TODO
-        //        val rv: RecyclerView = dataBinding.root.findViewById(R.id.creditsRecyclerView)
-//        rv.adapter = creditsAdapter
-//        creditsAdapter.onItemClick = {
-//            Log.d(TAG, it.toString())
-//        }
-//
-//        val recommendationRv: RecyclerView = dataBinding.root.findViewById(R.id.recommendationsRecyclerView)
-//        recommendationRv.adapter = movieRecommendationsAdapter
-//        movieRecommendationsAdapter.onItemClick = {
-//            Log.d(TAG, it.toString())
-//            application.selectedMovie = it
-//            try {
-//                val action = MovieDetailsFragmentDirections.actionMovieDetailsToMovieDetails(it, false)
-//                findNavController().navigate(action)
-//            } catch (e: Exception) {
-//                e.printStackTrace()
-//            }
-//        }
-//
-//        val root: View = dataBinding.root
-//        Log.d(TAG, "Selected Movie : " + args.movie.toString())
-//
-//        lifecycleScope.launch {
-//            movieDetailsFragmentViewModel.creditsList.collectLatest { pagedData ->
-//                creditsAdapter.submitData(pagedData)
-//            }
-//        }
-//
-//        lifecycleScope.launch {
-//            movieDetailsFragmentViewModel.movieList.collectLatest { pagedData ->
-//                movieRecommendationsAdapter.submitData(pagedData)
-//            }
-//        }
-        //endregion
+        val moviesRecyclerView: RecyclerView = dataBinding.root.findViewById(R.id.moviesRecyclerView)
+        moviesRecyclerView.adapter = movieRecommendationsAdapter
+        movieRecommendationsAdapter.onItemClick = {
+            Log.d(TAG, it.toString())
+            application.selectedMovie = it
+            try {
+                val action = PeopleDetailsFragmentDirections.actionPeopleDetailsToMovieDetails(it, false)
+                findNavController().navigate(action)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        val root: View = dataBinding.root
+        Log.d(TAG, "Selected person : " + args.personId.toString())
+        lifecycleScope.launch {
+            peopleDetailsFragmentViewModel.movieList.collectLatest { pagedData ->
+                movieRecommendationsAdapter.submitData(pagedData)
+            }
+        }
 
         return dataBinding.root
     }
