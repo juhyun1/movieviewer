@@ -125,21 +125,6 @@
                     android:textColor="@android:color/black"
                     android:layout_marginTop="10dp"
                     android:textStyle="bold"
-                    android:text="@string/tv_known_credits"/>
-                <TextView
-                    android:id="@+id/tv_known_credits"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
-                    android:text="@{viewModel.knownCredits}"
-                    tools:text="AAAAAAAA"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
-                    android:layout_marginTop="10dp"
-                    android:textStyle="bold"
                     android:text="@string/tv_gender"/>
                 <TextView
                     android:id="@+id/tv_gender"
@@ -253,6 +238,17 @@
                 android:text="@string/tv_acting"
                 app:layout_constraintStart_toStartOf="@+id/startGuideLine"
                 app:layout_constraintTop_toBottomOf="@+id/moviesRecyclerView"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/actingList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_acting"
+                tools:listitem="@layout/widget_credits_vertical" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

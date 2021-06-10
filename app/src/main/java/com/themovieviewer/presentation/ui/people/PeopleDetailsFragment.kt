@@ -15,7 +15,10 @@ import com.themovieviewer.data.DaoMapper
 import com.themovieviewer.data.vo.Favorites
 import com.themovieviewer.databinding.FragmentMovieDetailsBinding
 import com.themovieviewer.databinding.FragmentPeopleBinding
+import com.themovieviewer.network.model.CastCrewDtoMapper
 import com.themovieviewer.presentation.BaseApplication
+import com.themovieviewer.presentation.paging.ActingAdapter
+import com.themovieviewer.presentation.paging.ActingDataSource
 import com.themovieviewer.presentation.paging.CreditsAdapter
 import com.themovieviewer.presentation.paging.MovieRecommendationsAdapter
 import com.themovieviewer.presentation.ui.moviedetails.MovieDetailsFragmentArgs
@@ -37,6 +40,8 @@ class PeopleDetailsFragment : Fragment() {
     lateinit var application: BaseApplication
     @Inject
     lateinit var movieRecommendationsAdapter: MovieRecommendationsAdapter
+    @Inject
+    lateinit var actingAdapter: ActingAdapter
     @Inject
     lateinit var daoMapper: DaoMapper
 
@@ -67,11 +72,23 @@ class PeopleDetailsFragment : Fragment() {
             }
         }
 
+        val actingRv: RecyclerView = dataBinding.root.findViewById(R.id.actingList)
+        actingRv.adapter = actingAdapter
+        actingAdapter.onItemClick = {
+            Log.d(TAG, it.toString())
+        }
+
         val root: View = dataBinding.root
         Log.d(TAG, "Selected person : " + args.personId.toString())
         lifecycleScope.launch {
             peopleDetailsFragmentViewModel.movieList.collectLatest { pagedData ->
                 movieRecommendationsAdapter.submitData(pagedData)
+            }
+        }
+
+        lifecycleScope.launch {
+            peopleDetailsFragmentViewModel.actingList.collectLatest { pagedData ->
+                actingAdapter.submitData(pagedData)
             }
         }
 

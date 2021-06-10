@@ -35,4 +35,9 @@ object PagingModule {
         return VideosAdapter()
     }
 
+    @Provides
+    fun actingAdapter(): ActingAdapter {
+        return ActingAdapter()
+    }
+
 }

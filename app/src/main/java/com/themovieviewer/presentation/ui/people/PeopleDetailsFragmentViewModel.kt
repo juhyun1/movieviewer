@@ -1,22 +1,21 @@
 package com.themovieviewer.presentation.ui.people
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
+import com.themovieviewer.network.model.CastCrewDtoMapper
 import com.themovieviewer.network.model.MovieDtoMapper
 import com.themovieviewer.network.response.PeopleDetailsResponse
 import com.themovieviewer.presentation.BaseApplication
+import com.themovieviewer.presentation.paging.ActingDataSource
 import com.themovieviewer.presentation.paging.PeopleMovieCreditsDataSource
 import com.themovieviewer.repository.FavoritesMovieRepository
 import com.themovieviewer.repository.FavoritesRepository
 import com.themovieviewer.repository.MovieRepository
-import com.themovieviewer.util.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,6 +23,7 @@ import javax.inject.Inject
 class PeopleDetailsFragmentViewModel @Inject constructor(
     private val movieRepository: MovieRepository,
     private val movieDtoMapper: MovieDtoMapper,
+    private var castCrewDtoMapper: CastCrewDtoMapper,
     private val application: BaseApplication,
     private val favoritesRepository: FavoritesRepository,
     private val favoritesMovieRepository: FavoritesMovieRepository
@@ -32,7 +32,6 @@ class PeopleDetailsFragmentViewModel @Inject constructor(
     val profileImage: MutableLiveData<String> = MutableLiveData("")
     val knownFor: MutableLiveData<String> = MutableLiveData("")
     val gender: MutableLiveData<String> = MutableLiveData("")
-    val knownCredits: MutableLiveData<String> = MutableLiveData("")
     val birthday: MutableLiveData<String> = MutableLiveData("")
     val placeOfBirths: MutableLiveData<String> = MutableLiveData("")
     val biography: MutableLiveData<String> = MutableLiveData("")
@@ -43,6 +42,9 @@ class PeopleDetailsFragmentViewModel @Inject constructor(
         PeopleMovieCreditsDataSource(movieRepository, movieDtoMapper, application.selectedPerson!!.toInt())
     }.flow.cachedIn(viewModelScope)
 
+    val actingList = Pager(PagingConfig(pageSize = 100)) {
+        ActingDataSource(movieRepository, castCrewDtoMapper, application.selectedPerson!!.toInt())
+    }.flow.cachedIn(viewModelScope)
 
     init {
         init(application.selectedPerson)
