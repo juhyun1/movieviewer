@@ -11,6 +11,7 @@
     <string name="action_done">Done</string>
     <string name="action_top_billed_cast">Top Billed Cast</string>
     <string name="action_recommendations">Recommendations</string>
+    <string name="tv_video">Video</string>
     <string name="action_status">Status</string>
     <string name="action_original_language">Original Language</string>
     <string name="action_budget">Budget</string>

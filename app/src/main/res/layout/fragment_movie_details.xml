@@ -6,9 +6,6 @@
         <variable
             name="viewModel"
             type="com.themovieviewer.presentation.ui.moviedetails.MovieDetailsFragmentViewModel" />
-        <variable
-            name="fragment"
-            type="com.themovieviewer.presentation.ui.moviedetails.MovieDetailsFragment"/>
     </data>
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -72,21 +69,8 @@
                 android:textColor="@android:color/white"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintTop_toBottomOf="@+id/backdropImage"
-                app:layout_constraintEnd_toStartOf="@+id/playTrailer"
-                app:layout_constraintStart_toStartOf="parent"/>
-
-            <Button
-                android:id="@+id/playTrailer"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:onClick="@{fragment::playTrailer}"
-                android:background="@drawable/ic_trailer_payler"
-                app:trailerVisible="@{viewModel.isTrailer}"
-                app:layout_constraintTop_toBottomOf="@+id/backdropImage"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/title"/>
+                app:layout_constraintStart_toStartOf="parent"/>
 
             <TextView
                 android:id="@+id/releaseDate"
@@ -249,6 +233,32 @@
                 tools:listitem="@layout/widget_movie_recommendations" />
 
             <TextView
+                android:id="@+id/tv_video"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:text="@string/tv_video"
+                tools:text="Video"
+                android:textColor="@android:color/black"
+                app:visible="@{viewModel.isTrailer}"
+                app:layout_constraintTop_toBottomOf="@+id/recommendationsRecyclerView"
+                app:layout_constraintStart_toStartOf="@+id/startGuideLine"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/videoRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_video"
+                tools:listitem="@layout/widget_video" />
+
+            <TextView
                 android:id="@+id/tvStatus"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
@@ -258,7 +268,7 @@
                 android:text="@string/action_status"
                 tools:text="Status"
                 android:textColor="@android:color/black"
-                app:layout_constraintTop_toBottomOf="@+id/recommendationsRecyclerView"
+                app:layout_constraintTop_toBottomOf="@+id/videoRecyclerView"
                 app:layout_constraintStart_toStartOf="@+id/startGuideLine"/>
             <TextView
                 android:id="@+id/status"

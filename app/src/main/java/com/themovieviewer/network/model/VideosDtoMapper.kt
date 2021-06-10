@@ -1,5 +1,6 @@
 package com.themovieviewer.network.model
 
+import com.themovieviewer.domain.model.Movie
 import com.themovieviewer.domain.model.Trailer
 import com.themovieviewer.domain.util.DomainMapper
 
@@ -29,5 +30,13 @@ class VideosDtoMapper : DomainMapper<VideosDto, Trailer>{
             size = model.size,
             type = model.type
         )
+    }
+
+    fun toDomainList(initial: List<VideosDto>): List<Trailer> {
+        return initial.map { mapToDomainModel(it) }
+    }
+
+    fun fromDomainList(initial: List<Trailer>): List<VideosDto> {
+        return initial.map { mapFromDomainModel(it) }
     }
 }

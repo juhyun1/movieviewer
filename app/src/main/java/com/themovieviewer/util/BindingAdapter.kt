@@ -39,9 +39,9 @@ fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
     }
 }
 
-@BindingAdapter("trailerVisible")
-fun bindTrailerVisible(view: Button, trailerVisible: Boolean) {
-    if(trailerVisible) {
+@BindingAdapter("visible")
+fun visible(view: View, visible: Boolean) {
+    if(visible) {
         view.visibility = View.VISIBLE
     } else {
         view.visibility = View.GONE

@@ -15,9 +15,11 @@ import com.themovieviewer.R
 import com.themovieviewer.data.DaoMapper
 import com.themovieviewer.data.vo.Favorites
 import com.themovieviewer.databinding.FragmentMovieDetailsBinding
+import com.themovieviewer.domain.model.Trailer
 import com.themovieviewer.presentation.BaseApplication
 import com.themovieviewer.presentation.paging.CreditsAdapter
 import com.themovieviewer.presentation.paging.MovieRecommendationsAdapter
+import com.themovieviewer.presentation.paging.VideosAdapter
 import com.themovieviewer.util.TAG
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -33,6 +35,7 @@ class MovieDetailsFragment : Fragment() {
     @Inject lateinit var creditsAdapter: CreditsAdapter
     @Inject lateinit var application: BaseApplication
     @Inject lateinit var movieRecommendationsAdapter: MovieRecommendationsAdapter
+    @Inject lateinit var videosAdapter: VideosAdapter
     @Inject lateinit var daoMapper: DaoMapper
 
     // This property is only valid between onCreateView and
@@ -52,7 +55,6 @@ class MovieDetailsFragment : Fragment() {
 //        val _bind = FragmentMovieDetailsBinding.inflate(inflater, container, false)
         val dataBinding: FragmentMovieDetailsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_details, container, false)
         dataBinding.viewModel = movieDetailsFragmentViewModel
-        dataBinding.fragment = this
         dataBinding.lifecycleOwner = this
         _binding = dataBinding
         val rv: RecyclerView = dataBinding.root.findViewById(R.id.creditsRecyclerView)
@@ -77,6 +79,13 @@ class MovieDetailsFragment : Fragment() {
             }
         }
 
+        val videoRv: RecyclerView = dataBinding.root.findViewById(R.id.videoRecyclerView)
+        videoRv.adapter = videosAdapter
+        videosAdapter.onItemClick = {
+            Log.d(TAG, it.toString())
+            playTrailer(it)
+        }
+
         val root: View = dataBinding.root
         Log.d(TAG, "Selected Movie : " + args.movie.toString())
 
@@ -92,27 +101,31 @@ class MovieDetailsFragment : Fragment() {
             }
         }
 
-//        movieDetailsFragmentViewModel.init(args.movie)
+        lifecycleScope.launch {
+            movieDetailsFragmentViewModel.videoList.collectLatest { pagedData ->
+                videosAdapter.submitData(pagedData)
+            }
+        }
+
         return dataBinding.root
     }
 
-    fun playTrailer(view: View) {
+    private fun playTrailer(trailer: Trailer) {
 //        trailer.let {
 //            val sendIntent = Intent(requireContext(), TrailerActivity::class.java)
 //            sendIntent.putExtra("trailer", movieDetailsFragmentViewModel.trailer)
 //            startActivity(sendIntent)
 //        }
 
-        val trailer = movieDetailsFragmentViewModel.trailer
-        trailer?.let{
+        trailer.let{
             val intent = YouTubeStandalonePlayer.createVideoIntent(requireActivity(),
-                trailer.id, //유튜브 api 키
-                trailer.key, //비디오 id
-                0, //몇초후 재생
-                true, //자동실행 할지 말지
-                true //작은 뷰박스에서 재생할지 말지 false하면 풀화면으로 재생된다.
+                trailer.id,
+                trailer.key,
+                0,
+                true,
+                true
             )
-            view.context.startActivity(intent)
+            requireActivity().startActivity(intent)
         }
 
     }

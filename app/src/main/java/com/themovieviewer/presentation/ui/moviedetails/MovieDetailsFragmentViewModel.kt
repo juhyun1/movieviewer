@@ -18,6 +18,7 @@ import com.themovieviewer.network.response.VideosResponse
 import com.themovieviewer.presentation.BaseApplication
 import com.themovieviewer.presentation.paging.CreditsDataSource
 import com.themovieviewer.presentation.paging.RecommendationsDataSource
+import com.themovieviewer.presentation.paging.VideoDataSource
 import com.themovieviewer.repository.FavoritesMovieRepository
 import com.themovieviewer.repository.FavoritesRepository
 import com.themovieviewer.repository.MovieRepository
@@ -50,7 +51,6 @@ class MovieDetailsFragmentViewModel @Inject constructor(
     val title: MutableLiveData<String> = MutableLiveData("")
     val backdropImage: MutableLiveData<String> = MutableLiveData("")
     val posterImage: MutableLiveData<String> = MutableLiveData("")
-    var trailer: Trailer? = null
     val isTrailer: MutableLiveData<Boolean> = MutableLiveData(false)
     val creditsList = Pager(PagingConfig(pageSize = 100)) {
         CreditsDataSource(movieRepository, movieDtoMapper, application.selectedMovie!!.id)
@@ -58,6 +58,10 @@ class MovieDetailsFragmentViewModel @Inject constructor(
 
     val movieList = Pager(PagingConfig(pageSize = 100)) {
         RecommendationsDataSource(movieRepository, movieDtoMapper, application.selectedMovie!!.id)
+    }.flow.cachedIn(viewModelScope)
+
+    val videoList = Pager(PagingConfig(pageSize = 100)) {
+        VideoDataSource(movieRepository, videosDtoMapper, application.selectedMovie!!.id)
     }.flow.cachedIn(viewModelScope)
 
     init {
@@ -113,7 +117,6 @@ class MovieDetailsFragmentViewModel @Inject constructor(
                 )
 
                 if (videosResponse.results.isNotEmpty()) {
-                    trailer = videosDtoMapper.mapToDomainModel(videosResponse.results[0])
                     isTrailer.value = true
                 }
             }
