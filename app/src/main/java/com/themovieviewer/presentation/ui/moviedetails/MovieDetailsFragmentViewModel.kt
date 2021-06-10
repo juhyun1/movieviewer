@@ -37,7 +37,6 @@ class MovieDetailsFragmentViewModel @Inject constructor(
     private val favoritesMovieRepository: FavoritesMovieRepository
 ) : ViewModel() {
 
-
     val revenue: MutableLiveData<String> = MutableLiveData("")
     val budget: MutableLiveData<String> = MutableLiveData("")
     val originalLanguage: MutableLiveData<String> = MutableLiveData("")
@@ -52,6 +51,7 @@ class MovieDetailsFragmentViewModel @Inject constructor(
     val backdropImage: MutableLiveData<String> = MutableLiveData("")
     val posterImage: MutableLiveData<String> = MutableLiveData("")
     val isTrailer: MutableLiveData<Boolean> = MutableLiveData(false)
+    val showPoster: MutableLiveData<Boolean> = MutableLiveData(false)
     val creditsList = Pager(PagingConfig(pageSize = 100)) {
         CreditsDataSource(movieRepository, movieDtoMapper, application.selectedMovie!!.id)
     }.flow.cachedIn(viewModelScope)
@@ -135,5 +135,9 @@ class MovieDetailsFragmentViewModel @Inject constructor(
             favoritesRepository.deleteFavorites(favorites)
             favoritesMovieRepository.deleteFavoritesMovie(favoritesMovie)
         }
+    }
+
+    fun showPoster(show: Boolean) {
+        showPoster.value = show
     }
 }

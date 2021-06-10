@@ -4,6 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
+            name="fragment"
+            type="com.themovieviewer.presentation.ui.moviedetails.MovieDetailsFragment" />
+        <variable
             name="viewModel"
             type="com.themovieviewer.presentation.ui.moviedetails.MovieDetailsFragmentViewModel" />
     </data>
@@ -53,7 +56,9 @@
                 android:layout_margin="20dp"
                 android:layout_width="100dp"
                 android:layout_height="150dp"
+                android:tag="thumbnailPoster"
                 app:imageFromUrl="@{viewModel.posterImage}"
+                android:onClick="@{fragment::clickOnPoster}"
                 tools:src="@drawable/test"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -346,6 +351,32 @@
                 android:textColor="@android:color/black"
                 app:layout_constraintTop_toBottomOf="@+id/tvRevenue"
                 app:layout_constraintStart_toStartOf="@+id/startGuideLine"/>
+
+            <ImageView
+                android:id="@+id/originalPosterView"
+                android:layout_marginTop="30dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:overScrollMode="always"
+                android:tag="originalPosterView"
+                app:layout_constraintWidth_percent="0.8"
+                app:showPoster="@{viewModel.showPoster}"
+                app:imageFromUrl="@{viewModel.posterImage}"
+                android:onClick="@{fragment::clickOnPoster}"
+                android:visibility="invisible"
+                android:src="@drawable/test"
+                tools:src="@drawable/test"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <Button
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_save_24"
+                android:visibility="invisible"
+                app:showPoster="@{viewModel.showPoster}"
+                app:layout_constraintTop_toTopOf="@+id/originalPosterView"
+                app:layout_constraintStart_toEndOf="@+id/originalPosterView"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

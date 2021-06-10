@@ -44,6 +44,7 @@
                 android:layout_margin="20dp"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
+                android:scaleType="fitCenter"
                 app:imageFromUrl="@{viewModel.profileImage}"
                 tools:src="@drawable/test"
                 app:layout_constraintStart_toStartOf="parent"

@@ -3,6 +3,7 @@ package com.themovieviewer.presentation.ui.moviedetails
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.view.ScaleGestureDetector.SimpleOnScaleGestureListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -26,6 +27,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
 class MovieDetailsFragment : Fragment() {
 
@@ -37,6 +39,8 @@ class MovieDetailsFragment : Fragment() {
     @Inject lateinit var movieRecommendationsAdapter: MovieRecommendationsAdapter
     @Inject lateinit var videosAdapter: VideosAdapter
     @Inject lateinit var daoMapper: DaoMapper
+    private var mScaleGestureDetector: ScaleGestureDetector? = null
+    private var mScaleFactor = 1.0f
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -55,6 +59,7 @@ class MovieDetailsFragment : Fragment() {
 //        val _bind = FragmentMovieDetailsBinding.inflate(inflater, container, false)
         val dataBinding: FragmentMovieDetailsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_details, container, false)
         dataBinding.viewModel = movieDetailsFragmentViewModel
+        dataBinding.fragment = this
         dataBinding.lifecycleOwner = this
         _binding = dataBinding
         val rv: RecyclerView = dataBinding.root.findViewById(R.id.creditsRecyclerView)
@@ -106,7 +111,6 @@ class MovieDetailsFragment : Fragment() {
                 videosAdapter.submitData(pagedData)
             }
         }
-
         return dataBinding.root
     }
 
@@ -128,6 +132,14 @@ class MovieDetailsFragment : Fragment() {
             requireActivity().startActivity(intent)
         }
 
+    }
+
+    fun clickOnPoster(view: View) {
+        if (view.tag == "thumbnailPoster") {
+            movieDetailsFragmentViewModel.showPoster(true)
+        } else {
+            movieDetailsFragmentViewModel.showPoster(false)
+        }
     }
 
     override fun onDestroyView() {

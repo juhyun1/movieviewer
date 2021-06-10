@@ -47,3 +47,13 @@ fun visible(view: View, visible: Boolean) {
         view.visibility = View.GONE
     }
 }
+
+@BindingAdapter("showPoster")
+fun showPoster(view: View, showPoster: Boolean) {
+    if(showPoster) {
+        view.visibility = View.VISIBLE
+    } else {
+        view.visibility = View.INVISIBLE
+    }
+}
+

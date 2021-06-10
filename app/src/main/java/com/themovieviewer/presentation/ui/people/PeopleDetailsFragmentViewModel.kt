@@ -51,7 +51,7 @@ class PeopleDetailsFragmentViewModel @Inject constructor(
     }
 
     fun init(person: Int?) {
-        val language = "ko-KR"
+        val language = "en-US"
         viewModelScope.launch {
             // Coroutine that will be canceled when the ViewModel is cleared.
             person?.let {
