@@ -1,7 +1,6 @@
 package com.themovieviewer.presentation.ui.moviedetails
 
 import android.text.TextUtils
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,18 +10,20 @@ import androidx.paging.cachedIn
 import com.themovieviewer.data.vo.Favorites
 import com.themovieviewer.data.vo.FavoritesMovie
 import com.themovieviewer.domain.model.Movie
+import com.themovieviewer.domain.model.Trailer
 import com.themovieviewer.network.model.MovieDetailsResponse
 import com.themovieviewer.network.model.MovieDtoMapper
+import com.themovieviewer.network.model.VideosDtoMapper
+import com.themovieviewer.network.response.VideosResponse
 import com.themovieviewer.presentation.BaseApplication
 import com.themovieviewer.presentation.paging.CreditsDataSource
 import com.themovieviewer.presentation.paging.RecommendationsDataSource
+import com.themovieviewer.presentation.paging.VideoDataSource
 import com.themovieviewer.repository.FavoritesMovieRepository
 import com.themovieviewer.repository.FavoritesRepository
 import com.themovieviewer.repository.MovieRepository
-import com.themovieviewer.util.TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import java.text.DecimalFormat
 import javax.inject.Inject
 
@@ -30,11 +31,11 @@ import javax.inject.Inject
 class MovieDetailsFragmentViewModel @Inject constructor(
     private val movieRepository: MovieRepository,
     private val movieDtoMapper: MovieDtoMapper,
+    private val videosDtoMapper: VideosDtoMapper,
     private val application: BaseApplication,
     private val favoritesRepository: FavoritesRepository,
     private val favoritesMovieRepository: FavoritesMovieRepository
 ) : ViewModel() {
-
 
     val revenue: MutableLiveData<String> = MutableLiveData("")
     val budget: MutableLiveData<String> = MutableLiveData("")
@@ -49,12 +50,18 @@ class MovieDetailsFragmentViewModel @Inject constructor(
     val title: MutableLiveData<String> = MutableLiveData("")
     val backdropImage: MutableLiveData<String> = MutableLiveData("")
     val posterImage: MutableLiveData<String> = MutableLiveData("")
+    val isTrailer: MutableLiveData<Boolean> = MutableLiveData(false)
+    val showPoster: MutableLiveData<Boolean> = MutableLiveData(false)
     val creditsList = Pager(PagingConfig(pageSize = 100)) {
         CreditsDataSource(movieRepository, movieDtoMapper, application.selectedMovie!!.id)
     }.flow.cachedIn(viewModelScope)
 
     val movieList = Pager(PagingConfig(pageSize = 100)) {
         RecommendationsDataSource(movieRepository, movieDtoMapper, application.selectedMovie!!.id)
+    }.flow.cachedIn(viewModelScope)
+
+    val videoList = Pager(PagingConfig(pageSize = 100)) {
+        VideoDataSource(movieRepository, videosDtoMapper, application.selectedMovie!!.id)
     }.flow.cachedIn(viewModelScope)
 
     init {
@@ -98,12 +105,20 @@ class MovieDetailsFragmentViewModel @Inject constructor(
                     val format = DecimalFormat("###,###,###,###")
                     budget.value = "$${format.format(it.budget)}"
                     revenue.value = "$${format.format(it.revenue)}"
+
+                    val base = "https://image.tmdb.org/t/p/w500"
+                    backdropImage.value = base + movieDetailsResponse.backdrop_path
+                    posterImage.value = base + movieDetailsResponse.poster_path
                 }
 
-                val base = "https://image.tmdb.org/t/p/w500"
-                backdropImage.value = base + movieDetailsResponse.backdrop_path
-                posterImage.value = base + movieDetailsResponse.poster_path
+                val videosResponse: VideosResponse = movieRepository.getVideos(
+                    language = language,
+                    movie_id = movie.id
+                )
 
+                if (videosResponse.results.isNotEmpty()) {
+                    isTrailer.value = true
+                }
             }
         }
     }
@@ -120,5 +135,9 @@ class MovieDetailsFragmentViewModel @Inject constructor(
             favoritesRepository.deleteFavorites(favorites)
             favoritesMovieRepository.deleteFavoritesMovie(favoritesMovie)
         }
+    }
+
+    fun showPoster(show: Boolean) {
+        showPoster.value = show
     }
 }

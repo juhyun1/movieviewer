@@ -18,3 +18,13 @@ fun ImageView.loadImage(url: String) {
         .placeholder(R.drawable.placeholder)
         .into(this)
 }
+
+fun ImageView.loadThumbnail(key: String) {
+
+    val url = "https://img.youtube.com/vi/$key/sddefault.jpg"
+
+    Glide.with(this)
+        .load(url)
+        .placeholder(R.drawable.placeholder)
+        .into(this)
+}

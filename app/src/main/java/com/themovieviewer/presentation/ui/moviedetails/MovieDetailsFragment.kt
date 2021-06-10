@@ -2,12 +2,8 @@ package com.themovieviewer.presentation.ui.moviedetails
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.view.ScaleGestureDetector.SimpleOnScaleGestureListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -15,19 +11,22 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.youtube.player.YouTubeStandalonePlayer
 import com.themovieviewer.R
 import com.themovieviewer.data.DaoMapper
 import com.themovieviewer.data.vo.Favorites
 import com.themovieviewer.databinding.FragmentMovieDetailsBinding
+import com.themovieviewer.domain.model.Trailer
 import com.themovieviewer.presentation.BaseApplication
 import com.themovieviewer.presentation.paging.CreditsAdapter
 import com.themovieviewer.presentation.paging.MovieRecommendationsAdapter
-import com.themovieviewer.presentation.ui.main.MainFragmentDirections
+import com.themovieviewer.presentation.paging.VideosAdapter
 import com.themovieviewer.util.TAG
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class MovieDetailsFragment : Fragment() {
@@ -38,7 +37,10 @@ class MovieDetailsFragment : Fragment() {
     @Inject lateinit var creditsAdapter: CreditsAdapter
     @Inject lateinit var application: BaseApplication
     @Inject lateinit var movieRecommendationsAdapter: MovieRecommendationsAdapter
+    @Inject lateinit var videosAdapter: VideosAdapter
     @Inject lateinit var daoMapper: DaoMapper
+    private var mScaleGestureDetector: ScaleGestureDetector? = null
+    private var mScaleFactor = 1.0f
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -57,12 +59,16 @@ class MovieDetailsFragment : Fragment() {
 //        val _bind = FragmentMovieDetailsBinding.inflate(inflater, container, false)
         val dataBinding: FragmentMovieDetailsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_details, container, false)
         dataBinding.viewModel = movieDetailsFragmentViewModel
+        dataBinding.fragment = this
         dataBinding.lifecycleOwner = this
         _binding = dataBinding
         val rv: RecyclerView = dataBinding.root.findViewById(R.id.creditsRecyclerView)
         rv.adapter = creditsAdapter
         creditsAdapter.onItemClick = {
             Log.d(TAG, it.toString())
+            application.selectedPerson = it.id
+            val action = MovieDetailsFragmentDirections.actionMovieDetailsToPeopleDetails(it.id)
+            findNavController().navigate(action)
         }
 
         val recommendationRv: RecyclerView = dataBinding.root.findViewById(R.id.recommendationsRecyclerView)
@@ -76,6 +82,13 @@ class MovieDetailsFragment : Fragment() {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+        }
+
+        val videoRv: RecyclerView = dataBinding.root.findViewById(R.id.videoRecyclerView)
+        videoRv.adapter = videosAdapter
+        videosAdapter.onItemClick = {
+            Log.d(TAG, it.toString())
+            playTrailer(it)
         }
 
         val root: View = dataBinding.root
@@ -93,8 +106,40 @@ class MovieDetailsFragment : Fragment() {
             }
         }
 
-//        movieDetailsFragmentViewModel.init(args.movie)
+        lifecycleScope.launch {
+            movieDetailsFragmentViewModel.videoList.collectLatest { pagedData ->
+                videosAdapter.submitData(pagedData)
+            }
+        }
         return dataBinding.root
+    }
+
+    private fun playTrailer(trailer: Trailer) {
+//        trailer.let {
+//            val sendIntent = Intent(requireContext(), TrailerActivity::class.java)
+//            sendIntent.putExtra("trailer", movieDetailsFragmentViewModel.trailer)
+//            startActivity(sendIntent)
+//        }
+
+        trailer.let{
+            val intent = YouTubeStandalonePlayer.createVideoIntent(requireActivity(),
+                trailer.id,
+                trailer.key,
+                0,
+                true,
+                true
+            )
+            requireActivity().startActivity(intent)
+        }
+
+    }
+
+    fun clickOnPoster(view: View) {
+        if (view.tag == "thumbnailPoster") {
+            movieDetailsFragmentViewModel.showPoster(true)
+        } else {
+            movieDetailsFragmentViewModel.showPoster(false)
+        }
     }
 
     override fun onDestroyView() {

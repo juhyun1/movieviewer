@@ -7,4 +7,5 @@ import dagger.hilt.android.HiltAndroidApp
 @HiltAndroidApp
 class BaseApplication : Application() {
     var selectedMovie: Movie? = null
+    var selectedPerson: Int? = null
 }

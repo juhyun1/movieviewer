@@ -40,8 +40,8 @@ class MainFragment : Fragment() {
         val root: View = binding.root
         val fragmentList = ArrayList<Fragment>()
 
-        fragmentList.add(homeFragment)
         fragmentList.add(galleryFragment)
+        fragmentList.add(homeFragment)
         fragmentList.add(moviePopularFragment)
         fragmentList.add(slideshowFragment)
 
@@ -49,14 +49,11 @@ class MainFragment : Fragment() {
         binding.viewPager.adapter = MainFragmentAdapter(requireActivity(), fragmentList)
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text =
-                if (position == 0) {
-                    "Top Rated"
-                } else if (position == 1) {
-                    "Now Playing"
-                } else if (position == 2) {
-                    "Popular"
-                } else {
-                    "Favorite Movies"
+                when (position) {
+                    0 -> "Now Playing"
+                    1 -> "Top Rated"
+                    2 -> "Popular"
+                    else -> "Favorite Movies"
                 }
         }.attach()
         return root

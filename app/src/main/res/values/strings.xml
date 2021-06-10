@@ -11,17 +11,29 @@
     <string name="action_done">Done</string>
     <string name="action_top_billed_cast">Top Billed Cast</string>
     <string name="action_recommendations">Recommendations</string>
+    <string name="tv_video">Video</string>
     <string name="action_status">Status</string>
     <string name="action_original_language">Original Language</string>
     <string name="action_budget">Budget</string>
     <string name="action_revenue">Revenue</string>
     <string name="action_keywords">Keywords</string>
-
-
+    <string name="tv_personal_info">Personal Info</string>
+    <string name="tv_known_for">Known For</string>
+    <string name="tv_gender">Gender</string>
+    <string name="tv_birthday">Birthday</string>
+    <string name="tv_place_of_births">Place of Births</string>
+    <string name="tv_biography">Biography</string>
+    <string name="tv_acting">Acting</string>
+    <string name="tv_as">as</string>
     <string name="menu_main">Movie</string>
     <string name="menu_movie_details">Movie Details</string>
+    <string name="menu_people_details">People Details</string>
     <string name="menu_tv_show">TV Shows</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_Popular">Popular</string>
     <string name="menu_slideshow">Favorites Movies</string>
+
+
+
+
 </resources>

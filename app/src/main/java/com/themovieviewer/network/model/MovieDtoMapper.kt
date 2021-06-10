@@ -23,6 +23,25 @@ class MovieDtoMapper : DomainMapper<MovieDto, Movie> {
         )
     }
 
+    fun mapToDomainModel(model: PeopleMovieCreditsCastDto): Movie {
+        return Movie(
+            poster_path = model.poster_path,
+            adult = model.adult,
+            overview = model.overview,
+            release_date = model.release_date,
+            genre_ids = model.genre_ids,
+            id = model.id,
+            original_title = model.original_title,
+            original_language = model.original_language,
+            title = model.title,
+            backdrop_path = model.backdrop_path,
+            popularity = model.popularity,
+            vote_count = model.vote_count,
+            video = model.video,
+            vote_average = model.vote_average
+        )
+    }
+
     override fun mapFromDomainModel(domainModel: Movie): MovieDto {
         return MovieDto(
             poster_path = domainModel.poster_path,
@@ -43,6 +62,11 @@ class MovieDtoMapper : DomainMapper<MovieDto, Movie> {
     }
 
     fun toDomainList(initial: List<MovieDto>): List<Movie> {
+        return initial.map { mapToDomainModel(it) }
+    }
+
+    @JvmName("toDomainList1")
+    fun toDomainList(initial: List<PeopleMovieCreditsCastDto>): List<Movie> {
         return initial.map { mapToDomainModel(it) }
     }
 
