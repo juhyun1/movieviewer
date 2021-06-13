@@ -8,6 +8,7 @@ import androidx.paging.cachedIn
 import com.themovieviewer.data.vo.Favorites
 import com.themovieviewer.data.vo.FavoritesMovie
 import com.themovieviewer.network.model.MovieDtoMapper
+import com.themovieviewer.presentation.BaseApplication
 import com.themovieviewer.presentation.paging.NowPlayingDataSource
 import com.themovieviewer.repository.FavoritesMovieRepository
 import com.themovieviewer.repository.FavoritesRepository
@@ -18,6 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GalleryViewModel @Inject constructor(
+    private val baseApplication: BaseApplication,
     private val movieRepository: MovieRepository,
     private val movieDtoMapper: MovieDtoMapper
 ) : ViewModel() {
@@ -26,7 +28,7 @@ class GalleryViewModel @Inject constructor(
     var favoriteAddMode = false
 
     val nowPlayingList = Pager(PagingConfig(pageSize = 100)) {
-        NowPlayingDataSource(movieRepository, movieDtoMapper)
+        NowPlayingDataSource(movieRepository, movieDtoMapper, baseApplication.language)
     }.flow.cachedIn(viewModelScope)
 
     fun insertFavoriteMovie(favorites: Favorites, favoritesMovie: FavoritesMovie) {

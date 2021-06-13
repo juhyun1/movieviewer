@@ -21,6 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PeopleDetailsFragmentViewModel @Inject constructor(
+    private val baseApplication: BaseApplication,
     private val movieRepository: MovieRepository,
     private val movieDtoMapper: MovieDtoMapper,
     private var castCrewDtoMapper: CastCrewDtoMapper,
@@ -39,11 +40,11 @@ class PeopleDetailsFragmentViewModel @Inject constructor(
     val name: MutableLiveData<String> = MutableLiveData("")
 
     val movieList = Pager(PagingConfig(pageSize = 100)) {
-        PeopleMovieCreditsDataSource(movieRepository, movieDtoMapper, application.selectedPerson!!.toInt())
+        PeopleMovieCreditsDataSource(movieRepository, movieDtoMapper, application.selectedPerson!!.toInt(), baseApplication.language)
     }.flow.cachedIn(viewModelScope)
 
     val actingList = Pager(PagingConfig(pageSize = 100)) {
-        ActingDataSource(movieRepository, castCrewDtoMapper, application.selectedPerson!!.toInt())
+        ActingDataSource(movieRepository, castCrewDtoMapper, application.selectedPerson!!.toInt(), baseApplication.language)
     }.flow.cachedIn(viewModelScope)
 
     init {

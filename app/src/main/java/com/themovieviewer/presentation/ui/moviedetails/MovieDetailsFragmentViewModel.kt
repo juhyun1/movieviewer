@@ -10,7 +10,6 @@ import androidx.paging.cachedIn
 import com.themovieviewer.data.vo.Favorites
 import com.themovieviewer.data.vo.FavoritesMovie
 import com.themovieviewer.domain.model.Movie
-import com.themovieviewer.domain.model.Trailer
 import com.themovieviewer.network.model.MovieDetailsResponse
 import com.themovieviewer.network.model.MovieDtoMapper
 import com.themovieviewer.network.model.VideosDtoMapper
@@ -29,6 +28,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MovieDetailsFragmentViewModel @Inject constructor(
+    private val baseApplication: BaseApplication,
     private val movieRepository: MovieRepository,
     private val movieDtoMapper: MovieDtoMapper,
     private val videosDtoMapper: VideosDtoMapper,
@@ -53,15 +53,15 @@ class MovieDetailsFragmentViewModel @Inject constructor(
     val isTrailer: MutableLiveData<Boolean> = MutableLiveData(false)
     val showPoster: MutableLiveData<Boolean> = MutableLiveData(false)
     val creditsList = Pager(PagingConfig(pageSize = 100)) {
-        CreditsDataSource(movieRepository, movieDtoMapper, application.selectedMovie!!.id)
+        CreditsDataSource(movieRepository, movieDtoMapper, application.selectedMovie!!.id, baseApplication.language)
     }.flow.cachedIn(viewModelScope)
 
     val movieList = Pager(PagingConfig(pageSize = 100)) {
-        RecommendationsDataSource(movieRepository, movieDtoMapper, application.selectedMovie!!.id)
+        RecommendationsDataSource(movieRepository, movieDtoMapper, application.selectedMovie!!.id, baseApplication.language)
     }.flow.cachedIn(viewModelScope)
 
     val videoList = Pager(PagingConfig(pageSize = 100)) {
-        VideoDataSource(movieRepository, videosDtoMapper, application.selectedMovie!!.id)
+        VideoDataSource(movieRepository, videosDtoMapper, application.selectedMovie!!.id, baseApplication.language)
     }.flow.cachedIn(viewModelScope)
 
     init {
@@ -69,12 +69,11 @@ class MovieDetailsFragmentViewModel @Inject constructor(
     }
 
     fun init(movie: Movie?) {
-        val language = "ko-KR"
         viewModelScope.launch {
             // Coroutine that will be canceled when the ViewModel is cleared.
             movie?.let {
                 val movieDetailsResponse: MovieDetailsResponse = movieRepository.getMovieDetails(
-                    language = language,
+                    language = baseApplication.language,
                     movie_id = movie.id
                 )
 
@@ -112,7 +111,7 @@ class MovieDetailsFragmentViewModel @Inject constructor(
                 }
 
                 val videosResponse: VideosResponse = movieRepository.getVideos(
-                    language = language,
+                    language = baseApplication.language,
                     movie_id = movie.id
                 )
 

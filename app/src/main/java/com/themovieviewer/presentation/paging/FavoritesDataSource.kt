@@ -9,6 +9,7 @@ import com.themovieviewer.domain.model.Movie
 import com.themovieviewer.repository.FavoritesMovieRepository
 import com.themovieviewer.repository.FavoritesRepository
 import com.themovieviewer.util.TAG
+import java.util.stream.Collectors
 
 class FavoritesDataSource(private val favoritesRepository: FavoritesRepository, private val favoritesMovieRepository: FavoritesMovieRepository, private val daoMapper: DaoMapper) : PagingSource<Int, Movie>() {
 

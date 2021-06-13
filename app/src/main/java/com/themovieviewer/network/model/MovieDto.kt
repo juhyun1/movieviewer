@@ -15,4 +15,17 @@ data class MovieDto(
     val vote_count: Int,
     val video: Boolean,
     val vote_average: Float
-)
+
+
+) {
+    fun compareTo(dto: MovieDto): Int {
+        return if (this.release_date == null || this.release_date.isEmpty()) {
+            -1
+        } else if (dto.release_date == null || dto.release_date.isEmpty()) {
+            1
+        } else {
+            val b = dto.release_date.substringBefore("-", dto.release_date).toInt()
+            release_date.substringBefore("-", release_date).toInt().compareTo(b) * -1
+        }
+    }
+}

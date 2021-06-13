@@ -17,7 +17,18 @@ data class PeopleMovieCreditsCastDto (
     val backdrop_path: String?,
     val overview: String,
     val poster_path: String?
-)
+) {
+    fun compareTo(dto: PeopleMovieCreditsCastDto): Int {
+        return if (this.release_date == null || this.release_date.isEmpty()) {
+            -1
+        } else if (dto.release_date == null || dto.release_date.isEmpty()) {
+            1
+        } else {
+            val b = dto.release_date.substringBefore("-", dto.release_date).toInt()
+            release_date.substringBefore("-", release_date).toInt().compareTo(b) * -1
+        }
+    }
+}
 
 data class PeopleMovieCreditsCrewDto (
     val id: Int,

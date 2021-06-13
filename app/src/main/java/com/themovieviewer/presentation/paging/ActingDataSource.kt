@@ -8,8 +8,9 @@ import com.themovieviewer.network.model.CastCrewDtoMapper
 import com.themovieviewer.network.response.PeopleMovieCreditsResponse
 import com.themovieviewer.repository.MovieRepository
 import com.themovieviewer.util.TAG
+import java.util.stream.Collectors
 
-class ActingDataSource(private val movieRepository: MovieRepository, private val castCrewDtoMapper: CastCrewDtoMapper, private val personId: Int, private val language: String = "ko-KR") : PagingSource<Int, CastCrew>() {
+class ActingDataSource(private val movieRepository: MovieRepository, private val castCrewDtoMapper: CastCrewDtoMapper, private val personId: Int, private val language: String) : PagingSource<Int, CastCrew>() {
 
     override fun getRefreshKey(state: PagingState<Int, CastCrew>): Int? {
         TODO("Not yet implemented")
@@ -22,12 +23,16 @@ class ActingDataSource(private val movieRepository: MovieRepository, private val
                 person_id = personId,
             )
 
-            for (cast in peopleMovieCreditsResponse.cast) {
-                Log.d(TAG, cast.toString())
-            }
+//            for (cast in peopleMovieCreditsResponse.cast) {
+//                Log.d(TAG, cast.toString())
+//            }
+
+            val cast = peopleMovieCreditsResponse.cast.stream().sorted { o1, o2 ->
+                o1.compareTo(o2)
+            }.collect(Collectors.toList())
 
             LoadResult.Page(
-                data = castCrewDtoMapper.toDomainList(peopleMovieCreditsResponse.cast),
+                data = castCrewDtoMapper.toDomainList(cast),
                 prevKey = null,
                 nextKey = null
             )

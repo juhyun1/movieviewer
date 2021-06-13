@@ -9,4 +9,28 @@ data class VideosDto (
     val site: String,
     val size: Int,
     val type: String,
-)
+) {
+    fun compareTo(dto: VideosDto): Int {
+        return when {
+            this.type.isEmpty() -> {
+                1
+            }
+            dto.type.isEmpty() -> {
+                1
+            }
+            else -> {
+                when {
+                    type == "Trailer" -> {
+                        -1
+                    }
+                    dto.type == "Trailer" -> {
+                        1
+                    }
+                    else -> {
+                        1
+                    }
+                }
+            }
+        }
+    }
+}

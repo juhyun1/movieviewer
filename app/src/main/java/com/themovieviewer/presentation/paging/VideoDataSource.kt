@@ -8,8 +8,9 @@ import com.themovieviewer.network.model.VideosDtoMapper
 import com.themovieviewer.network.response.VideosResponse
 import com.themovieviewer.repository.MovieRepository
 import com.themovieviewer.util.TAG
+import java.util.stream.Collectors
 
-class VideoDataSource(private val movieRepository: MovieRepository, private val videosDtoMapper: VideosDtoMapper, private val movieId: Int, private val language: String = "ko-KR") : PagingSource<Int, Trailer>() {
+class VideoDataSource(private val movieRepository: MovieRepository, private val videosDtoMapper: VideosDtoMapper, private val movieId: Int, private val language: String) : PagingSource<Int, Trailer>() {
 
     override fun getRefreshKey(state: PagingState<Int, Trailer>): Int? {
         TODO("Not yet implemented")
@@ -26,8 +27,10 @@ class VideoDataSource(private val movieRepository: MovieRepository, private val 
                 Log.d(TAG, movie.toString())
             }
 
+            val list = videosResponse.results.stream().sorted { o1, o2 -> o1.compareTo(o2) }.collect(Collectors.toList())
+
             LoadResult.Page(
-                data = videosDtoMapper.toDomainList(videosResponse.results),
+                data = videosDtoMapper.toDomainList(list),
                 prevKey = null,
                 nextKey = null
             )

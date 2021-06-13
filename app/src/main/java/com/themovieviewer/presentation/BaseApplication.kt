@@ -8,4 +8,5 @@ import dagger.hilt.android.HiltAndroidApp
 class BaseApplication : Application() {
     var selectedMovie: Movie? = null
     var selectedPerson: Int? = null
+    var language: String = "en-US"
 }

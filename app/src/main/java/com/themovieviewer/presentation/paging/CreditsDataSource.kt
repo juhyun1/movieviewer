@@ -9,7 +9,7 @@ import com.themovieviewer.network.response.MovieCreditsResponse
 import com.themovieviewer.repository.MovieRepository
 import com.themovieviewer.util.TAG
 
-class CreditsDataSource(private val movieRepository: MovieRepository, private val movieDtoMapper: MovieDtoMapper, private val movieId: Int, private val language: String = "ko-KR") : PagingSource<Int, CreditsCastCrewDto>() {
+class CreditsDataSource(private val movieRepository: MovieRepository, private val movieDtoMapper: MovieDtoMapper, private val movieId: Int, private val language: String) : PagingSource<Int, CreditsCastCrewDto>() {
 
     override fun getRefreshKey(state: PagingState<Int, CreditsCastCrewDto>): Int? {
         TODO("Not yet implemented")
@@ -21,7 +21,7 @@ class CreditsDataSource(private val movieRepository: MovieRepository, private va
                 language = language,
                 movie_id = movieId
             )
-            Log.d(TAG, "Name : " + movieCreditsResponse.cast[0].name)
+//            Log.d(TAG, "Name : " + movieCreditsResponse.cast[0].name)
 //            val peopleDetailsResponse: PeopleDetailsResponse = movieRepository.getPeopleDetails(
 //                language = language,
 //                person_id = movieCreditsResponse.cast[0].id
