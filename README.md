@@ -32,8 +32,8 @@
 
 ## 오픈소스 라이브러리
 - **Glide** : 이미지를 다운로드하고 캐쉬 하기 위해서 사용 
-- **Retrofit2** : Itunes api를 사용하여 데이터를 얻기 위해서 사용.
-- **Exoplayer**: preview 음악을 재생하기 위해서 사용
+- **Retrofit2** : Open Api를 사용하여 데이터를 얻기 위해서 사용.
+
 
 ## MovieRepositoryImpl.kt 파일에 API Key를 넣으세요.
 ## https://www.themoviedb.org/documentation/api
