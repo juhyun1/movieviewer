@@ -362,7 +362,7 @@
                 app:layout_constraintWidth_percent="0.8"
                 app:showPoster="@{viewModel.showPoster}"
                 app:imageFromUrl="@{viewModel.posterImage}"
-                android:onClick="@{fragment::clickOnPoster}"
+                android:onClick="@{fragment.clickOnPoster}"
                 android:visibility="invisible"
                 android:src="@drawable/test"
                 tools:src="@drawable/test"

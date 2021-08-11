@@ -9,7 +9,6 @@ import com.themovieviewer.domain.model.Movie
 import com.themovieviewer.repository.FavoritesMovieRepository
 import com.themovieviewer.repository.FavoritesRepository
 import com.themovieviewer.util.TAG
-import java.util.stream.Collectors
 
 class FavoritesDataSource(private val favoritesRepository: FavoritesRepository, private val favoritesMovieRepository: FavoritesMovieRepository, private val daoMapper: DaoMapper) : PagingSource<Int, Movie>() {
 
@@ -23,7 +22,8 @@ class FavoritesDataSource(private val favoritesRepository: FavoritesRepository, 
             val favoritesList = favoritesRepository.getFavorites()
 
             val list: ArrayList<FavoritesMovie> = ArrayList()
-            for (favorite in favoritesList) {
+
+            favoritesList.forEach { favorite ->
                 list.add(favoritesMovieRepository.getFavoritesMovies(favorite.kindId))
             }
 

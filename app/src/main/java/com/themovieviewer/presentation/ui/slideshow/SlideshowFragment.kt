@@ -80,10 +80,20 @@ class SlideshowFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentSlideshowBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
+        initAdapter()
+
+        lifecycleScope.launch() {
+            slideshowViewModel.favoritesList.collectLatest { pagedData ->
+                oneRowAdapter.submitData(pagedData)
+            }
+        }
+        return binding.root
+    }
+
+    private fun initAdapter() {
         binding.favoritesList.adapter = oneRowAdapter
         oneRowAdapter.useTracker = false
 
@@ -101,13 +111,6 @@ class SlideshowFragment : Fragment() {
                 }
             }
         }
-
-        lifecycleScope.launch() {
-            slideshowViewModel.favoritesList.collectLatest { pagedData ->
-                oneRowAdapter.submitData(pagedData)
-            }
-        }
-        return root
     }
 
     override fun onDestroyView() {

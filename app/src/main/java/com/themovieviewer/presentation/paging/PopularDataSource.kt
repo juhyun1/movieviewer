@@ -24,9 +24,6 @@ class PopularDataSource(private val movieRepository: MovieRepository, private va
                 language = language,
                 page = requestPage
             )
-//            for (movie in movieListResponse.results) {
-//                Log.d(TAG, movie.toString())
-//            }
 
             LoadResult.Page(
                 data = movieDtoMapper.toDomainList(movieListResponse.results),

@@ -68,7 +68,7 @@ class MovieDetailsFragmentViewModel @Inject constructor(
         init(application.selectedMovie)
     }
 
-    fun init(movie: Movie?) {
+    private fun init(movie: Movie?) {
         viewModelScope.launch {
             // Coroutine that will be canceled when the ViewModel is cleared.
             movie?.let {

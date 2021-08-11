@@ -31,6 +31,7 @@ class HomeFragment : Fragment() {
     @Inject lateinit var application: BaseApplication
     @Inject lateinit var daoMapper: DaoMapper
 
+    //region recyclerview-selection
     private val tracker by lazy {
         with(binding) {
             SelectionTracker.Builder(
@@ -65,6 +66,7 @@ class HomeFragment : Fragment() {
             }
         }
     }
+    //endregion
 
     private val binding get() = _binding!!
 
@@ -72,9 +74,20 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentMovieBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        initAdapter()
+
+        lifecycleScope.launch {
+            homeViewModel.topRatedList.collectLatest { pagedData ->
+                oneRowAdapter.submitData(pagedData)
+            }
+        }
+        return root
+    }
+    private fun initAdapter() {
 
         binding.movieList.adapter = oneRowAdapter
         oneRowAdapter.useTracker = false
@@ -92,15 +105,7 @@ class HomeFragment : Fragment() {
                 }
             }
         }
-
-        lifecycleScope.launch {
-            homeViewModel.topRatedList.collectLatest { pagedData ->
-                oneRowAdapter.submitData(pagedData)
-            }
-        }
-        return root
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

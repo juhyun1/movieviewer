@@ -8,7 +8,6 @@ import com.themovieviewer.network.model.MovieDtoMapper
 import com.themovieviewer.network.response.PeopleMovieCreditsResponse
 import com.themovieviewer.repository.MovieRepository
 import com.themovieviewer.util.TAG
-import java.util.stream.Collectors
 
 class PeopleMovieCreditsDataSource(private val movieRepository: MovieRepository, private val movieDtoMapper: MovieDtoMapper, private val personId: Int, private val language: String) : PagingSource<Int, Movie>() {
 
@@ -23,11 +22,7 @@ class PeopleMovieCreditsDataSource(private val movieRepository: MovieRepository,
                 person_id = personId,
             )
 
-            for (movie in peopleMovieCreditsResponse.cast) {
-                Log.d(TAG, movie.toString())
-            }
-
-            val cast = peopleMovieCreditsResponse.cast.stream().sorted { o1, o2 -> o1.compareTo(o2)}.collect(Collectors.toList())
+            val cast = peopleMovieCreditsResponse.cast.sortedWith { o1, o2 -> o1.compareTo(o2)}
 
             LoadResult.Page(
                 data = movieDtoMapper.toDomainList(cast),

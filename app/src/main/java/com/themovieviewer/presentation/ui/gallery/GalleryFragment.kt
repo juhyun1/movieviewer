@@ -31,6 +31,7 @@ class GalleryFragment : Fragment() {
     @Inject lateinit var application: BaseApplication
     @Inject lateinit var daoMapper: DaoMapper
 
+    //region recyclerview-selection
     private val tracker by lazy {
         with(binding) {
             SelectionTracker.Builder(
@@ -65,6 +66,7 @@ class GalleryFragment : Fragment() {
             }
         }
     }
+    //endregion
 
     private val binding get() = _binding!!
 
@@ -74,8 +76,18 @@ class GalleryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMovieBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
+        initAdapter()
+
+        lifecycleScope.launch {
+            galleryViewModel.nowPlayingList.collectLatest { pagedData ->
+                oneRowAdapter.submitData(pagedData)
+            }
+        }
+        return binding.root
+    }
+
+    private fun initAdapter() {
         binding.movieList.adapter = oneRowAdapter
         oneRowAdapter.useTracker = false
 
@@ -85,20 +97,14 @@ class GalleryFragment : Fragment() {
             oneRowAdapter.onItemClick = {
                 application.selectedMovie = it
                 try {
-                    val action = MainFragmentDirections.actionMainFragmentToMovieDetailsFragment(it, false)
+                    val action =
+                        MainFragmentDirections.actionMainFragmentToMovieDetailsFragment(it, false)
                     findNavController().navigate(action)
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
         }
-
-        lifecycleScope.launch {
-            galleryViewModel.nowPlayingList.collectLatest { pagedData ->
-                oneRowAdapter.submitData(pagedData)
-            }
-        }
-        return root
     }
 
     override fun onDestroyView() {

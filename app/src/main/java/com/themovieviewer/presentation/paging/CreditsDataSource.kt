@@ -21,12 +21,6 @@ class CreditsDataSource(private val movieRepository: MovieRepository, private va
                 language = language,
                 movie_id = movieId
             )
-//            Log.d(TAG, "Name : " + movieCreditsResponse.cast[0].name)
-//            val peopleDetailsResponse: PeopleDetailsResponse = movieRepository.getPeopleDetails(
-//                language = language,
-//                person_id = movieCreditsResponse.cast[0].id
-//            )
-//            Log.d(TAG, "Name : " + peopleDetailsResponse.name + " birthday " + peopleDetailsResponse.birthday)
 
             LoadResult.Page(
                 data = movieCreditsResponse.cast,

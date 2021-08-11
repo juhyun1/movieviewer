@@ -1,12 +1,8 @@
 package com.themovieviewer.presentation.ui.moviedetails
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.view.ScaleGestureDetector.SimpleOnScaleGestureListener
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -25,12 +21,8 @@ import com.themovieviewer.presentation.paging.MovieRecommendationsAdapter
 import com.themovieviewer.presentation.paging.VideosAdapter
 import com.themovieviewer.util.TAG
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.net.HttpURLConnection
-import java.net.URL
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -44,37 +36,12 @@ class MovieDetailsFragment : Fragment() {
     @Inject lateinit var movieRecommendationsAdapter: MovieRecommendationsAdapter
     @Inject lateinit var videosAdapter: VideosAdapter
     @Inject lateinit var daoMapper: DaoMapper
-    private var mScaleGestureDetector: ScaleGestureDetector? = null
-    private var mScaleFactor = 1.0f
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-
-        CoroutineScope(IO).launch {
-            // do something
-        }
-
-    }
-
-    object ImageLoader {
-        fun loadImage(url: String, completed: (Bitmap?) -> Unit) {
-            return try {
-                val url = URL(url);
-                val connection = url.openConnection() as HttpURLConnection
-                connection.setDoInput(true);
-                connection.connect();
-                val input = connection.getInputStream();
-                val bitmap = BitmapFactory.decodeStream(input);
-                completed(bitmap)
-            } catch (e: java.lang.Exception) {
-                e.printStackTrace()
-            }
-        }
     }
 
     override fun onCreateView(
@@ -82,42 +49,13 @@ class MovieDetailsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-//        val _bind = FragmentMovieDetailsBinding.inflate(inflater, container, false)
-        val dataBinding: FragmentMovieDetailsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_details, container, false)
-        dataBinding.viewModel = movieDetailsFragmentViewModel
-        dataBinding.fragment = this
-        dataBinding.lifecycleOwner = this
-        _binding = dataBinding
-        val rv: RecyclerView = dataBinding.root.findViewById(R.id.creditsRecyclerView)
-        rv.adapter = creditsAdapter
-        creditsAdapter.onItemClick = {
-            Log.d(TAG, it.toString())
-            application.selectedPerson = it.id
-            val action = MovieDetailsFragmentDirections.actionMovieDetailsToPeopleDetails(it.id)
-            findNavController().navigate(action)
-        }
+        _binding = FragmentMovieDetailsBinding.inflate(inflater, container, false)
+        binding.viewModel = movieDetailsFragmentViewModel
+        binding.fragment = this
+        binding.lifecycleOwner = this
 
-        val recommendationRv: RecyclerView = dataBinding.root.findViewById(R.id.recommendationsRecyclerView)
-        recommendationRv.adapter = movieRecommendationsAdapter
-        movieRecommendationsAdapter.onItemClick = {
-            Log.d(TAG, it.toString())
-            application.selectedMovie = it
-            try {
-                val action = MovieDetailsFragmentDirections.actionMovieDetailsToMovieDetails(it, false)
-                findNavController().navigate(action)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
+        initAdapter()
 
-        val videoRv: RecyclerView = dataBinding.root.findViewById(R.id.videoRecyclerView)
-        videoRv.adapter = videosAdapter
-        videosAdapter.onItemClick = {
-            Log.d(TAG, it.toString())
-            playTrailer(it)
-        }
-
-        val root: View = dataBinding.root
         Log.d(TAG, "Selected Movie : " + args.movie.toString())
 
         lifecycleScope.launch {
@@ -137,16 +75,41 @@ class MovieDetailsFragment : Fragment() {
                 videosAdapter.submitData(pagedData)
             }
         }
-        return dataBinding.root
+        return binding.root
+    }
+
+    private fun initAdapter() {
+        val rv: RecyclerView = binding.creditsRecyclerView
+        rv.adapter = creditsAdapter
+        creditsAdapter.onItemClick = {
+            Log.d(TAG, it.toString())
+            application.selectedPerson = it.id
+            val action = MovieDetailsFragmentDirections.actionMovieDetailsToPeopleDetails(it.id)
+            findNavController().navigate(action)
+        }
+
+        val recommendationRv: RecyclerView = binding.recommendationsRecyclerView
+        recommendationRv.adapter = movieRecommendationsAdapter
+        movieRecommendationsAdapter.onItemClick = {
+            Log.d(TAG, it.toString())
+            application.selectedMovie = it
+            try {
+                val action = MovieDetailsFragmentDirections.actionMovieDetailsToMovieDetails(it, false)
+                findNavController().navigate(action)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        val videoRv: RecyclerView = binding.videoRecyclerView
+        videoRv.adapter = videosAdapter
+        videosAdapter.onItemClick = {
+            Log.d(TAG, it.toString())
+            playTrailer(it)
+        }
     }
 
     private fun playTrailer(trailer: Trailer) {
-//        trailer.let {
-//            val sendIntent = Intent(requireContext(), TrailerActivity::class.java)
-//            sendIntent.putExtra("trailer", movieDetailsFragmentViewModel.trailer)
-//            startActivity(sendIntent)
-//        }
-
         trailer.let{
             val intent = YouTubeStandalonePlayer.createVideoIntent(requireActivity(),
                 trailer.id,

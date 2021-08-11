@@ -8,7 +8,6 @@ import com.themovieviewer.network.model.VideosDtoMapper
 import com.themovieviewer.network.response.VideosResponse
 import com.themovieviewer.repository.MovieRepository
 import com.themovieviewer.util.TAG
-import java.util.stream.Collectors
 
 class VideoDataSource(private val movieRepository: MovieRepository, private val videosDtoMapper: VideosDtoMapper, private val movieId: Int, private val language: String) : PagingSource<Int, Trailer>() {
 
@@ -27,7 +26,7 @@ class VideoDataSource(private val movieRepository: MovieRepository, private val 
                 Log.d(TAG, movie.toString())
             }
 
-            val list = videosResponse.results.stream().sorted { o1, o2 -> o1.compareTo(o2) }.collect(Collectors.toList())
+            val list = videosResponse.results.sortedWith { o1, o2 -> o1.compareTo(o2) }
 
             LoadResult.Page(
                 data = videosDtoMapper.toDomainList(list),

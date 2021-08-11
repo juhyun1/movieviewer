@@ -37,6 +37,7 @@ class MoviePopularFragment : Fragment() {
     @Inject
     lateinit var daoMapper: DaoMapper
 
+    //region recyclerview-selection
     private val tracker by lazy {
         with(binding) {
             SelectionTracker.Builder(
@@ -71,6 +72,7 @@ class MoviePopularFragment : Fragment() {
             }
         }
     }
+    //endregion
 
     private val binding get() = _binding!!
 
@@ -78,10 +80,20 @@ class MoviePopularFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentMovieBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
+        initAdapter()
+
+        lifecycleScope.launch {
+            moviePopularViewModel.movieList.collectLatest { pagedData ->
+                oneRowAdapter.submitData(pagedData)
+            }
+        }
+        return binding.root
+    }
+
+    private fun initAdapter() {
         binding.movieList.adapter = oneRowAdapter
         oneRowAdapter.useTracker = false
 
@@ -98,15 +110,7 @@ class MoviePopularFragment : Fragment() {
                 }
             }
         }
-
-        lifecycleScope.launch {
-            moviePopularViewModel.movieList.collectLatest { pagedData ->
-                oneRowAdapter.submitData(pagedData)
-            }
-        }
-        return root
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

@@ -24,10 +24,6 @@ class NowPlayingDataSource(private val movieRepository: MovieRepository, private
                 page = requestPage
             )
 
-//            for (movie in movieListResponse.results) {
-//                Log.d(TAG, movie.toString())
-//            }
-
             LoadResult.Page(
                 data = movieDtoMapper.toDomainList(movieListResponse.results),
                 prevKey = if (nextPageNumber > 0) nextPageNumber - 1 else null,

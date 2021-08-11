@@ -18,17 +18,12 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainFragment : Fragment() {
 
-    private val mainViewModel: MainFragmentViewModel by viewModels()
     private var _binding: FragmentMainBinding? = null
     @Inject lateinit var homeFragment: HomeFragment
     @Inject lateinit var galleryFragment: GalleryFragment
     @Inject lateinit var slideshowFragment: SlideshowFragment
     @Inject lateinit var moviePopularFragment: MoviePopularFragment
-//    @Inject
-//    lateinit var topRatedAdapter: TopRatedAdapter
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -37,14 +32,12 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-        val fragmentList = ArrayList<Fragment>()
 
+        val fragmentList = ArrayList<Fragment>()
         fragmentList.add(galleryFragment)
         fragmentList.add(homeFragment)
         fragmentList.add(moviePopularFragment)
         fragmentList.add(slideshowFragment)
-
 
         binding.viewPager.adapter = MainFragmentAdapter(requireActivity(), fragmentList)
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
@@ -56,13 +49,11 @@ class MainFragment : Fragment() {
                     else -> "Favorite Movies"
                 }
         }.attach()
-        return root
+        return binding.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        homeFragment.onDestroyView()
-        galleryFragment.onDestroyView()
     }
 }
