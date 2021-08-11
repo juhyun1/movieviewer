@@ -36,5 +36,7 @@
 - **Retrofit2** : Open Api를 사용하여 데이터를 얻기 위해서 사용.
 
 
-## MovieRepositoryImpl.kt 파일에 API Key를 넣으세요.
-## https://www.themoviedb.org/documentation/api
+![image1](./image1.jpg)
+![image2_](./image2_.jpg)
+![image3](./image3.jpg)
+![image4](./image4.jpg)
