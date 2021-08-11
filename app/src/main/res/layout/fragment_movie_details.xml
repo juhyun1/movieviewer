@@ -8,7 +8,7 @@
             type="com.themovieviewer.presentation.ui.moviedetails.MovieDetailsFragment" />
         <variable
             name="viewModel"
-            type="com.themovieviewer.presentation.ui.moviedetails.MovieDetailsFragmentViewModel" />
+            type="com.themovieviewer.domain.model.MovieDetail" />
     </data>
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:scaleType="fitXY"
-                app:imageFromUrl="@{viewModel.backdropImage}"
+                app:loadImage="@{viewModel.backdropImage}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
@@ -57,7 +57,7 @@
                 android:layout_width="100dp"
                 android:layout_height="150dp"
                 android:tag="thumbnailPoster"
-                app:imageFromUrl="@{viewModel.posterImage}"
+                app:loadImage="@{viewModel.posterImage}"
                 android:onClick="@{fragment::clickOnPoster}"
                 tools:src="@drawable/test"
                 app:layout_constraintStart_toStartOf="parent"
@@ -109,9 +109,9 @@
                 android:paddingStart="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.runtime}"
                 tools:text="1h 50m"
                 app:layout_constraintHorizontal_chainStyle="packed"
+                app:runtime="@{viewModel.runtime}"
                 android:textSize="20sp"
                 android:textColor="@android:color/white"
                 app:layout_constraintTop_toTopOf="@+id/releaseDate"
@@ -133,9 +133,9 @@
                 android:id="@+id/voteAverage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.voteAverage}"
                 tools:text="Drama"
                 android:textColor="@android:color/white"
+                app:vote_average="@{viewModel.voteAverage}"
                 app:layout_constraintTop_toBottomOf="@+id/genres"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
@@ -324,7 +324,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.budget}"
+                app:budget="@{viewModel.budget}"
                 tools:text="Budget"
                 android:textColor="@android:color/black"
                 app:layout_constraintTop_toBottomOf="@+id/tvBudget"
@@ -346,8 +346,8 @@
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.revenue}"
                 tools:text="Revenue"
+                app:revenue="@{viewModel.revenue}"
                 android:textColor="@android:color/black"
                 app:layout_constraintTop_toBottomOf="@+id/tvRevenue"
                 app:layout_constraintStart_toStartOf="@+id/startGuideLine"/>
@@ -361,8 +361,8 @@
                 android:tag="originalPosterView"
                 app:layout_constraintWidth_percent="0.8"
                 app:showPoster="@{viewModel.showPoster}"
-                app:imageFromUrl="@{viewModel.posterImage}"
-                android:onClick="@{fragment.clickOnPoster}"
+                app:loadImage="@{viewModel.posterImage}"
+                android:onClick="@{fragment::clickOnPoster}"
                 android:visibility="invisible"
                 android:src="@drawable/test"
                 tools:src="@drawable/test"

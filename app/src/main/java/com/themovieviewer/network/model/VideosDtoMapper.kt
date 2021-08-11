@@ -1,6 +1,5 @@
 package com.themovieviewer.network.model
 
-import com.themovieviewer.domain.model.Movie
 import com.themovieviewer.domain.model.Trailer
 import com.themovieviewer.domain.util.DomainMapper
 

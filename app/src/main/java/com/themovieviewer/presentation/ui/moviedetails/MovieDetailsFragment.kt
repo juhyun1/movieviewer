@@ -28,7 +28,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MovieDetailsFragment : Fragment() {
 
-    private val movieDetailsFragmentViewModel: MovieDetailsFragmentViewModel by viewModels()
+    private val viewModel: MovieDetailsFragmentViewModel by viewModels()
     private var _binding: FragmentMovieDetailsBinding? = null
     private val args by navArgs<MovieDetailsFragmentArgs>()
     @Inject lateinit var creditsAdapter: CreditsAdapter
@@ -50,31 +50,15 @@ class MovieDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMovieDetailsBinding.inflate(inflater, container, false)
-        binding.viewModel = movieDetailsFragmentViewModel
         binding.fragment = this
         binding.lifecycleOwner = this
 
         initAdapter()
+        initObserve()
 
         Log.d(TAG, "Selected Movie : " + args.movie.toString())
 
-        lifecycleScope.launch {
-            movieDetailsFragmentViewModel.creditsList.collectLatest { pagedData ->
-                creditsAdapter.submitData(pagedData)
-            }
-        }
 
-        lifecycleScope.launch {
-            movieDetailsFragmentViewModel.movieList.collectLatest { pagedData ->
-                movieRecommendationsAdapter.submitData(pagedData)
-            }
-        }
-
-        lifecycleScope.launch {
-            movieDetailsFragmentViewModel.videoList.collectLatest { pagedData ->
-                videosAdapter.submitData(pagedData)
-            }
-        }
         return binding.root
     }
 
@@ -109,6 +93,32 @@ class MovieDetailsFragment : Fragment() {
         }
     }
 
+    private fun initObserve() {
+        lifecycleScope.launch {
+            viewModel.creditsList.collectLatest { pagedData ->
+                creditsAdapter.submitData(pagedData)
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.movieList.collectLatest { pagedData ->
+                movieRecommendationsAdapter.submitData(pagedData)
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.videoList.collectLatest { pagedData ->
+                videosAdapter.submitData(pagedData)
+            }
+        }
+
+        viewModel.initDataDone.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.viewModel = viewModel.movieDetail
+                binding.executePendingBindings()
+            }
+        }
+    }
     private fun playTrailer(trailer: Trailer) {
         trailer.let{
             val intent = YouTubeStandalonePlayer.createVideoIntent(requireActivity(),
@@ -125,9 +135,9 @@ class MovieDetailsFragment : Fragment() {
 
     fun clickOnPoster(view: View) {
         if (view.tag == "thumbnailPoster") {
-            movieDetailsFragmentViewModel.showPoster(true)
+            viewModel.showPoster(true)
         } else {
-            movieDetailsFragmentViewModel.showPoster(false)
+            viewModel.showPoster(false)
         }
     }
 
@@ -147,7 +157,7 @@ class MovieDetailsFragment : Fragment() {
                 val favorite = Favorites(name = it.original_title, kind = "movie", kindId = it.id, date = it.release_date)
                 val favoriteMovie = daoMapper.mapFromDomainModel(it)
 
-                movieDetailsFragmentViewModel.insertFavoriteMovie(favorite, favoriteMovie)
+                viewModel.insertFavoriteMovie(favorite, favoriteMovie)
             }
             true
         }
@@ -157,7 +167,7 @@ class MovieDetailsFragment : Fragment() {
                 val favorite = Favorites(name = it.original_title, kind = "movie", kindId = it.id, date = it.release_date)
                 val favoriteMovie = daoMapper.mapFromDomainModel(it)
 
-                movieDetailsFragmentViewModel.deleteFavoriteMovie(favorite, favoriteMovie)
+                viewModel.deleteFavoriteMovie(favorite, favoriteMovie)
                 Log.d(TAG, "Inserted Favorite Movie to DB")
             }
             true

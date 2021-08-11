@@ -2,28 +2,20 @@ package com.themovieviewer.presentation.ui.people
 
 import android.os.Bundle
 import android.util.Log
-import android.view.*
-import androidx.databinding.DataBindingUtil
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.RecyclerView
-import com.themovieviewer.R
 import com.themovieviewer.data.DaoMapper
-import com.themovieviewer.data.vo.Favorites
-import com.themovieviewer.databinding.FragmentMovieDetailsBinding
 import com.themovieviewer.databinding.FragmentPeopleBinding
-import com.themovieviewer.network.model.CastCrewDtoMapper
+import com.themovieviewer.network.response.PeopleMapper
 import com.themovieviewer.presentation.BaseApplication
 import com.themovieviewer.presentation.paging.ActingAdapter
-import com.themovieviewer.presentation.paging.ActingDataSource
-import com.themovieviewer.presentation.paging.CreditsAdapter
 import com.themovieviewer.presentation.paging.MovieRecommendationsAdapter
-import com.themovieviewer.presentation.ui.moviedetails.MovieDetailsFragmentArgs
-import com.themovieviewer.presentation.ui.moviedetails.MovieDetailsFragmentDirections
-import com.themovieviewer.presentation.ui.moviedetails.MovieDetailsFragmentViewModel
 import com.themovieviewer.util.TAG
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -33,7 +25,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class PeopleDetailsFragment : Fragment() {
 
-    private val peopleDetailsFragmentViewModel: PeopleDetailsFragmentViewModel by viewModels()
+    private val viewModel: PeopleDetailsFragmentViewModel by viewModels()
     private var _binding: FragmentPeopleBinding? = null
     private val args by navArgs<PeopleDetailsFragmentArgs>()
     @Inject
@@ -45,8 +37,6 @@ class PeopleDetailsFragment : Fragment() {
     @Inject
     lateinit var daoMapper: DaoMapper
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -54,13 +44,20 @@ class PeopleDetailsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dataBinding: FragmentPeopleBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_people, container, false)
-        dataBinding.viewModel = peopleDetailsFragmentViewModel
-        dataBinding.lifecycleOwner = this
-        _binding = dataBinding
+        _binding = FragmentPeopleBinding.inflate(inflater, container, false)
 
-        val moviesRecyclerView: RecyclerView = dataBinding.root.findViewById(R.id.moviesRecyclerView)
-        moviesRecyclerView.adapter = movieRecommendationsAdapter
+        initAdapter()
+        initObserve()
+
+        binding.lifecycleOwner = this
+        Log.d(TAG, "Selected person : " + args.personId.toString())
+
+        return binding.root
+    }
+
+    private fun initAdapter() {
+
+        binding.moviesRecyclerView.adapter = movieRecommendationsAdapter
         movieRecommendationsAdapter.onItemClick = {
             Log.d(TAG, it.toString())
             application.selectedMovie = it
@@ -72,27 +69,30 @@ class PeopleDetailsFragment : Fragment() {
             }
         }
 
-        val actingRv: RecyclerView = dataBinding.root.findViewById(R.id.actingList)
-        actingRv.adapter = actingAdapter
+        binding.actingList.adapter = actingAdapter
         actingAdapter.onItemClick = {
             Log.d(TAG, it.toString())
         }
+    }
 
-        val root: View = dataBinding.root
-        Log.d(TAG, "Selected person : " + args.personId.toString())
+    private fun initObserve() {
         lifecycleScope.launch {
-            peopleDetailsFragmentViewModel.movieList.collectLatest { pagedData ->
+            viewModel.movieList.collectLatest { pagedData ->
                 movieRecommendationsAdapter.submitData(pagedData)
             }
         }
 
         lifecycleScope.launch {
-            peopleDetailsFragmentViewModel.actingList.collectLatest { pagedData ->
+            viewModel.actingList.collectLatest { pagedData ->
                 actingAdapter.submitData(pagedData)
             }
         }
 
-        return dataBinding.root
+        viewModel.initModelDone.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.model = viewModel.model
+            }
+        }
     }
 
     override fun onDestroyView() {

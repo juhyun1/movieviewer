@@ -1,6 +1,5 @@
 package com.themovieviewer.repository
 
-import com.themovieviewer.network.model.MovieDetailsResponse
 import com.themovieviewer.network.response.*
 
 interface MovieRepository {

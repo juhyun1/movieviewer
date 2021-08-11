@@ -1,6 +1,5 @@
 package com.themovieviewer.network
 
-import com.themovieviewer.network.model.MovieDetailsResponse
 import com.themovieviewer.network.response.*
 import retrofit2.http.GET
 import retrofit2.http.Path

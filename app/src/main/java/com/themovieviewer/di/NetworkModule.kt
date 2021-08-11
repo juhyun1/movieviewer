@@ -5,6 +5,8 @@ import com.themovieviewer.network.MovieService
 import com.themovieviewer.network.model.CastCrewDtoMapper
 import com.themovieviewer.network.model.MovieDtoMapper
 import com.themovieviewer.network.model.VideosDtoMapper
+import com.themovieviewer.network.response.MovieDetailMapper
+import com.themovieviewer.network.response.PeopleMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,6 +36,19 @@ object NetworkModule {
     fun provideCastCrewDtoMapper(): CastCrewDtoMapper {
         return CastCrewDtoMapper()
     }
+
+    @Singleton
+    @Provides
+    fun providePeopleMapper(): PeopleMapper {
+        return PeopleMapper()
+    }
+
+    @Singleton
+    @Provides
+    fun provideMovieDetailMapper(): MovieDetailMapper {
+        return MovieDetailMapper()
+    }
+
 
     @Singleton
     @Provides

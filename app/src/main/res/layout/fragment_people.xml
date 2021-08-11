@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="viewModel"
-            type="com.themovieviewer.presentation.ui.people.PeopleDetailsFragmentViewModel" />
+            name="model"
+            type="com.themovieviewer.domain.model.People" />
     </data>
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -45,7 +45,7 @@
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:scaleType="fitCenter"
-                app:imageFromUrl="@{viewModel.profileImage}"
+                app:loadImage="@{model.profileImage}"
                 tools:src="@drawable/test"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -59,7 +59,7 @@
                 android:textColor="@android:color/black"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                android:text="@{viewModel.name}"
+                android:text="@{model.name}"
                 tools:text="Ma Dong-seok"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -132,7 +132,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
-                    android:text="@{viewModel.gender}"
+                    app:gender="@{model.gender}"
                     tools:text="AAAAAAAA"/>
 
                 <TextView
@@ -147,7 +147,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
-                    android:text="@{viewModel.birthday}"
+                    android:text="@{model.birthday}"
                     tools:text="AAAAAAAA"/>
 
                 <TextView
@@ -162,7 +162,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
-                    android:text="@{viewModel.placeOfBirths}"
+                    android:text="@{model.placeOfBirths}"
                     tools:text="AAAAAAAA"/>
 
                 <TextView
@@ -177,7 +177,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/black"
-                    android:text="@{viewModel.knownFor}"
+                    android:text="@{model.knownFor}"
                     tools:text="AAAAAAAA"/>
             </LinearLayout>
 
@@ -197,7 +197,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
-                android:text="@{viewModel.biography}"
+                android:text="@{model.biography}"
                 tools:text="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                 app:layout_constraintStart_toStartOf="@+id/startGuideLine"
                 app:layout_constraintEnd_toEndOf="@+id/endGuideLine"

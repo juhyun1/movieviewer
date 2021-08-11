@@ -7,6 +7,7 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.themovieviewer.R
+import java.text.DecimalFormat
 
 @BindingAdapter("loadImage")
 fun loadImage(imageView: ImageView, url: String?) {
@@ -89,9 +90,42 @@ fun setReleaseDate(view: TextView, releaseDate: String?) {
 
 @BindingAdapter("vote_average")
 fun setVoteAverage(view: TextView, voteAverage: Float) {
-    val text = (voteAverage * 10).toInt().toString()
-    view.text = "$text %"
+    val str = (voteAverage * 10).toInt().toString()
+    view.text = "User Score $str%"
 }
+
+@BindingAdapter("gender")
+fun setGender(view: TextView, gender: Int) {
+    when(gender) {
+        1 -> view.text = "Woman"
+        2 -> view.text  = "Man"
+    }
+}
+
+@BindingAdapter("runtime")
+fun setRuntime(view: TextView, runtime: Int) {
+        val temp = runtime.div(60)
+        val temp2 = runtime.rem(60)
+        val b = StringBuilder()
+        b.append(temp)
+        b.append("h ")
+        b.append(temp2)
+        b.append("m")
+        view.text = b.toString()
+}
+
+@BindingAdapter("revenue")
+fun setRevenue(view: TextView, revenue: Long) {
+        val format = DecimalFormat("###,###,###,###")
+        view.text = "$${format.format(revenue)}"
+}
+
+@BindingAdapter("budget")
+fun setBudget(view: TextView, budget: Long) {
+    val format = DecimalFormat("###,###,###,###")
+    view.text = "$${format.format(budget)}"
+}
+
 
 
 
