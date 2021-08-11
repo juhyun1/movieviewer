@@ -39,3 +39,6 @@
 ## MovieRepositoryImpl.kt 파일에 API Key를 넣으세요.
 
 ![image1](./image1.jpg)
+![image2_](./image2_.jpg)
+![image3](./image3.jpg)
+![image4](./image4.jpg)
