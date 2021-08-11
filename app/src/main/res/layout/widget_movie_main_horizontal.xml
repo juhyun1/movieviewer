@@ -1,115 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@android:color/white"
-    android:padding="5dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <androidx.cardview.widget.CardView
+    <data>
+        <variable
+            name="model"
+            type="com.themovieviewer.domain.model.Movie" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@android:color/white"
+        android:padding="5dp"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        app:cardCornerRadius="4dp"
-        app:cardUseCompatPadding="true"
-        app:cardBackgroundColor="@android:color/white"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:layout_height="wrap_content">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="150dp"
+            app:cardCornerRadius="4dp"
+            app:cardUseCompatPadding="true"
+            app:cardBackgroundColor="@android:color/white"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/imageGuideLine"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.25"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent">
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/textGuideLine"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.28"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/imageGuideLine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.25"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
-            <ImageView
-                android:id="@+id/poster"
-                android:scaleType="fitXY"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:src="@drawable/placeholder"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/imageGuideLine"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/textGuideLine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.28"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
-            <Space
-                android:id="@+id/space"
-                android:layout_width="10dp"
-                android:layout_height="0dp"
-                android:orientation="vertical"
-                app:layout_constraintHeight_percent="0.15"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textGuideLine"
-                />
+                <ImageView
+                    android:id="@+id/poster"
+                    android:scaleType="fitXY"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:src="@drawable/placeholder"
+                    app:loadImage="@{model.poster_path}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/imageGuideLine"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
-            <TextView
-                android:id="@+id/originalTitle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                android:textStyle="bold"
-                android:textSize="15sp"
-                tools:text="aaaaaaaa"
-                app:layout_constraintTop_toBottomOf="@+id/space"
-                app:layout_constraintStart_toStartOf="@+id/textGuideLine"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                <Space
+                    android:id="@+id/space"
+                    android:layout_width="10dp"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintHeight_percent="0.15"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/textGuideLine"
+                    />
 
-            <TextView
-                android:id="@+id/releaseDate"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                tools:text="2021-05-04"
-                app:layout_constraintTop_toBottomOf="@+id/originalTitle"
-                app:layout_constraintStart_toStartOf="@+id/textGuideLine"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                <TextView
+                    android:id="@+id/originalTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:text="@{model.title}"
+                    tools:text="aaaaaaaa"
+                    app:layout_constraintTop_toBottomOf="@+id/space"
+                    app:layout_constraintStart_toStartOf="@+id/textGuideLine"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
-            <Space
-                android:id="@+id/space2"
-                android:layout_width="10dp"
-                android:layout_height="0dp"
-                android:orientation="vertical"
-                app:layout_constraintHeight_percent="0.1"
-                app:layout_constraintTop_toBottomOf="@+id/releaseDate"
-                app:layout_constraintStart_toStartOf="@+id/textGuideLine"
-                />
+                <TextView
+                    android:id="@+id/releaseDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:text="@{model.release_date}"
+                    tools:text="2021-05-04"
+                    app:layout_constraintTop_toBottomOf="@+id/originalTitle"
+                    app:layout_constraintStart_toStartOf="@+id/textGuideLine"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
-            <TextView
-                android:id="@+id/overView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:maxLines="2"
-                android:textColor="@android:color/black"
-                tools:text="2021-05-04"
-                app:layout_constraintTop_toBottomOf="@+id/space2"
-                app:layout_constraintStart_toStartOf="@+id/textGuideLine"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                <Space
+                    android:id="@+id/space2"
+                    android:layout_width="10dp"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintHeight_percent="0.1"
+                    app:layout_constraintTop_toBottomOf="@+id/releaseDate"
+                    app:layout_constraintStart_toStartOf="@+id/textGuideLine"
+                    />
+
+                <TextView
+                    android:id="@+id/overView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:textColor="@android:color/black"
+                    android:text="@{model.overview}"
+                    tools:text="2021-05-04"
+                    app:layout_constraintTop_toBottomOf="@+id/space2"
+                    app:layout_constraintStart_toStartOf="@+id/textGuideLine"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
                 <View
                     android:id="@+id/selection"
@@ -123,6 +133,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

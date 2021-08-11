@@ -1,5 +1,7 @@
 package com.themovieviewer.presentation.ui.moviedetails
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -23,10 +25,13 @@ import com.themovieviewer.presentation.paging.MovieRecommendationsAdapter
 import com.themovieviewer.presentation.paging.VideosAdapter
 import com.themovieviewer.util.TAG
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.net.HttpURLConnection
+import java.net.URL
 import javax.inject.Inject
-
 
 @AndroidEntryPoint
 class MovieDetailsFragment : Fragment() {
@@ -49,6 +54,27 @@ class MovieDetailsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+        CoroutineScope(IO).launch {
+            // do something
+        }
+
+    }
+
+    object ImageLoader {
+        fun loadImage(url: String, completed: (Bitmap?) -> Unit) {
+            return try {
+                val url = URL(url);
+                val connection = url.openConnection() as HttpURLConnection
+                connection.setDoInput(true);
+                connection.connect();
+                val input = connection.getInputStream();
+                val bitmap = BitmapFactory.decodeStream(input);
+                completed(bitmap)
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
     override fun onCreateView(
