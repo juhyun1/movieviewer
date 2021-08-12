@@ -1,6 +1,5 @@
 package com.themovieviewer.presentation.ui.people
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,7 +10,6 @@ import com.themovieviewer.domain.model.People
 import com.themovieviewer.domain.usecase.GetActingDataPagerUseCase
 import com.themovieviewer.domain.usecase.GetPeopleDetailsUseCase
 import com.themovieviewer.domain.usecase.GetPeopleMovieCreditsPagerUseCase
-import com.themovieviewer.network.response.PeopleDetailsResponse
 import com.themovieviewer.network.response.PeopleMapper
 import com.themovieviewer.presentation.BaseApplication
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,6 +24,7 @@ class PeopleDetailsFragmentViewModel @Inject constructor(
 
     lateinit var model: People
     val pageSize = 100
+    val language = application.language
 
     @Inject
     lateinit var getActingDataPagerUseCase: GetActingDataPagerUseCase
@@ -51,18 +50,11 @@ class PeopleDetailsFragmentViewModel @Inject constructor(
     }
 
     private fun init(person: Int?) {
-        val language = "en-US"
         viewModelScope.launch {
-            // Coroutine that will be canceled when the ViewModel is cleared.
             person?.let {
-                val peopleDetailsResponse: PeopleDetailsResponse = getPeopleDetailsUseCase.execute(personId = person, language = language)
-
-                peopleDetailsResponse.let {
-                    model = peopleMapper.mapToDomainModel(it)
-                }
+                model = getPeopleDetailsUseCase.execute(personId = person, language = language)
+                initModelDone.value = true
             }
-
-            initModelDone.value = true
         }
     }
 }

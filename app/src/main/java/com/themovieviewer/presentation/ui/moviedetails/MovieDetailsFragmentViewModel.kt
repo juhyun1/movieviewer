@@ -3,116 +3,68 @@ package com.themovieviewer.presentation.ui.moviedetails
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.cachedIn
+import androidx.paging.PagingData
 import com.themovieviewer.data.vo.Favorites
 import com.themovieviewer.data.vo.FavoritesMovie
 import com.themovieviewer.domain.model.Movie
 import com.themovieviewer.domain.model.MovieDetail
-import com.themovieviewer.network.model.MovieDtoMapper
-import com.themovieviewer.network.model.VideosDtoMapper
-import com.themovieviewer.network.response.MovieDetailMapper
-import com.themovieviewer.network.response.MovieDetailsResponse
-import com.themovieviewer.network.response.VideosResponse
+import com.themovieviewer.domain.model.Trailer
+import com.themovieviewer.domain.usecase.*
+import com.themovieviewer.network.model.CreditsCastCrewDto
 import com.themovieviewer.presentation.BaseApplication
-import com.themovieviewer.presentation.paging.CreditsDataSource
-import com.themovieviewer.presentation.paging.RecommendationsDataSource
-import com.themovieviewer.presentation.paging.VideoDataSource
-import com.themovieviewer.repository.FavoritesMovieRepository
-import com.themovieviewer.repository.FavoritesRepository
-import com.themovieviewer.repository.MovieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MovieDetailsFragmentViewModel @Inject constructor(
-    private val baseApplication: BaseApplication,
-    private val movieRepository: MovieRepository,
-    private val movieDtoMapper: MovieDtoMapper,
-    private val videosDtoMapper: VideosDtoMapper,
     private val application: BaseApplication,
-    private val favoritesRepository: FavoritesRepository,
-    private val favoritesMovieRepository: FavoritesMovieRepository
+
 ) : ViewModel() {
 
-
+    private val pageSize = 100
     lateinit var movieDetail: MovieDetail
-
-    val creditsList = Pager(PagingConfig(pageSize = 100)) {
-        CreditsDataSource(movieRepository, movieDtoMapper, application.selectedMovie!!.id, baseApplication.language)
-    }.flow.cachedIn(viewModelScope)
-
-    val movieList = Pager(PagingConfig(pageSize = 100)) {
-        RecommendationsDataSource(movieRepository, movieDtoMapper, application.selectedMovie!!.id, baseApplication.language)
-    }.flow.cachedIn(viewModelScope)
-
-    val videoList = Pager(PagingConfig(pageSize = 100)) {
-        VideoDataSource(movieRepository, videosDtoMapper, application.selectedMovie!!.id, baseApplication.language)
-    }.flow.cachedIn(viewModelScope)
-
-    init {
-        init(application.selectedMovie)
-    }
+    private val language = application.language
 
     @Inject
-    lateinit var movieDetailMapper: MovieDetailMapper
+    lateinit var getMovieDetailsUseCase: GetMovieDetailsUseCase
+    @Inject
+    lateinit var getCreditsPagerUseCase: GetCreditsPagerUseCase
+    @Inject
+    lateinit var getRecommendationsPagerUseCase: GetRecommendationsPagerUseCase
+    @Inject
+    lateinit var getVideoPagerUseCase: GetVideoPagerUseCase
+    @Inject
+    lateinit var insertFavoriteMovieUseCase: InsertFavoriteMovieUseCase
+    @Inject
+    lateinit var deleteFavoriteMovieUseCase: DeleteFavoriteMovieUseCase
 
+    val creditsList: Flow<PagingData<CreditsCastCrewDto>> by lazy {
+        getCreditsPagerUseCase.execute(
+            scope = viewModelScope, personId = application.selectedMovie!!.id,
+            language = language, pageSize = pageSize)
+    }
+    val movieList: Flow<PagingData<Movie>> by lazy {
+        getRecommendationsPagerUseCase.execute(
+            scope = viewModelScope, personId = application.selectedMovie!!.id,
+            language = language, pageSize = pageSize)
+    }
+    val videoList: Flow<PagingData<Trailer>> by lazy {
+        getVideoPagerUseCase.execute(
+            scope = viewModelScope, personId = application.selectedMovie!!.id,
+            language = language, pageSize = pageSize)
+    }
     val initDataDone = MutableLiveData(false)
+
+    init {
+        init(movie = application.selectedMovie)
+    }
 
     private fun init(movie: Movie?) {
         viewModelScope.launch {
-            // Coroutine that will be canceled when the ViewModel is cleared.
             movie?.let {
-                val movieDetailsResponse: MovieDetailsResponse = movieRepository.getMovieDetails(
-                    language = baseApplication.language,
-                    movie_id = movie.id
-                )
-
-                movieDetail = movieDetailMapper.mapToDomainModel(movieDetailsResponse)
-//                movieDetailsResponse.let {
-//                    title.value = it.title
-//                    releaseDate.value = it.release_date
-//                    val temp = movieDetailsResponse.runtime?.div(60)
-//                    val temp2 = movieDetailsResponse.runtime?.rem(60)
-//                    val b = StringBuilder()
-//                    b.append(temp)
-//                    b.append("h ")
-//                    b.append(temp2)
-//                    b.append("m")
-//                    runtime.value = b.toString()
-//
-//                    val list = ArrayList<String>()
-//                    for (genres in it.genres) {
-//                        list.add(genres.name)
-//                    }
-//
-//                    genres.value = TextUtils.join(",", list)
-//                    val temp3 = (it.vote_average * 10).toInt().toString()
-//                    voteAverage.value = "User Score $temp3%"
-//                    tagline.value = it.tagline
-//                    overview.value = it.overview
-//                    status.value = it.status
-//                    originalLanguage.value = it.original_language
-//                    val format = DecimalFormat("###,###,###,###")
-//                    budget.value = "$${format.format(it.budget)}"
-//                    revenue.value = "$${format.format(it.revenue)}"
-//
-//                    val base = "https://image.tmdb.org/t/p/w500"
-//                    backdropImage.value = base + movieDetailsResponse.backdrop_path
-//                    posterImage.value = base + movieDetailsResponse.poster_path
-//                }
-
-                val videosResponse: VideosResponse = movieRepository.getVideos(
-                    language = baseApplication.language,
-                    movie_id = movie.id
-                )
-
-                if (videosResponse.results.isNotEmpty()) {
-                    movieDetail.isTrailer = true
-                }
-
+                movieDetail = getMovieDetailsUseCase.execute(movie = movie, language = language)
                 initDataDone.value = true
             }
         }
@@ -120,15 +72,13 @@ class MovieDetailsFragmentViewModel @Inject constructor(
 
     fun insertFavoriteMovie(favorites: Favorites, favoritesMovie: FavoritesMovie) {
         viewModelScope.launch {
-            favoritesRepository.insertFavorites(favorites)
-            favoritesMovieRepository.insertFavoritesMovie(favoritesMovie)
+            insertFavoriteMovieUseCase.execute(favorites = favorites, favoritesMovie = favoritesMovie)
         }
     }
 
     fun deleteFavoriteMovie(favorites: Favorites, favoritesMovie: FavoritesMovie) {
         viewModelScope.launch {
-            favoritesRepository.deleteFavorites(favorites)
-            favoritesMovieRepository.deleteFavoritesMovie(favoritesMovie)
+            deleteFavoriteMovieUseCase.execute(favorites = favorites, favoritesMovie = favoritesMovie)
         }
     }
 

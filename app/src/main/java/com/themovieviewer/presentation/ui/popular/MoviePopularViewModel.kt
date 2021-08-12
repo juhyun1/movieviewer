@@ -11,8 +11,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MoviePopularViewModel @Inject constructor() : ViewModel() {
+    private val limited = 10
     val movieList: Flow<PagingData<Movie>> by lazy {
-        val limited = 10
         getMoviePopularPagerUseCase.execute(viewModelScope, pageSize = limited)
     }
 

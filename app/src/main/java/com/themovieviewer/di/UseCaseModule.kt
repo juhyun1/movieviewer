@@ -1,11 +1,13 @@
 package com.themovieviewer.di
 
-import com.themovieviewer.domain.usecase.GetActingDataPagerUseCase
-import com.themovieviewer.domain.usecase.GetMoviePopularPagerUseCase
-import com.themovieviewer.domain.usecase.GetPeopleDetailsUseCase
-import com.themovieviewer.domain.usecase.GetPeopleMovieCreditsPagerUseCase
+import com.themovieviewer.domain.usecase.*
 import com.themovieviewer.network.model.CastCrewDtoMapper
 import com.themovieviewer.network.model.MovieDtoMapper
+import com.themovieviewer.network.model.VideosDtoMapper
+import com.themovieviewer.network.response.MovieDetailMapper
+import com.themovieviewer.network.response.PeopleMapper
+import com.themovieviewer.repository.FavoritesMovieRepository
+import com.themovieviewer.repository.FavoritesRepository
 import com.themovieviewer.repository.MovieRepository
 import dagger.Module
 import dagger.Provides
@@ -51,10 +53,78 @@ object UseCaseModule {
 
     @Provides
     fun provideGetPeopleDetailsUseCase(
-        movieRepository: MovieRepository
+        movieRepository: MovieRepository,
+        peopleMapper: PeopleMapper
     ): GetPeopleDetailsUseCase {
         return GetPeopleDetailsUseCase(
-            movieRepository = movieRepository
+            movieRepository = movieRepository,
+            peopleMapper = peopleMapper
+        )
+    }
+
+    @Provides
+    fun provideGetCreditsPagerUseCase(
+        movieRepository: MovieRepository,
+        movieDtoMapper: MovieDtoMapper
+    ): GetCreditsPagerUseCase {
+        return GetCreditsPagerUseCase(
+            movieRepository = movieRepository,
+            movieDtoMapper = movieDtoMapper
+        )
+    }
+
+    @Provides
+    fun provideGetRecommendationsPagerUseCase(
+        movieRepository: MovieRepository,
+        movieDtoMapper: MovieDtoMapper
+    ): GetRecommendationsPagerUseCase {
+        return GetRecommendationsPagerUseCase(
+            movieRepository = movieRepository,
+            movieDtoMapper = movieDtoMapper
+        )
+    }
+
+    @Provides
+    fun provideGetVideoPagerUseCase(
+        movieRepository: MovieRepository,
+        videosDtoMapper: VideosDtoMapper
+    ): GetVideoPagerUseCase {
+        return GetVideoPagerUseCase(
+            movieRepository = movieRepository,
+            videosDtoMapper = videosDtoMapper
+        )
+    }
+
+    @Provides
+    fun provideInsertFavoriteMovieUseCase(
+        favoritesRepository: FavoritesRepository,
+        favoritesMovieRepository: FavoritesMovieRepository
+    ): InsertFavoriteMovieUseCase {
+        return InsertFavoriteMovieUseCase(
+            favoritesRepository = favoritesRepository,
+            favoritesMovieRepository = favoritesMovieRepository
+        )
+    }
+
+    @Provides
+    fun provideDeleteFavoriteMovieUseCase(
+        favoritesRepository: FavoritesRepository,
+        favoritesMovieRepository: FavoritesMovieRepository
+    ): DeleteFavoriteMovieUseCase {
+        return DeleteFavoriteMovieUseCase(
+            favoritesRepository = favoritesRepository,
+            favoritesMovieRepository = favoritesMovieRepository
+        )
+    }
+
+    @Provides
+    fun provideGetMovieDetailsUseCase(
+        movieRepository: MovieRepository,
+        movieDetailMapper: MovieDetailMapper
+    ): GetMovieDetailsUseCase {
+        return GetMovieDetailsUseCase(
+            movieRepository = movieRepository,
+            movieDetailMapper = movieDetailMapper
         )
     }
 }
