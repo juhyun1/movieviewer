@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
+                R.id.nav_now_playing,R.id.nav_top_rated, R.id.nav_popular, R.id.nav_favorite
             ),
             drawerLayout
         )
@@ -59,7 +59,6 @@ class MainActivity : AppCompatActivity() {
             false
         }
         else -> {
-
             super.onOptionsItemSelected(item)
         }
     }

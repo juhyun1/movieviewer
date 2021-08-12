@@ -1,31 +1,31 @@
 package com.themovieviewer.di
 
-import com.themovieviewer.presentation.ui.gallery.GalleryFragment
-import com.themovieviewer.presentation.ui.home.HomeFragment
+import com.themovieviewer.presentation.ui.favorite.FavoriteFragment
+import com.themovieviewer.presentation.ui.nowplaying.NowPlayingFragment
 import com.themovieviewer.presentation.ui.popular.MoviePopularFragment
-import com.themovieviewer.presentation.ui.slideshow.SlideshowFragment
+import com.themovieviewer.presentation.ui.toprated.TopRatedFragment
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import dagger.hilt.android.components.ActivityComponent
 
 @Module
-@InstallIn(SingletonComponent::class)
+@InstallIn(ActivityComponent::class)
 object FragmentModule {
 
     @Provides
-    fun provideHomeFragment(): HomeFragment {
-        return HomeFragment()
+    fun provideTopRatedFragment(): TopRatedFragment {
+        return TopRatedFragment()
     }
 
     @Provides
-    fun provideGalleryFragment(): GalleryFragment {
-        return GalleryFragment()
+    fun provideNowPlayingFragment(): NowPlayingFragment {
+        return NowPlayingFragment()
     }
 
     @Provides
-    fun provideSlideshowFragment(): SlideshowFragment {
-        return SlideshowFragment()
+    fun provideFavoriteFragment(): FavoriteFragment {
+        return FavoriteFragment()
     }
 
     @Provides

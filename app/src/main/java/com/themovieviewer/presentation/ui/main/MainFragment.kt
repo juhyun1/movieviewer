@@ -5,13 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayoutMediator
 import com.themovieviewer.databinding.FragmentMainBinding
-import com.themovieviewer.presentation.ui.gallery.GalleryFragment
-import com.themovieviewer.presentation.ui.home.HomeFragment
+import com.themovieviewer.presentation.ui.nowplaying.NowPlayingFragment
+import com.themovieviewer.presentation.ui.toprated.TopRatedFragment
 import com.themovieviewer.presentation.ui.popular.MoviePopularFragment
-import com.themovieviewer.presentation.ui.slideshow.SlideshowFragment
+import com.themovieviewer.presentation.ui.favorite.FavoriteFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -19,9 +18,9 @@ import javax.inject.Inject
 class MainFragment : Fragment() {
 
     private var _binding: FragmentMainBinding? = null
-    @Inject lateinit var homeFragment: HomeFragment
-    @Inject lateinit var galleryFragment: GalleryFragment
-    @Inject lateinit var slideshowFragment: SlideshowFragment
+    @Inject lateinit var topRatedFragment: TopRatedFragment
+    @Inject lateinit var nowPlayingFragment: NowPlayingFragment
+    @Inject lateinit var favoriteFragment: FavoriteFragment
     @Inject lateinit var moviePopularFragment: MoviePopularFragment
 
     private val binding get() = _binding!!
@@ -34,10 +33,10 @@ class MainFragment : Fragment() {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
 
         val fragmentList = ArrayList<Fragment>()
-        fragmentList.add(galleryFragment)
-        fragmentList.add(homeFragment)
+        fragmentList.add(nowPlayingFragment)
+        fragmentList.add(topRatedFragment)
         fragmentList.add(moviePopularFragment)
-        fragmentList.add(slideshowFragment)
+        fragmentList.add(favoriteFragment)
 
         binding.viewPager.adapter = MainFragmentAdapter(requireActivity(), fragmentList)
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->

@@ -48,38 +48,38 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.themovieviewer.presentation.ui.home.HomeFragment"
+        android:id="@+id/nav_top_rated"
+        android:name="com.themovieviewer.presentation.ui.toprated.TopRatedFragment"
         android:label="@string/menu_tv_show"
-        tools:layout="@layout/fragment_movie">
+        tools:layout="@layout/fragment_top_rated">
         <action
-            android:id="@+id/action_HomeFragment_to_MovieDetailsFragment"
+            android:id="@+id/action_TopRatedFragment_to_MovieDetailsFragment"
             app:destination="@+id/nav_movie_details" />
     </fragment>
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.themovieviewer.presentation.ui.gallery.GalleryFragment"
+        android:id="@+id/nav_now_playing"
+        android:name="com.themovieviewer.presentation.ui.nowplaying.NowPlayingFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery">
+        tools:layout="@layout/fragment_now_palying">
         <action
-            android:id="@+id/action_GalleryFragment_to_MovieDetailsFragment"
+            android:id="@+id/action_NowPlayingFragment_to_MovieDetailsFragment"
             app:destination="@+id/nav_movie_details" />
     </fragment>
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.themovieviewer.presentation.ui.slideshow.SlideshowFragment"
+        android:id="@+id/nav_favorite"
+        android:name="com.themovieviewer.presentation.ui.favorite.FavoriteFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" >
+        tools:layout="@layout/fragment_favorite" >
         <action
-            android:id="@+id/action_SlideshowFragment_to_MovieDetailsFragment"
+            android:id="@+id/action_FavoriteFragment_to_MovieDetailsFragment"
             app:destination="@+id/nav_movie_details" />
     </fragment>
     <fragment
         android:id="@+id/nav_popular"
         android:name="com.themovieviewer.presentation.ui.popular.MoviePopularFragment"
         android:label="@string/menu_Popular"
-        tools:layout="@layout/fragment_slideshow" >
+        tools:layout="@layout/fragment_popular" >
         <action
             android:id="@+id/action_MoviePopularFragment_to_MovieDetailsFragment"
             app:destination="@+id/nav_movie_details" />

@@ -1,4 +1,4 @@
-package com.themovieviewer.presentation.ui.gallery
+package com.themovieviewer.presentation.ui.toprated
 
 import android.os.Bundle
 import android.util.Log
@@ -11,8 +11,7 @@ import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import com.themovieviewer.R
-import com.themovieviewer.data.DaoMapper
-import com.themovieviewer.databinding.FragmentMovieBinding
+import com.themovieviewer.databinding.FragmentTopRatedBinding
 import com.themovieviewer.presentation.BaseApplication
 import com.themovieviewer.presentation.paging.MovieOneRowAdapter
 import com.themovieviewer.presentation.ui.main.MainFragmentDirections
@@ -23,13 +22,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class GalleryFragment : Fragment() {
+class TopRatedFragment : Fragment() {
 
-    private val galleryViewModel: GalleryViewModel by viewModels()
-    private var _binding: FragmentMovieBinding? = null
-    @Inject lateinit var oneRowAdapter: MovieOneRowAdapter
-    @Inject lateinit var application: BaseApplication
-    @Inject lateinit var daoMapper: DaoMapper
+    private val viewModel: TopRatedViewModel by viewModels()
+    private var _binding: FragmentTopRatedBinding? = null
+    @Inject
+    lateinit var oneRowAdapter: MovieOneRowAdapter
+    @Inject
+    lateinit var application: BaseApplication
 
     //region recyclerview-selection
     private val tracker by lazy {
@@ -75,19 +75,16 @@ class GalleryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMovieBinding.inflate(inflater, container, false)
+        _binding = FragmentTopRatedBinding.inflate(inflater, container, false)
+        val root: View = binding.root
 
         initAdapter()
+        initObserve()
 
-        lifecycleScope.launch {
-            galleryViewModel.nowPlayingList.collectLatest { pagedData ->
-                oneRowAdapter.submitData(pagedData)
-            }
-        }
-        return binding.root
+        return root
     }
-
     private fun initAdapter() {
+
         binding.movieList.adapter = oneRowAdapter
         oneRowAdapter.useTracker = false
 
@@ -97,12 +94,19 @@ class GalleryFragment : Fragment() {
             oneRowAdapter.onItemClick = {
                 application.selectedMovie = it
                 try {
-                    val action =
-                        MainFragmentDirections.actionMainFragmentToMovieDetailsFragment(it, false)
+                    val action = MainFragmentDirections.actionMainFragmentToMovieDetailsFragment(it, false)
                     findNavController().navigate(action)
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
+            }
+        }
+    }
+
+    private fun initObserve() {
+        lifecycleScope.launch {
+            viewModel.topRatedList.collectLatest { pagedData ->
+                oneRowAdapter.submitData(pagedData)
             }
         }
     }
@@ -112,31 +116,20 @@ class GalleryFragment : Fragment() {
         _binding = null
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
 
         R.id.action_settings -> {
-            galleryViewModel.favoriteAddMode = true
-            requireActivity().invalidateOptionsMenu()
             true
         }
         else -> {
             // If we got here, the user's action was not recognized.
             // Invoke the superclass to handle it.
             super.onOptionsItemSelected(item)
-        }
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        super.onPrepareOptionsMenu(menu)
-        val addItem = menu.findItem(R.id.action_add)
-        val doneItem = menu.findItem(R.id.action_done)
-
-        if (galleryViewModel.favoriteAddMode) {
-            addItem.isVisible = false
-            doneItem.isVisible = true
-        } else {
-            addItem.isVisible = true
-            doneItem.isVisible = false
         }
     }
 }

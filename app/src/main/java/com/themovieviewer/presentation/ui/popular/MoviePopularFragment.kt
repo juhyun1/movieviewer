@@ -14,7 +14,7 @@ import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import com.themovieviewer.R
-import com.themovieviewer.databinding.FragmentMovieBinding
+import com.themovieviewer.databinding.FragmentPopularBinding
 import com.themovieviewer.presentation.BaseApplication
 import com.themovieviewer.presentation.paging.MovieOneRowAdapter
 import com.themovieviewer.presentation.ui.main.MainFragmentDirections
@@ -27,8 +27,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MoviePopularFragment : Fragment() {
 
-    private val moviePopularViewModel: MoviePopularViewModel by viewModels()
-    private var _binding: FragmentMovieBinding? = null
+    private val viewModel: MoviePopularViewModel by viewModels()
+    private var _binding: FragmentPopularBinding? = null
     @Inject
     lateinit var oneRowAdapter: MovieOneRowAdapter
     @Inject
@@ -78,7 +78,7 @@ class MoviePopularFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMovieBinding.inflate(inflater, container, false)
+        _binding = FragmentPopularBinding.inflate(inflater, container, false)
 
         initAdapter()
         initObserve()
@@ -107,7 +107,7 @@ class MoviePopularFragment : Fragment() {
 
     private fun initObserve() {
         lifecycleScope.launch {
-            moviePopularViewModel.movieList.collectLatest { pagedData ->
+            viewModel.movieList.collectLatest { pagedData ->
                 oneRowAdapter.submitData(pagedData)
             }
         }

@@ -1,5 +1,6 @@
 package com.themovieviewer.di
 
+import com.themovieviewer.data.DaoMapper
 import com.themovieviewer.domain.usecase.*
 import com.themovieviewer.network.model.CastCrewDtoMapper
 import com.themovieviewer.network.model.MovieDtoMapper
@@ -125,6 +126,40 @@ object UseCaseModule {
         return GetMovieDetailsUseCase(
             movieRepository = movieRepository,
             movieDetailMapper = movieDetailMapper
+        )
+    }
+
+
+    @Provides
+    fun provideGetNowPlayingPagerUseCase(
+        movieRepository: MovieRepository,
+        movieDtoMapper: MovieDtoMapper
+    ): GetNowPlayingPagerUseCase {
+        return GetNowPlayingPagerUseCase(
+            movieRepository = movieRepository,
+            movieDtoMapper = movieDtoMapper
+        )
+    }
+
+    @Provides
+    fun provideGetTopRatedPagerUseCase(
+        movieRepository: MovieRepository,
+        movieDtoMapper: MovieDtoMapper
+    ): GetTopRatedPagerUseCase {
+        return GetTopRatedPagerUseCase(
+            movieRepository = movieRepository,
+            movieDtoMapper = movieDtoMapper
+        )
+    }
+
+    @Provides
+    fun provideGetFavoritePagerUseCase(
+        favoritesMovieRepository: FavoritesMovieRepository,
+        daoMapper: DaoMapper
+    ): GetFavoritePagerUseCase {
+        return GetFavoritePagerUseCase(
+            favoritesMovieRepository = favoritesMovieRepository,
+            daoMapper = daoMapper
         )
     }
 }

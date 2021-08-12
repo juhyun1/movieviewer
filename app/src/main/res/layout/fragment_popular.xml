@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.ui.slideshow.SlideshowFragment">
+    tools:context=".presentation.ui.popular.MoviePopularFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/favoritesList"
+        android:id="@+id/movieList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"

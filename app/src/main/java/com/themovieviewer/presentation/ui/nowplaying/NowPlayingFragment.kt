@@ -1,11 +1,8 @@
-package com.themovieviewer.presentation.ui.slideshow
+package com.themovieviewer.presentation.ui.nowplaying
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -15,7 +12,7 @@ import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import com.themovieviewer.R
 import com.themovieviewer.data.DaoMapper
-import com.themovieviewer.databinding.FragmentSlideshowBinding
+import com.themovieviewer.databinding.FragmentNowPalyingBinding
 import com.themovieviewer.presentation.BaseApplication
 import com.themovieviewer.presentation.paging.MovieOneRowAdapter
 import com.themovieviewer.presentation.ui.main.MainFragmentDirections
@@ -26,14 +23,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SlideshowFragment : Fragment() {
+class NowPlayingFragment : Fragment() {
 
-    private val slideshowViewModel: SlideshowViewModel by viewModels()
-    private var _binding: FragmentSlideshowBinding? = null
-    @Inject
-    lateinit var oneRowAdapter: MovieOneRowAdapter
-    @Inject
-    lateinit var application: BaseApplication
+    private val viewModel: NowPlayingViewModel by viewModels()
+    private var _binding: FragmentNowPalyingBinding? = null
+    @Inject lateinit var oneRowAdapter: MovieOneRowAdapter
+    @Inject lateinit var application: BaseApplication
     @Inject lateinit var daoMapper: DaoMapper
 
     //region recyclerview-selection
@@ -41,9 +36,9 @@ class SlideshowFragment : Fragment() {
         with(binding) {
             SelectionTracker.Builder(
                 "Selection",
-                favoritesList,
+                nowPlayingList,
                 MovieOneRowAdapter.SelectionKeyProvider(oneRowAdapter),
-                MovieOneRowAdapter.SelectionDetailsLookup(favoritesList),
+                MovieOneRowAdapter.SelectionDetailsLookup(nowPlayingList),
                 StorageStrategy.createLongStorage()
             ).withSelectionPredicate(
                 SelectionPredicates.createSelectSingleAnything()
@@ -52,15 +47,14 @@ class SlideshowFragment : Fragment() {
                     override fun onSelectionChanged() {
                         super.onSelectionChanged()
                         val tracker = this@apply
-                        val adapter = (favoritesList.adapter as MovieOneRowAdapter)
+                        val adapter = (nowPlayingList.adapter as MovieOneRowAdapter)
                         tracker.selection.forEach {
                             val movie = adapter.peek(it.toInt())
                             Log.d(TAG, "position : $it Selection : $movie")
                             movie?.let {
                                 application.selectedMovie = movie
                                 try {
-                                    val action = MainFragmentDirections.actionMainFragmentToMovieDetailsFragment(movie, true)
-//                                            val action = SlideshowFragmentDirections.actionSlideshowFragmentToMovieDetailsFragment(movie)
+                                    val action = MainFragmentDirections.actionMainFragmentToMovieDetailsFragment(movie, false)
                                     findNavController().navigate(action)
                                 } catch (e: Exception) {
                                     e.printStackTrace()
@@ -81,20 +75,16 @@ class SlideshowFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSlideshowBinding.inflate(inflater, container, false)
+        _binding = FragmentNowPalyingBinding.inflate(inflater, container, false)
 
         initAdapter()
+        initObserve()
 
-        lifecycleScope.launch() {
-            slideshowViewModel.favoritesList.collectLatest { pagedData ->
-                oneRowAdapter.submitData(pagedData)
-            }
-        }
         return binding.root
     }
 
     private fun initAdapter() {
-        binding.favoritesList.adapter = oneRowAdapter
+        binding.nowPlayingList.adapter = oneRowAdapter
         oneRowAdapter.useTracker = false
 
         if (oneRowAdapter.useTracker) {
@@ -102,13 +92,21 @@ class SlideshowFragment : Fragment() {
         } else {
             oneRowAdapter.onItemClick = {
                 application.selectedMovie = it
-                Log.d(TAG, "Selected Favorites Movie : ${it.original_title}")
                 try {
-                    val action = MainFragmentDirections.actionMainFragmentToMovieDetailsFragment(it, true)
+                    val action =
+                        MainFragmentDirections.actionMainFragmentToMovieDetailsFragment(it, false)
                     findNavController().navigate(action)
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
+            }
+        }
+    }
+
+    private fun initObserve() {
+        lifecycleScope.launch {
+            viewModel.nowPlayingList.collectLatest { pagedData ->
+                oneRowAdapter.submitData(pagedData)
             }
         }
     }
@@ -121,10 +119,28 @@ class SlideshowFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
 
         R.id.action_settings -> {
+            viewModel.favoriteAddMode = true
+            requireActivity().invalidateOptionsMenu()
             true
         }
         else -> {
+            // If we got here, the user's action was not recognized.
+            // Invoke the superclass to handle it.
             super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        val addItem = menu.findItem(R.id.action_add)
+        val doneItem = menu.findItem(R.id.action_done)
+
+        if (viewModel.favoriteAddMode) {
+            addItem.isVisible = false
+            doneItem.isVisible = true
+        } else {
+            addItem.isVisible = true
+            doneItem.isVisible = false
         }
     }
 }
