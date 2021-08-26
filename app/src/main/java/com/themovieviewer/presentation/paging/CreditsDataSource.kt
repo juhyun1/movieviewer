@@ -12,7 +12,10 @@ import com.themovieviewer.util.TAG
 class CreditsDataSource(private val movieRepository: MovieRepository, private val movieDtoMapper: MovieDtoMapper, private val movieId: Int, private val language: String) : PagingSource<Int, CreditsCastCrewDto>() {
 
     override fun getRefreshKey(state: PagingState<Int, CreditsCastCrewDto>): Int? {
-        TODO("Not yet implemented")
+        return state.anchorPosition?.let { anchorPosition ->
+            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
+                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
+        }
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CreditsCastCrewDto> {

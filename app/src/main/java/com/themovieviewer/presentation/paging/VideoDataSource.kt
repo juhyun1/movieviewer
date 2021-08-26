@@ -12,7 +12,10 @@ import com.themovieviewer.util.TAG
 class VideoDataSource(private val movieRepository: MovieRepository, private val videosDtoMapper: VideosDtoMapper, private val movieId: Int, private val language: String) : PagingSource<Int, Trailer>() {
 
     override fun getRefreshKey(state: PagingState<Int, Trailer>): Int? {
-        TODO("Not yet implemented")
+        return state.anchorPosition?.let { anchorPosition ->
+            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
+                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
+        }
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Trailer> {

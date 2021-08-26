@@ -7,9 +7,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.themovieviewer.R
 import com.themovieviewer.data.DaoMapper
 import com.themovieviewer.databinding.FragmentNowPalyingBinding
@@ -20,7 +22,9 @@ import com.themovieviewer.util.TAG
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.lang.String
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class NowPlayingFragment : Fragment() {
@@ -77,6 +81,9 @@ class NowPlayingFragment : Fragment() {
     ): View {
         _binding = FragmentNowPalyingBinding.inflate(inflater, container, false)
 
+
+
+
         initAdapter()
         initObserve()
 
@@ -100,6 +107,17 @@ class NowPlayingFragment : Fragment() {
                     e.printStackTrace()
                 }
             }
+        }
+
+        oneRowAdapter.addLoadStateListener { combinedLoadStates ->
+            val error = combinedLoadStates.source.refresh is LoadState.Error
+            if (error) {
+                oneRowAdapter.retry()
+            }
+        }
+        binding.refreshlayout.setOnRefreshListener {
+            oneRowAdapter.refresh()
+            binding.refreshlayout.isRefreshing = false
         }
     }
 
