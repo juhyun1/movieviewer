@@ -25,12 +25,19 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
       # Runs a set of commands using the runners shell
-      - name: Android Build
+      - name: Set up JDK 1.8
         # You may pin to the exact commit or the version.
         # uses: vgaidarji/android-github-actions-build@0888eff41ad409a802aa4ccd7790a91891da9056
-        uses: vgaidarji/android-github-actions-build@v1.0.1
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+          
+      - name: build apk
+        run: bash ./gradlew assembleDebug --stacktrace
+        
+      - name: upload apk
+        uses: actions/upload-artifact@v1
+        with:
+          name: TestApp-debug
+          path: app/build/outputs/apk/debug/app-debug.apk
