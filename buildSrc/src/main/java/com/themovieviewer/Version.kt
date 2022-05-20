@@ -2,6 +2,10 @@ package com.themovieviewer
 
 object Versions {
     // gradle plugin
+    const val MIN_SDK = "27"
+    const val TARGET_SDK = "32"
+    const val COMPILE_SDK = "32"
+    const val BUILD_TOOLS = "30.0.3"
     const val buildGradle = "4.0.1"
     const val GLIDE = "4.13.1"
     const val CORE_KTX = "1.7.0"
