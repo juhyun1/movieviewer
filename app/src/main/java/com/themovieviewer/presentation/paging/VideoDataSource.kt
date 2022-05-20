@@ -3,7 +3,7 @@ package com.themovieviewer.presentation.paging
 import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.themovieviewer.domain.model.Trailer
+import com.themovieviewer.core.model.data.Trailer
 import com.themovieviewer.network.model.VideosDtoMapper
 import com.themovieviewer.network.response.VideosResponse
 import com.themovieviewer.repository.MovieRepository

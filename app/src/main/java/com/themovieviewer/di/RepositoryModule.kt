@@ -6,7 +6,7 @@ import com.themovieviewer.network.MovieService
 import com.themovieviewer.repository.FavoritesMovieRepository
 import com.themovieviewer.repository.FavoritesRepository
 import com.themovieviewer.repository.MovieRepository
-import com.themovieviewer.repository.MovieRepositoryImpl
+import com.themovieviewer.core.data.repository.MovieRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

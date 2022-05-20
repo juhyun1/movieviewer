@@ -6,7 +6,7 @@ import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerView
 import com.themovieviewer.R
-import com.themovieviewer.domain.model.Trailer
+import com.themovieviewer.core.model.data.Trailer
 
 class TrailerActivity : YouTubeBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +38,5 @@ class TrailerActivity : YouTubeBaseActivity() {
 
             }
         })
-
-
     }
 }

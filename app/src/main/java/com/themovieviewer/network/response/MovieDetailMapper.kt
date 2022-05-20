@@ -1,8 +1,8 @@
 package com.themovieviewer.network.response
 
 import android.text.TextUtils
-import com.themovieviewer.domain.model.MovieDetail
-import com.themovieviewer.domain.util.DomainMapper
+import com.themovieviewer.core.model.data.MovieDetail
+import com.themovieviewer.core.model.util.DomainMapper
 
 class MovieDetailMapper: DomainMapper<MovieDetailsResponse, MovieDetail> {
 

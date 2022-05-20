@@ -28,7 +28,7 @@
             app:destination="@+id/nav_people_details" />
         <argument
             android:name="movie"
-            app:argType="com.themovieviewer.domain.model.Movie" />
+            app:argType="com.themovieviewer.core.model.data.Movie" />
         <argument
             android:name="fromFavoriteScreen"
             app:argType="boolean" />

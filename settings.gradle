@@ -1,2 +1,4 @@
 rootProject.name = "TheMovieViewer"
 include ':app'
+include ':model'
+include ':core-data'

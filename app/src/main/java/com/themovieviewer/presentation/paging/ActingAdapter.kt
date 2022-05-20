@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.themovieviewer.core.model.data.CastCrew
 import com.themovieviewer.databinding.WidgetPeopleActingBinding
-import com.themovieviewer.domain.model.CastCrew
 
 class ActingAdapter : PagingDataAdapter<CastCrew, ActingAdapter.ViewHolder>(diffCallback) {
 

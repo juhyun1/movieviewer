@@ -1,7 +1,7 @@
 package com.themovieviewer.presentation
 
 import android.app.Application
-import com.themovieviewer.domain.model.Movie
+import com.themovieviewer.core.model.data.Movie
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp

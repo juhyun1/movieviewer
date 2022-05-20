@@ -1,8 +1,7 @@
 package com.themovieviewer.network.model
 
-import com.themovieviewer.domain.model.CastCrew
-import com.themovieviewer.domain.model.Trailer
-import com.themovieviewer.domain.util.DomainMapper
+import com.themovieviewer.core.model.data.CastCrew
+import com.themovieviewer.core.model.util.DomainMapper
 
 class CastCrewDtoMapper : DomainMapper<PeopleMovieCreditsCastDto, CastCrew> {
 

@@ -8,7 +8,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.themovieviewer.R
-import com.themovieviewer.domain.model.Movie
+import com.themovieviewer.core.model.data.Movie
 import com.themovieviewer.util.loadImage
 
 class MovieTwoColumnsAdapter : PagingDataAdapter<Movie, MovieTwoColumnsAdapter.MovieViewHolder>(diffCallback) {
@@ -65,7 +65,7 @@ class MovieTwoColumnsAdapter : PagingDataAdapter<Movie, MovieTwoColumnsAdapter.M
             movie = item
             item?.let {
                 if (it.poster_path != null) {
-                    poster.loadImage(it.poster_path)
+                    poster.loadImage(it.poster_path!!)
                     poster.clipToOutline = true
                 }
                 originalTitle.text = it.original_title

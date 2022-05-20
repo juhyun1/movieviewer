@@ -98,4 +98,7 @@ dependencies {
 
     //WorkManager
     implementation "androidx.work:work-runtime-ktx:${Versions.WORK_KTX}"
+
+    implementation(project(":model"))
+    implementation(project(":core-data"))
 }

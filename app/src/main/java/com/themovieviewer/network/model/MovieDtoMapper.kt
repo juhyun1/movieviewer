@@ -1,7 +1,7 @@
 package com.themovieviewer.network.model
 
-import com.themovieviewer.domain.model.Movie
-import com.themovieviewer.domain.util.DomainMapper
+import com.themovieviewer.core.model.data.Movie
+import com.themovieviewer.core.model.util.DomainMapper
 
 class MovieDtoMapper : DomainMapper<MovieDto, Movie> {
     override fun mapToDomainModel(model: MovieDto): Movie {

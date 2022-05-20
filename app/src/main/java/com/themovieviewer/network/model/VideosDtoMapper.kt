@@ -1,9 +1,9 @@
 package com.themovieviewer.network.model
 
-import com.themovieviewer.domain.model.Trailer
-import com.themovieviewer.domain.util.DomainMapper
+import com.themovieviewer.core.model.data.Trailer
+import com.themovieviewer.core.model.util.DomainMapper
 
-class VideosDtoMapper : DomainMapper<VideosDto, Trailer>{
+class VideosDtoMapper : DomainMapper<VideosDto, Trailer> {
 
     override fun mapFromDomainModel(domainModel: Trailer): VideosDto {
         return VideosDto(

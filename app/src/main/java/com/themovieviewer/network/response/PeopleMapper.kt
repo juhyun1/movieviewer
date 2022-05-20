@@ -1,7 +1,7 @@
 package com.themovieviewer.network.response
 
-import com.themovieviewer.domain.model.People
-import com.themovieviewer.domain.util.DomainMapper
+import com.themovieviewer.core.model.data.People
+import com.themovieviewer.core.model.util.DomainMapper
 
 class PeopleMapper : DomainMapper<PeopleDetailsResponse, People> {
 
