@@ -3,7 +3,11 @@ package com.themovieviewer.presentation.ui.moviedetails
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.themovieviewer.core.data.network.datasource.CreditsDataSource
 import com.themovieviewer.core.model.data.Favorites
 import com.themovieviewer.core.model.data.Movie
 import com.themovieviewer.core.model.data.MovieDetail
@@ -12,6 +16,7 @@ import com.themovieviewer.core.model.usecase.*
 import com.themovieviewer.data.vo.FavoritesMovie
 import com.themovieviewer.core.data.network.model.CreditsCastCrewDto
 import com.themovieviewer.presentation.BaseApplication
+import com.themovieviewer.usecase.GetCreditsPagerUseCaseImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -20,38 +25,29 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieDetailsFragmentViewModel @Inject constructor(
     private val application: BaseApplication,
-
+    private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
+    private val getCreditsPagerUseCase: GetCreditsPagerUseCase,
+    private val getRecommendationsPagerUseCase: GetRecommendationsPagerUseCase,
+    private val getVideoPagerUseCase: GetVideoPagerUseCase,
+    private val insertFavoriteMovieUseCase: InsertFavoriteMovieUseCase,
+    private val deleteFavoriteMovieUseCase: DeleteFavoriteMovieUseCase,
 ) : ViewModel() {
 
     private val pageSize = 100
     lateinit var movieDetail: MovieDetail
     private val language = application.language
 
-    @Inject
-    lateinit var getMovieDetailsUseCase: GetMovieDetailsUseCase
-    @Inject
-    lateinit var getCreditsPagerUseCase: GetCreditsPagerUseCase
-    @Inject
-    lateinit var getRecommendationsPagerUseCase: GetRecommendationsPagerUseCase
-    @Inject
-    lateinit var getVideoPagerUseCase: GetVideoPagerUseCase
-    @Inject
-    lateinit var insertFavoriteMovieUseCase: InsertFavoriteMovieUseCase
-    @Inject
-    lateinit var deleteFavoriteMovieUseCase: DeleteFavoriteMovieUseCase
+    val creditsList: Flow<PagingData<CreditsCastCrewDto>> = Pager(PagingConfig(pageSize = pageSize)) {
+        getCreditsPagerUseCase(movieId = application.selectedMovie!!.id, language = language) as CreditsDataSource
+    }.flow.cachedIn(viewModelScope)
 
-    val creditsList: Flow<PagingData<CreditsCastCrewDto>> by lazy {
-        getCreditsPagerUseCase.execute(
-            scope = viewModelScope, personId = application.selectedMovie!!.id,
-            language = language, pageSize = pageSize)
-    }
     val movieList: Flow<PagingData<Movie>> by lazy {
-        getRecommendationsPagerUseCase.execute(
+        getRecommendationsPagerUseCase(
             scope = viewModelScope, personId = application.selectedMovie!!.id,
             language = language, pageSize = pageSize)
     }
     val videoList: Flow<PagingData<Trailer>> by lazy {
-        getVideoPagerUseCase.execute(
+        getVideoPagerUseCase(
             scope = viewModelScope, personId = application.selectedMovie!!.id,
             language = language, pageSize = pageSize)
     }

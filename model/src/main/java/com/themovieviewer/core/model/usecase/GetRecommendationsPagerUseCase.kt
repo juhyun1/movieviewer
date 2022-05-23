@@ -5,6 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.themovieviewer.core.model.data.Movie
+import com.themovieviewer.core.model.repository.MovieRepository
 import com.themovieviewer.core.model.usecase.UseCase
 import com.themovieviewer.network.model.MovieDtoMapper
 import com.themovieviewer.presentation.paging.RecommendationsDataSource
@@ -17,7 +18,7 @@ class GetRecommendationsPagerUseCase(
     private val movieDtoMapper: MovieDtoMapper
 ): UseCase {
 
-    fun execute(scope: CoroutineScope, personId: Int, language: String, pageSize: Int): Flow<PagingData<Movie>> {
+    operator fun invoke(scope: CoroutineScope, personId: Int, language: String, pageSize: Int): Flow<PagingData<Movie>> {
         return Pager(PagingConfig(pageSize = pageSize)) {
             RecommendationsDataSource(
                 movieRepository = movieRepository,

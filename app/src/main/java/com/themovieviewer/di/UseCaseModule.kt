@@ -1,7 +1,6 @@
 package com.themovieviewer.di
 
 import com.themovieviewer.core.data.DaoMapper
-import com.themovieviewer.domain.usecase.*
 import com.themovieviewer.core.data.network.model.CastCrewDtoMapper
 import com.themovieviewer.core.data.network.model.MovieDtoMapper
 import com.themovieviewer.core.data.network.model.VideosDtoMapper
@@ -9,11 +8,16 @@ import com.themovieviewer.core.data.network.response.MovieDetailMapper
 import com.themovieviewer.core.data.network.response.PeopleMapper
 import com.themovieviewer.core.data.repository.FavoritesMovieRepository
 import com.themovieviewer.core.data.repository.FavoritesRepository
-import com.themovieviewer.repository.MovieRepository
+import com.themovieviewer.core.model.repository.MovieRepository
+import com.themovieviewer.core.model.usecase.*
+import com.themovieviewer.usecase.GetCreditsPagerUseCaseImpl
+import com.themovieviewer.usecase.GetNowPlayingPagerUseCaseImpl
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -60,17 +64,6 @@ object UseCaseModule {
         return GetPeopleDetailsUseCase(
             movieRepository = movieRepository,
             peopleMapper = peopleMapper
-        )
-    }
-
-    @Provides
-    fun provideGetCreditsPagerUseCase(
-        movieRepository: MovieRepository,
-        movieDtoMapper: MovieDtoMapper
-    ): GetCreditsPagerUseCase {
-        return GetCreditsPagerUseCase(
-            movieRepository = movieRepository,
-            movieDtoMapper = movieDtoMapper
         )
     }
 
@@ -129,18 +122,6 @@ object UseCaseModule {
         )
     }
 
-
-    @Provides
-    fun provideGetNowPlayingPagerUseCase(
-        movieRepository: MovieRepository,
-        movieDtoMapper: MovieDtoMapper
-    ): GetNowPlayingPagerUseCase {
-        return GetNowPlayingPagerUseCase(
-            movieRepository = movieRepository,
-            movieDtoMapper = movieDtoMapper
-        )
-    }
-
     @Provides
     fun provideGetTopRatedPagerUseCase(
         movieRepository: MovieRepository,
@@ -162,4 +143,15 @@ object UseCaseModule {
             daoMapper = daoMapper
         )
     }
+}
+
+@InstallIn(SingletonComponent::class)
+@Module
+interface UseCaseModule2 {
+    @Binds
+    fun bindGetCreditsPagerUseCase(impl: GetCreditsPagerUseCaseImpl): GetCreditsPagerUseCase
+
+    @Binds
+    fun bindGetNowPlayingPagerUseCase(impl: GetNowPlayingPagerUseCaseImpl): GetNowPlayingPagerUseCase
+
 }

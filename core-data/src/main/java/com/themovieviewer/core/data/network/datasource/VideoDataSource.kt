@@ -1,13 +1,11 @@
-package com.themovieviewer.presentation.paging
+package com.themovieviewer.core.data.network.datasource
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.themovieviewer.core.model.data.Trailer
 import com.themovieviewer.core.data.network.model.VideosDtoMapper
 import com.themovieviewer.core.data.network.response.VideosResponse
-import com.themovieviewer.repository.MovieRepository
-import com.themovieviewer.util.TAG
+import com.themovieviewer.core.model.data.Trailer
+import com.themovieviewer.core.model.repository.MovieRepository
 
 class VideoDataSource(private val movieRepository: MovieRepository, private val videosDtoMapper: VideosDtoMapper, private val movieId: Int, private val language: String) : PagingSource<Int, Trailer>() {
 
@@ -25,10 +23,6 @@ class VideoDataSource(private val movieRepository: MovieRepository, private val 
                 movie_id = movieId
             )
 
-            for (movie in videosResponse.results) {
-                Log.d(TAG, movie.toString())
-            }
-
             val list = videosResponse.results.sortedWith { o1, o2 -> o1.compareTo(o2) }
 
             LoadResult.Page(
@@ -37,7 +31,6 @@ class VideoDataSource(private val movieRepository: MovieRepository, private val 
                 nextKey = null
             )
         } catch (e: Exception) {
-            Log.e(TAG, "launchJob: Exception: $e, ${e.cause}")
             e.printStackTrace()
             LoadResult.Error(e)
         }

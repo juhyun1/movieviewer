@@ -1,13 +1,11 @@
-package com.themovieviewer.presentation.paging
+package com.themovieviewer.core.data.network.datasource
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.themovieviewer.core.model.data.Movie
 import com.themovieviewer.core.data.network.model.MovieDtoMapper
 import com.themovieviewer.core.data.network.response.TopRatedResponse
-import com.themovieviewer.repository.MovieRepository
-import com.themovieviewer.util.TAG
+import com.themovieviewer.core.model.data.Movie
+import com.themovieviewer.core.model.repository.MovieRepository
 
 class TopRatedListDataSource(private val movieRepository: MovieRepository, private val movieDtoMapper: MovieDtoMapper, private val language: String) : PagingSource<Int, Movie>() {
 
@@ -34,7 +32,6 @@ class TopRatedListDataSource(private val movieRepository: MovieRepository, priva
                 nextKey = if (nextPageNumber < movieListResponse.total_pages) nextPageNumber + 1 else null
             )
         } catch (e: Exception) {
-            Log.e(TAG, "launchJob: Exception: $e, ${e.cause}")
             e.printStackTrace()
             LoadResult.Error(e)
         }

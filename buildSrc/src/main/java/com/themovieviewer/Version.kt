@@ -17,5 +17,5 @@ object Versions {
     const val HILT_LIFECYCLE_VIEW_MODEL = "1.0.0-alpha03"
     const val VIEWPAGER2 = "1.0.0"
     const val WORK_KTX = "2.6.0-rc01"
-
+    const val PAGING = "3.1.1"
 }

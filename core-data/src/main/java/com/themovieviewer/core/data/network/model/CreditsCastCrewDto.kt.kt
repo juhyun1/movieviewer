@@ -1,5 +1,9 @@
 package com.themovieviewer.core.data.network.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class CreditsCastCrewDto(
     val adult: Boolean,
     val gender: Int?,
@@ -17,4 +21,4 @@ data class CreditsCastCrewDto(
     // the bellow is crew attribute
     val department: String,
     val job: String
-)
+) : Parcelable

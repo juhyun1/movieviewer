@@ -11,7 +11,6 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.youtube.player.YouTubeStandalonePlayer
 import com.themovieviewer.R
-import com.themovieviewer.core.data.vo.Favorites
 import com.themovieviewer.core.model.data.Trailer
 import com.themovieviewer.core.data.DaoMapper
 import com.themovieviewer.databinding.FragmentMovieDetailsBinding
@@ -149,33 +148,33 @@ class MovieDetailsFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.movie, menu)
     }
-
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-
-        R.id.action_add -> {
-            args.movie.let {
-                val favorite = Favorites(name = it.original_title, kind = "movie", kindId = it.id, date = it.release_date)
-                val favoriteMovie = daoMapper.mapFromDomainModel(it)
-
-                viewModel.insertFavoriteMovie(favorite, favoriteMovie)
-            }
-            true
-        }
-
-        R.id.action_remove -> {
-            args.movie.let {
-                val favorite = Favorites(name = it.original_title, kind = "movie", kindId = it.id, date = it.release_date)
-                val favoriteMovie = daoMapper.mapFromDomainModel(it)
-
-                viewModel.deleteFavoriteMovie(favorite, favoriteMovie)
-                Log.d(TAG, "Inserted Favorite Movie to DB")
-            }
-            true
-        }
-        else -> {
-            super.onOptionsItemSelected(item)
-        }
-    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+//
+//        R.id.action_add -> {
+//            args.movie.let {
+//                val favorite = Favorites(name = it.original_title, kind = "movie", kindId = it.id, date = it.release_date)
+//                val favoriteMovie = daoMapper.mapFromDomainModel(it)
+//
+//                viewModel.insertFavoriteMovie(favorite, favoriteMovie)
+//            }
+//            true
+//        }
+//
+//        R.id.action_remove -> {
+//            args.movie.let {
+//                val favorite = Favorites(name = it.original_title, kind = "movie", kindId = it.id, date = it.release_date)
+//                val favoriteMovie = daoMapper.mapFromDomainModel(it)
+//
+//                viewModel.deleteFavoriteMovie(favorite, favoriteMovie)
+//                Log.d(TAG, "Inserted Favorite Movie to DB")
+//            }
+//            true
+//        }
+//        else -> {
+//            super.onOptionsItemSelected(item)
+//        }
+//    }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)

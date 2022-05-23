@@ -1,4 +1,4 @@
-package com.themovieviewer.core.data.network.response
+package com.themovieviewer.core.model.data.network
 
 import com.themovieviewer.core.data.network.model.CreditsCastCrewDto
 

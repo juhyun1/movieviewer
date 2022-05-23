@@ -1,4 +1,4 @@
-package com.themovieviewer.core.data.network.response
+package com.themovieviewer.core.model.data.network
 
 data class PeopleExternalIdsResponse (
     val imdb_id: String?,

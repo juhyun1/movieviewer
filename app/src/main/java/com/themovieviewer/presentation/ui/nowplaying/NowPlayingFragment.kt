@@ -25,13 +25,15 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class NowPlayingFragment : Fragment() {
+class NowPlayingFragment @Inject constructor(
+    val oneRowAdapter: MovieOneRowAdapter,
+    val application: BaseApplication,
+    val daoMapper: DaoMapper
+) : Fragment() {
 
     private val viewModel: NowPlayingViewModel by viewModels()
     private var _binding: FragmentNowPalyingBinding? = null
-    @Inject lateinit var oneRowAdapter: MovieOneRowAdapter
-    @Inject lateinit var application: BaseApplication
-    @Inject lateinit var daoMapper: DaoMapper
+
 
     //region recyclerview-selection
     private val tracker by lazy {
@@ -78,9 +80,6 @@ class NowPlayingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentNowPalyingBinding.inflate(inflater, container, false)
-
-
-
 
         initAdapter()
         initObserve()

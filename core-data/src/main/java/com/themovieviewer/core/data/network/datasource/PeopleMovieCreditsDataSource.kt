@@ -1,13 +1,11 @@
-package com.themovieviewer.presentation.paging
+package com.themovieviewer.core.data.network.datasource
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.themovieviewer.core.model.data.Movie
 import com.themovieviewer.core.data.network.model.MovieDtoMapper
 import com.themovieviewer.core.data.network.response.PeopleMovieCreditsResponse
-import com.themovieviewer.repository.MovieRepository
-import com.themovieviewer.util.TAG
+import com.themovieviewer.core.model.data.Movie
+import com.themovieviewer.core.model.repository.MovieRepository
 
 class PeopleMovieCreditsDataSource(
     private val movieRepository: MovieRepository,
@@ -37,7 +35,6 @@ class PeopleMovieCreditsDataSource(
                 nextKey = null
             )
         } catch (e: Exception) {
-            Log.e(TAG, "launchJob: Exception: $e, ${e.cause}")
             e.printStackTrace()
             LoadResult.Error(e)
         }

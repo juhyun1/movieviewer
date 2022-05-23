@@ -2,7 +2,11 @@ package com.themovieviewer.presentation.ui.nowplaying
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.themovieviewer.core.data.network.datasource.NowPlayingDataSource
 import com.themovieviewer.core.data.vo.Favorites
 import com.themovieviewer.core.data.vo.FavoritesMovie
 import com.themovieviewer.core.model.data.Movie
@@ -27,9 +31,9 @@ class NowPlayingViewModel @Inject constructor(
     @Inject
     lateinit var insertFavoriteMovieUseCase: InsertFavoriteMovieUseCase
 
-    val nowPlayingList: Flow<PagingData<Movie>> by lazy {
-        getNowPlayingPagerUseCase.execute(scope = viewModelScope, language = language, pageSize = pageSize)
-    }
+    val nowPlayingList: Flow<PagingData<Movie>> = Pager(PagingConfig(pageSize = pageSize)) {
+        getNowPlayingPagerUseCase(language = language) as NowPlayingDataSource
+    }.flow.cachedIn(viewModelScope)
 
     fun insertFavoriteMovie(favorites: Favorites, favoritesMovie: FavoritesMovie) {
         viewModelScope.launch {

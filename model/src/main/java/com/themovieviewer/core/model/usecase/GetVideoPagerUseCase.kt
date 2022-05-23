@@ -5,6 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.themovieviewer.core.model.data.Trailer
+import com.themovieviewer.core.model.repository.MovieRepository
 import com.themovieviewer.core.model.usecase.UseCase
 import com.themovieviewer.network.model.VideosDtoMapper
 import com.themovieviewer.presentation.paging.VideoDataSource
@@ -17,7 +18,7 @@ class GetVideoPagerUseCase(
     private val videosDtoMapper: VideosDtoMapper
 ): UseCase {
 
-    fun execute(scope: CoroutineScope, personId: Int, language: String, pageSize: Int): Flow<PagingData<Trailer>> {
+    operator fun invoke(scope: CoroutineScope, personId: Int, language: String, pageSize: Int): Flow<PagingData<Trailer>> {
         return Pager(PagingConfig(pageSize = pageSize)) {
             VideoDataSource(
                 movieRepository = movieRepository,

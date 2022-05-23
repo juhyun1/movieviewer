@@ -1,4 +1,4 @@
-package com.themovieviewer.core.data.network.response
+package com.themovieviewer.core.model.data.network
 
 import android.text.TextUtils
 import com.themovieviewer.core.model.data.MovieDetail

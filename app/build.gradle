@@ -98,6 +98,7 @@ dependencies {
 
     //WorkManager
     implementation "androidx.work:work-runtime-ktx:${Versions.WORK_KTX}"
+    implementation "androidx.paging:paging-runtime-ktx:${Versions.PAGING}"
 
     implementation(project(":model"))
     implementation(project(":core-data"))
