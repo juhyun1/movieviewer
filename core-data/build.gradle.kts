@@ -53,4 +53,22 @@ dependencies {
     androidTestImplementation("androidx.room:room-testing:${Versions.ROOM}")
     implementation("androidx.paging:paging-runtime-ktx:3.1.1")// For Kotlin use paging-runtime-ktx
 
+    implementation("com.squareup.retrofit2:retrofit:${Versions.RETROFIT}")
+    implementation("com.squareup.retrofit2:converter-gson:${Versions.RETROFIT}")
+    // Retrofit Coroutines Support
+    implementation("com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:${Versions.RETROFIT_COROUTINES}")
+    //Kotlin Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.COROUTINES}")
+
+    implementation(project(":model"))
+
+    // Hilt dependencies
+    implementation("com.google.dagger:hilt-android:${Versions.HILT}")
+    kapt("com.google.dagger:hilt-android-compiler:${Versions.HILT}")
+    implementation("androidx.hilt:hilt-lifecycle-viewmodel:${Versions.HILT_LIFECYCLE_VIEW_MODEL}")
+    kapt("androidx.hilt:hilt-compiler:${Versions.HILT_COMPILER}")
+
+    // Hilt testing dependencies
+    androidTestImplementation("com.google.dagger:hilt-android-testing:${Versions.HILT}")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:${Versions.HILT}")
 }

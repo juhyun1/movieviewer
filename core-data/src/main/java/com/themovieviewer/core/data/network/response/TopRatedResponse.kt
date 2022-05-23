@@ -1,8 +1,8 @@
-package com.themovieviewer.network.response
+package com.themovieviewer.core.data.network.response
 
 import com.google.gson.annotations.SerializedName
-import com.themovieviewer.network.model.DatesDto
-import com.themovieviewer.network.model.MovieDto
+import com.themovieviewer.core.data.network.model.DatesDto
+import com.themovieviewer.core.data.network.model.MovieDto
 
 data class TopRatedResponse(
     @SerializedName("page")

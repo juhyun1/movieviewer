@@ -1,6 +1,6 @@
 package com.themovieviewer.repository
 
-import com.themovieviewer.network.response.*
+import com.themovieviewer.core.data.network.response.*
 
 interface MovieRepository {
     suspend fun getTopRated(language: String?, page: Int): TopRatedResponse

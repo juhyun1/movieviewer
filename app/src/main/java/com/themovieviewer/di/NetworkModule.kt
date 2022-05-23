@@ -2,11 +2,11 @@ package com.themovieviewer.di
 
 import com.google.gson.GsonBuilder
 import com.themovieviewer.network.MovieService
-import com.themovieviewer.network.model.CastCrewDtoMapper
-import com.themovieviewer.network.model.MovieDtoMapper
-import com.themovieviewer.network.model.VideosDtoMapper
-import com.themovieviewer.network.response.MovieDetailMapper
-import com.themovieviewer.network.response.PeopleMapper
+import com.themovieviewer.core.data.network.model.CastCrewDtoMapper
+import com.themovieviewer.core.data.network.model.MovieDtoMapper
+import com.themovieviewer.core.data.network.model.VideosDtoMapper
+import com.themovieviewer.core.data.network.response.MovieDetailMapper
+import com.themovieviewer.core.data.network.response.PeopleMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

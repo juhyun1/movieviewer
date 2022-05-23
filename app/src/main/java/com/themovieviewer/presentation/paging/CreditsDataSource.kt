@@ -3,9 +3,9 @@ package com.themovieviewer.presentation.paging
 import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.themovieviewer.network.model.CreditsCastCrewDto
-import com.themovieviewer.network.model.MovieDtoMapper
-import com.themovieviewer.network.response.MovieCreditsResponse
+import com.themovieviewer.core.data.network.model.CreditsCastCrewDto
+import com.themovieviewer.core.data.network.model.MovieDtoMapper
+import com.themovieviewer.core.data.network.response.MovieCreditsResponse
 import com.themovieviewer.repository.MovieRepository
 import com.themovieviewer.util.TAG
 

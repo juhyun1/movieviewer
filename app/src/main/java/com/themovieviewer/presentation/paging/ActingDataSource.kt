@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.themovieviewer.core.model.data.CastCrew
-import com.themovieviewer.network.model.CastCrewDtoMapper
-import com.themovieviewer.network.response.PeopleMovieCreditsResponse
+import com.themovieviewer.core.data.network.model.CastCrewDtoMapper
+import com.themovieviewer.core.data.network.response.PeopleMovieCreditsResponse
 import com.themovieviewer.repository.MovieRepository
 import com.themovieviewer.util.TAG
 

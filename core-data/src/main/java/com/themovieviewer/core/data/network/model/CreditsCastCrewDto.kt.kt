@@ -1,4 +1,4 @@
-package com.themovieviewer.network.model
+package com.themovieviewer.core.data.network.model
 
 data class CreditsCastCrewDto(
     val adult: Boolean,

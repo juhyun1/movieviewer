@@ -1,14 +1,14 @@
 package com.themovieviewer.di
 
-import com.themovieviewer.data.DaoMapper
+import com.themovieviewer.core.data.DaoMapper
 import com.themovieviewer.domain.usecase.*
-import com.themovieviewer.network.model.CastCrewDtoMapper
-import com.themovieviewer.network.model.MovieDtoMapper
-import com.themovieviewer.network.model.VideosDtoMapper
-import com.themovieviewer.network.response.MovieDetailMapper
-import com.themovieviewer.network.response.PeopleMapper
-import com.themovieviewer.repository.FavoritesMovieRepository
-import com.themovieviewer.repository.FavoritesRepository
+import com.themovieviewer.core.data.network.model.CastCrewDtoMapper
+import com.themovieviewer.core.data.network.model.MovieDtoMapper
+import com.themovieviewer.core.data.network.model.VideosDtoMapper
+import com.themovieviewer.core.data.network.response.MovieDetailMapper
+import com.themovieviewer.core.data.network.response.PeopleMapper
+import com.themovieviewer.core.data.repository.FavoritesMovieRepository
+import com.themovieviewer.core.data.repository.FavoritesRepository
 import com.themovieviewer.repository.MovieRepository
 import dagger.Module
 import dagger.Provides

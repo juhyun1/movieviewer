@@ -3,7 +3,8 @@ package com.themovieviewer.data
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
-import com.themovieviewer.data.vo.FavoritesMovie
+import com.themovieviewer.core.data.BaseDao
+import com.themovieviewer.core.data.vo.FavoritesMovie
 
 @Dao
 interface FavoritesMovieDao : BaseDao<FavoritesMovie> {

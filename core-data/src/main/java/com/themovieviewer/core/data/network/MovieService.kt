@@ -1,6 +1,6 @@
-package com.themovieviewer.network
+package com.themovieviewer.core.data.network
 
-import com.themovieviewer.network.response.*
+import com.themovieviewer.core.data.network.response.*
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

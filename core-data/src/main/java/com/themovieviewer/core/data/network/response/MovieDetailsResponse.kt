@@ -1,9 +1,9 @@
-package com.themovieviewer.network.response
+package com.themovieviewer.core.data.network.response
 
-import com.themovieviewer.network.model.MovieGenresDto
-import com.themovieviewer.network.model.MovieProductionCompaniesDto
-import com.themovieviewer.network.model.MovieProductionCountriesDto
-import com.themovieviewer.network.model.MovieSpokenLanguagesDto
+import com.themovieviewer.core.data.network.model.MovieGenresDto
+import com.themovieviewer.core.data.network.model.MovieProductionCompaniesDto
+import com.themovieviewer.core.data.network.model.MovieProductionCountriesDto
+import com.themovieviewer.core.data.network.model.MovieSpokenLanguagesDto
 
 data class MovieDetailsResponse(
     val adult: Boolean = false,

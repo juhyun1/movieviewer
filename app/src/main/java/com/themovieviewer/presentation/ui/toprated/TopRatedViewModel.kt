@@ -3,8 +3,8 @@ package com.themovieviewer.presentation.ui.toprated
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import com.themovieviewer.domain.model.Movie
-import com.themovieviewer.domain.usecase.GetTopRatedPagerUseCase
+import com.themovieviewer.core.model.data.Movie
+import com.themovieviewer.core.model.usecase.GetTopRatedPagerUseCase
 import com.themovieviewer.presentation.BaseApplication
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow

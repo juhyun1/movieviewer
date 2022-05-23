@@ -1,4 +1,4 @@
-package com.themovieviewer.network.response
+package com.themovieviewer.core.data.network.response
 
 data class PeopleDetailsResponse(
     val birthday: String? = "",

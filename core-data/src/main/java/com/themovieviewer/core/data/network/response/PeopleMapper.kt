@@ -1,4 +1,4 @@
-package com.themovieviewer.network.response
+package com.themovieviewer.core.data.network.response
 
 import com.themovieviewer.core.model.data.People
 import com.themovieviewer.core.model.util.DomainMapper

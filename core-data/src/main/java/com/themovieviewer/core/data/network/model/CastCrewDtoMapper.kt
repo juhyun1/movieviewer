@@ -1,4 +1,4 @@
-package com.themovieviewer.network.model
+package com.themovieviewer.core.data.network.model
 
 import com.themovieviewer.core.model.data.CastCrew
 import com.themovieviewer.core.model.util.DomainMapper

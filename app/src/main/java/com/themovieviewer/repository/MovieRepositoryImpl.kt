@@ -1,5 +1,6 @@
 package com.themovieviewer.repository
 
+import com.themovieviewer.core.data.network.response.*
 import com.themovieviewer.network.MovieService
 import com.themovieviewer.network.response.*
 

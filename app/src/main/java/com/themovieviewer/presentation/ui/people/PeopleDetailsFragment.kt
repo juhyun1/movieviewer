@@ -10,9 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.themovieviewer.data.DaoMapper
+import com.themovieviewer.core.data.DaoMapper
 import com.themovieviewer.databinding.FragmentPeopleBinding
-import com.themovieviewer.network.response.PeopleMapper
 import com.themovieviewer.presentation.BaseApplication
 import com.themovieviewer.presentation.paging.ActingAdapter
 import com.themovieviewer.presentation.paging.MovieRecommendationsAdapter

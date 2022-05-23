@@ -1,8 +1,8 @@
-package com.themovieviewer.data
+package com.themovieviewer.core.data
 
-import com.themovieviewer.data.vo.FavoritesMovie
-import com.themovieviewer.domain.model.Movie
-import com.themovieviewer.domain.util.DomainMapper
+import com.themovieviewer.core.data.vo.FavoritesMovie
+import com.themovieviewer.core.model.data.Movie
+import com.themovieviewer.core.model.util.DomainMapper
 
 class DaoMapper : DomainMapper<FavoritesMovie, Movie> {
     override fun mapToDomainModel(model: FavoritesMovie): Movie {

@@ -2,10 +2,10 @@ package com.themovieviewer.di
 
 import android.content.Context
 import androidx.room.Room
-import com.themovieviewer.data.AppDatabase
-import com.themovieviewer.data.DaoMapper
-import com.themovieviewer.data.FavoritesDao
-import com.themovieviewer.data.FavoritesMovieDao
+import com.themovieviewer.core.data.AppDatabase
+import com.themovieviewer.core.data.DaoMapper
+import com.themovieviewer.core.data.FavoritesDao
+import com.themovieviewer.core.data.FavoritesMovieDao
 import com.themovieviewer.util.DATABASE_NAME
 import dagger.Module
 import dagger.Provides

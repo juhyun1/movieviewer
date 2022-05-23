@@ -3,8 +3,8 @@ package com.themovieviewer.presentation.ui.favorite
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import com.themovieviewer.domain.model.Movie
-import com.themovieviewer.domain.usecase.GetFavoritePagerUseCase
+import com.themovieviewer.core.model.data.Movie
+import com.themovieviewer.core.model.usecase.GetFavoritePagerUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

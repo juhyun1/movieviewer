@@ -1,6 +1,6 @@
-package com.themovieviewer.network.response
+package com.themovieviewer.core.data.network.response
 
-import com.themovieviewer.network.model.CreditsCastCrewDto
+import com.themovieviewer.core.data.network.model.CreditsCastCrewDto
 
 data class MovieCreditsResponse(
     val id: String,

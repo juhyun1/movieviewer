@@ -1,4 +1,4 @@
-package com.themovieviewer.data
+package com.themovieviewer.core.data
 
 import androidx.room.Dao
 import androidx.room.Delete

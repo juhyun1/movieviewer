@@ -11,9 +11,8 @@ import androidx.paging.LoadState
 import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.themovieviewer.R
-import com.themovieviewer.data.DaoMapper
+import com.themovieviewer.core.data.DaoMapper
 import com.themovieviewer.databinding.FragmentNowPalyingBinding
 import com.themovieviewer.presentation.BaseApplication
 import com.themovieviewer.presentation.paging.MovieOneRowAdapter
@@ -22,7 +21,6 @@ import com.themovieviewer.util.TAG
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.lang.String
 import javax.inject.Inject
 
 

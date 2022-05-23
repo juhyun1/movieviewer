@@ -11,10 +11,10 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.youtube.player.YouTubeStandalonePlayer
 import com.themovieviewer.R
-import com.themovieviewer.data.DaoMapper
-import com.themovieviewer.data.vo.Favorites
+import com.themovieviewer.core.data.vo.Favorites
+import com.themovieviewer.core.model.data.Trailer
+import com.themovieviewer.core.data.DaoMapper
 import com.themovieviewer.databinding.FragmentMovieDetailsBinding
-import com.themovieviewer.domain.model.Trailer
 import com.themovieviewer.presentation.BaseApplication
 import com.themovieviewer.presentation.paging.CreditsAdapter
 import com.themovieviewer.presentation.paging.MovieRecommendationsAdapter

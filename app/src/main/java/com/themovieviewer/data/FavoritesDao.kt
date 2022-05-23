@@ -2,7 +2,8 @@ package com.themovieviewer.data
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.themovieviewer.data.vo.Favorites
+import com.themovieviewer.core.data.BaseDao
+import com.themovieviewer.core.data.vo.Favorites
 
 @Dao
 interface FavoritesDao : BaseDao<Favorites> {

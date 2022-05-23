@@ -1,10 +1,10 @@
 package com.themovieviewer.di
 
-import com.themovieviewer.data.FavoritesDao
-import com.themovieviewer.data.FavoritesMovieDao
+import com.themovieviewer.core.data.FavoritesDao
+import com.themovieviewer.core.data.FavoritesMovieDao
 import com.themovieviewer.network.MovieService
-import com.themovieviewer.repository.FavoritesMovieRepository
-import com.themovieviewer.repository.FavoritesRepository
+import com.themovieviewer.core.data.repository.FavoritesMovieRepository
+import com.themovieviewer.core.data.repository.FavoritesRepository
 import com.themovieviewer.repository.MovieRepository
 import com.themovieviewer.core.data.repository.MovieRepositoryImpl
 import dagger.Module

@@ -4,10 +4,10 @@ import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.themovieviewer.core.model.data.Movie
-import com.themovieviewer.data.DaoMapper
-import com.themovieviewer.data.vo.FavoritesMovie
-import com.themovieviewer.repository.FavoritesMovieRepository
-import com.themovieviewer.repository.FavoritesRepository
+import com.themovieviewer.core.data.DaoMapper
+import com.themovieviewer.core.data.vo.FavoritesMovie
+import com.themovieviewer.core.data.repository.FavoritesMovieRepository
+import com.themovieviewer.core.data.repository.FavoritesRepository
 import com.themovieviewer.util.TAG
 
 class FavoritesDataSource(private val favoritesRepository: FavoritesRepository, private val favoritesMovieRepository: FavoritesMovieRepository, private val daoMapper: DaoMapper) : PagingSource<Int, Movie>() {

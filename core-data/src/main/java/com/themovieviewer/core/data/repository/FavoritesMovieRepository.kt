@@ -1,9 +1,9 @@
-package com.themovieviewer.repository
+package com.themovieviewer.core.data.repository
 
 import androidx.annotation.WorkerThread
 import androidx.paging.PagingSource
-import com.themovieviewer.data.FavoritesMovieDao
-import com.themovieviewer.data.vo.FavoritesMovie
+import com.themovieviewer.core.data.FavoritesMovieDao
+import com.themovieviewer.core.data.vo.FavoritesMovie
 import javax.inject.Inject
 
 class FavoritesMovieRepository @Inject constructor(private val favoritesMovieDao: FavoritesMovieDao) {

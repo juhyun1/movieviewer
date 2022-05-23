@@ -1,7 +1,8 @@
 package com.themovieviewer.core.data.repository
 
-import com.themovieviewer.network.MovieService
-import com.themovieviewer.network.response.*
+import com.themovieviewer.core.data.network.MovieService
+import com.themovieviewer.core.data.network.response.*
+import com.themovieviewer.core.model.repository.MovieRepository
 
 class MovieRepositoryImpl(
     private val movieService: MovieService

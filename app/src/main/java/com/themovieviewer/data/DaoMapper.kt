@@ -2,7 +2,7 @@ package com.themovieviewer.data
 
 import com.themovieviewer.core.model.data.Movie
 import com.themovieviewer.core.model.util.DomainMapper
-import com.themovieviewer.data.vo.FavoritesMovie
+import com.themovieviewer.core.data.vo.FavoritesMovie
 
 class DaoMapper : DomainMapper<FavoritesMovie, Movie> {
     override fun mapToDomainModel(model: FavoritesMovie): Movie {
