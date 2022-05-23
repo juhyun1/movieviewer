@@ -1,4 +1,4 @@
-package com.themovieviewer.core.model.data.network
+package com.themovieviewer.core.data.network.response
 
 import com.themovieviewer.core.data.network.model.MovieGenresDto
 import com.themovieviewer.core.data.network.model.MovieProductionCompaniesDto

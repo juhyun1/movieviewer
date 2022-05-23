@@ -1,10 +1,11 @@
 package com.themovieviewer.core.model.repository
 
-import com.themovieviewer.core.model.data.network.*
+import com.themovieviewer.core.model.data.Movie
+import com.themovieviewer.core.model.data.PageData
 
 interface MovieRepository {
     suspend fun getTopRated(language: String?, page: Int): TopRatedResponse
-    suspend fun getNowPlaying(language: String, page: Int): TopRatedResponse
+    suspend fun getNowPlaying(language: String, page: Int): PageData<Movie>
     suspend fun getPopular(language: String?, page: Int): TopRatedResponse
     suspend fun getMovieDetails(language: String, movie_id: Int): MovieDetailsResponse
     suspend fun getVideos(language: String, movie_id: Int): VideosResponse

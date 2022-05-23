@@ -1,7 +1,6 @@
 package com.themovieviewer.core.model.usecase
 
 import com.themovieviewer.core.model.data.People
-import com.themovieviewer.core.model.usecase.UseCase
 import com.themovieviewer.network.response.PeopleMapper
 import com.themovieviewer.repository.MovieRepository
 

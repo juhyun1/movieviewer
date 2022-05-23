@@ -1,11 +1,15 @@
 package com.themovieviewer.core.data.repository
 
 import com.themovieviewer.core.data.network.MovieService
+import com.themovieviewer.core.data.network.model.MovieDtoMapper
 import com.themovieviewer.core.data.network.response.*
+import com.themovieviewer.core.model.data.Movie
+import com.themovieviewer.core.model.data.PageData
 import com.themovieviewer.core.model.repository.MovieRepository
 
 class MovieRepositoryImpl(
-    private val movieService: MovieService
+    private val movieService: MovieService,
+    private val movieDtoMapper: MovieDtoMapper
 ) : MovieRepository {
 
 //    https://developers.themoviedb.org/3/getting-started/introduction
@@ -15,8 +19,9 @@ class MovieRepositoryImpl(
         return movieService.topRated(api_key = apiKey, language = language, page = page)
     }
 
-    override suspend fun getNowPlaying(language: String, page: Int): TopRatedResponse {
-        return movieService.nowPlaying(api_key = apiKey, language = language, page = page)
+    override suspend fun getNowPlaying(language: String, page: Int): PageData<Movie> {
+        val movieListResponse: TopRatedResponse = movieService.nowPlaying(api_key = apiKey, language = language, page = page)
+        return PageData(list = movieDtoMapper.toDomainList(movieListResponse.results), pageCount = movieListResponse.total_pages)
     }
 
     override suspend fun getPopular(language: String?, page: Int): TopRatedResponse {
