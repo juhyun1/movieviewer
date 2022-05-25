@@ -47,4 +47,11 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
 
     implementation("androidx.paging:paging-runtime-ktx:${Versions.PAGING}")
+
+    //Room
+    implementation("androidx.room:room-runtime:${Versions.ROOM}")
+    implementation("androidx.room:room-ktx:${Versions.ROOM}")
+    implementation("androidx.room:room-paging:${Versions.ROOM}")
+    kapt("androidx.room:room-compiler:${Versions.ROOM}")
+    androidTestImplementation("androidx.room:room-testing:${Versions.ROOM}")
 }

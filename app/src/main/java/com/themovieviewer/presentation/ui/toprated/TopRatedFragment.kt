@@ -116,11 +116,11 @@ class TopRatedFragment : Fragment() {
     }
 
     private fun initObserve() {
-        lifecycleScope.launch {
-            viewModel.topRatedList.collectLatest { pagedData ->
-                oneRowAdapter.submitData(pagedData)
-            }
-        }
+//        lifecycleScope.launch {
+//            viewModel.topRatedList.collectLatest { pagedData ->
+//                oneRowAdapter.submitData(pagedData)
+//            }
+//        }
     }
 
     override fun onDestroyView() {

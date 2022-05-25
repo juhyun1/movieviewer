@@ -93,30 +93,30 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun initObserve() {
-        lifecycleScope.launch {
-            viewModel.creditsList.collectLatest { pagedData ->
-                creditsAdapter.submitData(pagedData)
-            }
-        }
-
-        lifecycleScope.launch {
-            viewModel.movieList.collectLatest { pagedData ->
-                movieRecommendationsAdapter.submitData(pagedData)
-            }
-        }
-
-        lifecycleScope.launch {
-            viewModel.videoList.collectLatest { pagedData ->
-                videosAdapter.submitData(pagedData)
-            }
-        }
-
-        viewModel.initDataDone.observe(viewLifecycleOwner) {
-            if (it) {
-                binding.viewModel = viewModel.movieDetail
-                binding.executePendingBindings()
-            }
-        }
+//        lifecycleScope.launch {
+//            viewModel.creditsList.collectLatest { pagedData ->
+//                creditsAdapter.submitData(pagedData)
+//            }
+//        }
+//
+//        lifecycleScope.launch {
+//            viewModel.movieList.collectLatest { pagedData ->
+//                movieRecommendationsAdapter.submitData(pagedData)
+//            }
+//        }
+//
+//        lifecycleScope.launch {
+//            viewModel.videoList.collectLatest { pagedData ->
+//                videosAdapter.submitData(pagedData)
+//            }
+//        }
+//
+//        viewModel.initDataDone.observe(viewLifecycleOwner) {
+//            if (it) {
+//                binding.viewModel = viewModel.movieDetail
+//                binding.executePendingBindings()
+//            }
+//        }
     }
     private fun playTrailer(trailer: Trailer) {
         trailer.let{
@@ -133,11 +133,11 @@ class MovieDetailsFragment : Fragment() {
     }
 
     fun clickOnPoster(view: View) {
-        if (view.tag == "thumbnailPoster") {
-            viewModel.showPoster(true)
-        } else {
-            viewModel.showPoster(false)
-        }
+//        if (view.tag == "thumbnailPoster") {
+//            viewModel.showPoster(true)
+//        } else {
+//            viewModel.showPoster(false)
+//        }
     }
 
     override fun onDestroyView() {

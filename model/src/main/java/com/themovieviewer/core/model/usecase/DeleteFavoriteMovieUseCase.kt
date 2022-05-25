@@ -1,17 +1,9 @@
 package com.themovieviewer.core.model.usecase
 
 import com.themovieviewer.core.model.data.Favorites
-import com.themovieviewer.data.vo.FavoritesMovie
-import com.themovieviewer.repository.FavoritesMovieRepository
-import com.themovieviewer.repository.FavoritesRepository
+import com.themovieviewer.core.model.data.vo.FavoritesMovieVo
 
-class DeleteFavoriteMovieUseCase(
-    private val favoritesRepository: FavoritesRepository,
-    private val favoritesMovieRepository: FavoritesMovieRepository
-): UseCase {
+interface DeleteFavoriteMovieUseCase {
 
-    suspend fun execute(favorites: Favorites, favoritesMovie: FavoritesMovie) {
-        favoritesRepository.deleteFavorites(favorites)
-        favoritesMovieRepository.deleteFavoritesMovie(favoritesMovie)
-    }
+    suspend fun invoke(favorites: Favorites, favoritesMovie: FavoritesMovieVo)
 }

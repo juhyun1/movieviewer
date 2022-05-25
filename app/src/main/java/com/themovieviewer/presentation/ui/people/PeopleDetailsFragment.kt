@@ -75,23 +75,23 @@ class PeopleDetailsFragment : Fragment() {
     }
 
     private fun initObserve() {
-        lifecycleScope.launch {
-            viewModel.movieList.collectLatest { pagedData ->
-                movieRecommendationsAdapter.submitData(pagedData)
-            }
-        }
-
-        lifecycleScope.launch {
-            viewModel.actingList.collectLatest { pagedData ->
-                actingAdapter.submitData(pagedData)
-            }
-        }
-
-        viewModel.initModelDone.observe(viewLifecycleOwner) {
-            if (it) {
-                binding.model = viewModel.model
-            }
-        }
+//        lifecycleScope.launch {
+//            viewModel.movieList.collectLatest { pagedData ->
+//                movieRecommendationsAdapter.submitData(pagedData)
+//            }
+//        }
+//
+//        lifecycleScope.launch {
+//            viewModel.actingList.collectLatest { pagedData ->
+//                actingAdapter.submitData(pagedData)
+//            }
+//        }
+//
+//        viewModel.initModelDone.observe(viewLifecycleOwner) {
+//            if (it) {
+//                binding.model = viewModel.model
+//            }
+//        }
     }
 
     override fun onDestroyView() {

@@ -18,13 +18,18 @@ class CreditsDataSource(private val movieRepository: MovieRepository, private va
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CreditsCastCrewDto> {
         return try {
-            val movieCreditsResponse: MovieCreditsResponse = movieRepository.getMovieCredits(
-                language = language,
-                movie_id = movieId
-            )
-
+//            val movieCreditsResponse: MovieCreditsResponse = movieRepository.getMovieCredits(
+//                language = language,
+//                movie_id = movieId
+//            )
+//
+//            LoadResult.Page(
+//                data = movieCreditsResponse.cast,
+//                prevKey = null,
+//                nextKey = null
+//            )
             LoadResult.Page(
-                data = movieCreditsResponse.cast,
+                data = emptyList(),
                 prevKey = null,
                 nextKey = null
             )

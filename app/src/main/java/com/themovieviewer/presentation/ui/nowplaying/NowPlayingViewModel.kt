@@ -7,11 +7,10 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.themovieviewer.core.data.network.datasource.NowPlayingDataSource
-import com.themovieviewer.core.data.vo.Favorites
-import com.themovieviewer.core.data.vo.FavoritesMovie
 import com.themovieviewer.core.model.data.Movie
+import com.themovieviewer.core.model.data.vo.FavoritesMovieVo
+import com.themovieviewer.core.model.data.vo.FavoritesVo
 import com.themovieviewer.core.model.usecase.GetNowPlayingPagerUseCase
-import com.themovieviewer.core.model.usecase.InsertFavoriteMovieUseCase
 import com.themovieviewer.presentation.BaseApplication
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -28,16 +27,16 @@ class NowPlayingViewModel @Inject constructor(
 
     @Inject
     lateinit var getNowPlayingPagerUseCase: GetNowPlayingPagerUseCase
-    @Inject
-    lateinit var insertFavoriteMovieUseCase: InsertFavoriteMovieUseCase
+//    @Inject
+//    lateinit var insertFavoriteMovieUseCase: InsertFavoriteMovieUseCase
 
     val nowPlayingList: Flow<PagingData<Movie>> = Pager(PagingConfig(pageSize = pageSize)) {
         getNowPlayingPagerUseCase(language = language) as NowPlayingDataSource
     }.flow.cachedIn(viewModelScope)
 
-    fun insertFavoriteMovie(favorites: Favorites, favoritesMovie: FavoritesMovie) {
+    fun insertFavoriteMovie(favoritesDto: FavoritesVo, favoritesMovie: FavoritesMovieVo) {
         viewModelScope.launch {
-            insertFavoriteMovieUseCase.execute(favorites, favoritesMovie)
+//            insertFavoriteMovieUseCase.execute(favoritesDto, favoritesMovie)
         }
     }
 }

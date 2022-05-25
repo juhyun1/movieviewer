@@ -18,15 +18,20 @@ class VideoDataSource(private val movieRepository: MovieRepository, private val 
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Trailer> {
         return try {
-            val videosResponse: VideosResponse = movieRepository.getVideos(
-                language = language,
-                movie_id = movieId
-            )
-
-            val list = videosResponse.results.sortedWith { o1, o2 -> o1.compareTo(o2) }
-
+//            val videosResponse: VideosResponse = movieRepository.getVideos(
+//                language = language,
+//                movie_id = movieId
+//            )
+//
+//            val list = videosResponse.results.sortedWith { o1, o2 -> o1.compareTo(o2) }
+//
+//            LoadResult.Page(
+//                data = videosDtoMapper.toDomainList(list),
+//                prevKey = null,
+//                nextKey = null
+//            )
             LoadResult.Page(
-                data = videosDtoMapper.toDomainList(list),
+                data = emptyList(),
                 prevKey = null,
                 nextKey = null
             )

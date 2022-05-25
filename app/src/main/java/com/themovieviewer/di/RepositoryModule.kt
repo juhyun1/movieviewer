@@ -5,7 +5,7 @@ import com.themovieviewer.core.data.FavoritesMovieDao
 import com.themovieviewer.core.data.repository.FavoritesMovieRepository
 import com.themovieviewer.core.data.repository.FavoritesRepository
 import com.themovieviewer.core.data.repository.MovieRepositoryImpl
-import com.themovieviewer.repository.MovieRepository
+import com.themovieviewer.core.model.repository.MovieRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -43,5 +43,5 @@ object RepositoryModule {
 @Module
 interface RepositoryModule2 {
     @Binds
-    fun bindMovieRepository(impl: MovieRepository): MovieRepositoryImpl
+    fun bindMovieRepository(impl: MovieRepositoryImpl): MovieRepository
 }

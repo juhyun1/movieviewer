@@ -4,11 +4,11 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.themovieviewer.core.data.util.Converters
-import com.themovieviewer.core.data.vo.Favorites
-import com.themovieviewer.core.data.vo.FavoritesMovie
+import com.themovieviewer.core.model.data.vo.FavoritesVo
+import com.themovieviewer.core.model.data.vo.FavoritesMovieVo
 
 @TypeConverters(Converters::class)
-@Database(entities = [FavoritesMovie::class, Favorites::class], version = 1, exportSchema = false)
+@Database(entities = [FavoritesMovieVo::class, FavoritesVo::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun favoritesMovieDao(): FavoritesMovieDao
     abstract fun favoritesDao(): FavoritesDao

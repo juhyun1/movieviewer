@@ -4,14 +4,14 @@ import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
 import com.themovieviewer.core.data.BaseDao
-import com.themovieviewer.core.data.vo.FavoritesMovie
+import com.themovieviewer.core.model.data.vo.FavoritesMovieVo
 
 @Dao
-interface FavoritesMovieDao : BaseDao<FavoritesMovie> {
+interface FavoritesMovieDao : BaseDao<FavoritesMovieVo> {
 
     @Query("SELECT * FROM movies")
-    fun getFavoritesMovies(): PagingSource<Int, FavoritesMovie>
+    fun getFavoritesMovies(): PagingSource<Int, FavoritesMovieVo>
 
     @Query("SELECT * FROM movies WHERE id = :id")
-    fun getFavoritesMovies(id: Int): FavoritesMovie
+    fun getFavoritesMovies(id: Int): FavoritesMovieVo
 }

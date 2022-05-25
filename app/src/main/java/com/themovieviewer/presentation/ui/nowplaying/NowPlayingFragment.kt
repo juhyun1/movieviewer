@@ -26,10 +26,15 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class NowPlayingFragment @Inject constructor(
-    val oneRowAdapter: MovieOneRowAdapter,
-    val application: BaseApplication,
-    val daoMapper: DaoMapper
+
 ) : Fragment() {
+
+    @Inject
+    lateinit var oneRowAdapter: MovieOneRowAdapter
+    @Inject
+    lateinit var application: BaseApplication
+    @Inject
+    lateinit var daoMapper: DaoMapper
 
     private val viewModel: NowPlayingViewModel by viewModels()
     private var _binding: FragmentNowPalyingBinding? = null

@@ -18,18 +18,23 @@ class PopularDataSource(private val movieRepository: MovieRepository, private va
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
         return try {
-            val nextPageNumber = params.key ?: 0
-            val requestPage = nextPageNumber + 1
-
-            val movieListResponse: TopRatedResponse = movieRepository.getPopular(
-                language = language,
-                page = requestPage
-            )
-
+//            val nextPageNumber = params.key ?: 0
+//            val requestPage = nextPageNumber + 1
+//
+//            val movieListResponse: TopRatedResponse = movieRepository.getPopular(
+//                language = language,
+//                page = requestPage
+//            )
+//
+//            LoadResult.Page(
+//                data = movieDtoMapper.toDomainList(movieListResponse.results),
+//                prevKey = if (nextPageNumber > 0) nextPageNumber - 1 else null,
+//                nextKey = if (nextPageNumber < movieListResponse.total_pages) nextPageNumber + 1 else null
+//            )
             LoadResult.Page(
-                data = movieDtoMapper.toDomainList(movieListResponse.results),
-                prevKey = if (nextPageNumber > 0) nextPageNumber - 1 else null,
-                nextKey = if (nextPageNumber < movieListResponse.total_pages) nextPageNumber + 1 else null
+                data = emptyList(),
+                prevKey = null,
+                nextKey = null
             )
         } catch (e: Exception) {
             e.printStackTrace()

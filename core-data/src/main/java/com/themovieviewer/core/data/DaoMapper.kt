@@ -1,11 +1,11 @@
 package com.themovieviewer.core.data
 
-import com.themovieviewer.core.data.vo.FavoritesMovie
+import com.themovieviewer.core.model.data.vo.FavoritesMovieVo
 import com.themovieviewer.core.model.data.Movie
 import com.themovieviewer.core.model.util.DomainMapper
 
-class DaoMapper : DomainMapper<FavoritesMovie, Movie> {
-    override fun mapToDomainModel(model: FavoritesMovie): Movie {
+class DaoMapper : DomainMapper<FavoritesMovieVo, Movie> {
+    override fun mapToDomainModel(model: FavoritesMovieVo): Movie {
         return Movie(
             poster_path = model.poster_path,
             adult = model.adult,
@@ -24,8 +24,8 @@ class DaoMapper : DomainMapper<FavoritesMovie, Movie> {
         )
     }
 
-    override fun mapFromDomainModel(domainModel: Movie): FavoritesMovie {
-        return FavoritesMovie(
+    override fun mapFromDomainModel(domainModel: Movie): FavoritesMovieVo {
+        return FavoritesMovieVo(
             poster_path = domainModel.poster_path,
             adult = domainModel.adult,
             overview = domainModel.overview,
@@ -41,11 +41,11 @@ class DaoMapper : DomainMapper<FavoritesMovie, Movie> {
         )
     }
 
-    fun toDomainList(initial: List<FavoritesMovie>): List<Movie> {
+    fun toDomainList(initial: List<FavoritesMovieVo>): List<Movie> {
         return initial.map { mapToDomainModel(it) }
     }
 
-    fun fromDomainList(initial: List<Movie>): List<FavoritesMovie> {
+    fun fromDomainList(initial: List<Movie>): List<FavoritesMovieVo> {
         return initial.map { mapFromDomainModel(it) }
     }
 }

@@ -107,11 +107,11 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun initObserve() {
-        lifecycleScope.launch() {
-            viewModel.favoritesList.collectLatest { pagedData ->
-                oneRowAdapter.submitData(pagedData)
-            }
-        }
+//        lifecycleScope.launch() {
+//            viewModel.favoritesList.collectLatest { pagedData ->
+//                oneRowAdapter.submitData(pagedData)
+//            }
+//        }
     }
 
     override fun onDestroyView() {

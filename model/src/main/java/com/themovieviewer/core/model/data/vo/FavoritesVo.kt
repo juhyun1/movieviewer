@@ -1,11 +1,11 @@
-package com.themovieviewer.data.vo
+package com.themovieviewer.core.model.data.vo
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "favorites")
-data class Favorites(
+data class FavoritesVo(
     @PrimaryKey @ColumnInfo(name = "id") val kindId: Int,
     val name: String,
     val kind: String,

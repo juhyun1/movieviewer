@@ -22,15 +22,20 @@ class PeopleMovieCreditsDataSource(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
         return try {
-            val peopleMovieCreditsResponse: PeopleMovieCreditsResponse = movieRepository.getPeopleMovieCredits(
-                language = language,
-                person_id = personId,
-            )
-
-            val cast = peopleMovieCreditsResponse.cast.sortedWith { o1, o2 -> o1.compareTo(o2)}
-
+//            val peopleMovieCreditsResponse: PeopleMovieCreditsResponse = movieRepository.getPeopleMovieCredits(
+//                language = language,
+//                person_id = personId,
+//            )
+//
+//            val cast = peopleMovieCreditsResponse.cast.sortedWith { o1, o2 -> o1.compareTo(o2)}
+//
+//            LoadResult.Page(
+//                data = movieDtoMapper.toDomainList(cast),
+//                prevKey = null,
+//                nextKey = null
+//            )
             LoadResult.Page(
-                data = movieDtoMapper.toDomainList(cast),
+                data = emptyList(),
                 prevKey = null,
                 nextKey = null
             )

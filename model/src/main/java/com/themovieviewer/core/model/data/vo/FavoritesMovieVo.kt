@@ -1,10 +1,10 @@
-package com.themovieviewer.core.data.vo
+package com.themovieviewer.core.model.data.vo
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "movies")
-data class FavoritesMovie(
+data class FavoritesMovieVo(
     @PrimaryKey val id: Int,
     val poster_path: String?,
     val adult: Boolean,
