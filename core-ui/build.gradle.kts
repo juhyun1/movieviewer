@@ -3,16 +3,16 @@ import com.themovieviewer.Versions
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    kotlin("kapt")
-    id("kotlin-parcelize")
     id("dagger.hilt.android.plugin")
+    kotlin("kapt")
+    kotlin("plugin.serialization") version "1.6.21"
 }
 
 android {
     compileSdk = 32
 
     defaultConfig {
-        minSdk = 27
+        minSdk = 21
         targetSdk = 32
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -35,32 +35,46 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion =  Versions.COMPOSE
+    }
 }
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.appcompat:appcompat:1.4.1")
     implementation("com.google.android.material:material:1.6.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
 
-    implementation("androidx.room:room-runtime:${Versions.ROOM}")
-    implementation("androidx.room:room-ktx:${Versions.ROOM}")
-    implementation("androidx.room:room-paging:${Versions.ROOM}")
-    kapt("androidx.room:room-compiler:${Versions.ROOM}")
-    androidTestImplementation("androidx.room:room-testing:${Versions.ROOM}")
-    implementation("androidx.paging:paging-runtime-ktx:3.1.1")// For Kotlin use paging-runtime-ktx
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:${Versions.KOTLIN_VERSION}")
+    implementation("androidx.core:core-ktx:${Versions.CORE_KTX}")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:${Versions.LIFECYCLE_KTX}")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.LIFECYCLE_KTX}")
+    implementation("androidx.navigation:navigation-fragment-ktx:${Versions.NAVIGATION_KTX}")
+    implementation("androidx.navigation:navigation-ui-ktx:${Versions.NAVIGATION_KTX}")
+    implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
 
-    implementation("com.squareup.retrofit2:retrofit:${Versions.RETROFIT}")
-    implementation("com.squareup.retrofit2:converter-gson:${Versions.RETROFIT}")
-    // Retrofit Coroutines Support
-    implementation("com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:${Versions.RETROFIT_COROUTINES}")
-    //Kotlin Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.COROUTINES}")
+    // Compose
+    implementation("androidx.compose.runtime:runtime:${Versions.COMPOSE}")
+    implementation("androidx.compose.foundation:foundation-layout:${Versions.COMPOSE}")
+    implementation("androidx.compose.runtime:runtime-livedata:${Versions.COMPOSE}")
+    implementation("androidx.compose.ui:ui:${Versions.COMPOSE}")
+    implementation("androidx.compose.ui:ui-tooling-preview:${Versions.COMPOSE}")
+    implementation("androidx.compose.ui:ui-test-junit4:${Versions.COMPOSE}")
+    implementation("androidx.activity:activity-compose:1.4.0")
+    implementation("androidx.navigation:navigation-compose:${Versions.NAVIGATION_COMPOSE}")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.VIEWMODEL_COMPOSE}")
 
-    implementation(project(":model"))
+    //material
+    implementation("androidx.compose.material:material-icons-extended:${Versions.COMPOSE}")
+    implementation("androidx.compose.material3:material3:${Versions.MATERIAL3}")
+    implementation("androidx.compose.material3:material3-window-size-class:${Versions.MATERIAL3}")
 
     // Dagger Core
     implementation("com.google.dagger:dagger:${Versions.HILT}")
@@ -81,4 +95,6 @@ dependencies {
     androidTestImplementation("com.google.dagger:hilt-android-testing:${Versions.HILT}")
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:${Versions.HILT}")
 
+    //kotlin serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
 }

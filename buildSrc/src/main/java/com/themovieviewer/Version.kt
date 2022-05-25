@@ -18,4 +18,8 @@ object Versions {
     const val VIEWPAGER2 = "1.0.0"
     const val WORK_KTX = "2.6.0-rc01"
     const val PAGING = "3.1.1"
+    const val MATERIAL3 = "1.0.0-alpha10"
+    const val COMPOSE = "1.2.0-alpha07"
+    const val NAVIGATION_COMPOSE = "2.5.0-alpha04"
+    const val VIEWMODEL_COMPOSE = "2.4.1"
 }
