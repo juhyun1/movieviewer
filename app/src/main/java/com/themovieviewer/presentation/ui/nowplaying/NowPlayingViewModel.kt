@@ -11,7 +11,7 @@ import com.themovieviewer.core.model.data.Movie
 import com.themovieviewer.core.model.data.vo.FavoritesMovieVo
 import com.themovieviewer.core.model.data.vo.FavoritesVo
 import com.themovieviewer.core.model.usecase.GetNowPlayingPagerUseCase
-import com.themovieviewer.presentation.BaseApplication
+import com.themovieviewer.BaseApplication
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch

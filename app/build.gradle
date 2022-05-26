@@ -85,15 +85,16 @@ dependencies {
     //Kotlin Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.COROUTINES}"
 
-    // Hilt dependencies
-    implementation "com.google.dagger:hilt-android:${Versions.HILT}"
-    kapt "com.google.dagger:hilt-android-compiler:${Versions.HILT}"
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:${Versions.HILT_LIFECYCLE_VIEW_MODEL}"
-    kapt "androidx.hilt:hilt-compiler:${Versions.HILT_COMPILER}"
+    // Dagger - Hilt
+    implementation("com.google.dagger:hilt-android:${Versions.HILT}")
+    kapt("com.google.dagger:hilt-android-compiler:${Versions.HILT}")
+    implementation("androidx.hilt:hilt-lifecycle-viewmodel:${Versions.HILT_LIFECYCLE_VIEW_MODEL}")
+    kapt("androidx.hilt:hilt-compiler:${Versions.HILT_COMPILER}")
 
     // Hilt testing dependencies
-    androidTestImplementation "com.google.dagger:hilt-android-testing:${Versions.HILT}"
-    kaptAndroidTest "com.google.dagger:hilt-android-compiler:${Versions.HILT}"
+    androidTestImplementation("com.google.dagger:hilt-android-testing:${Versions.HILT}")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:${Versions.HILT}")
+
 
     //GLIDE
     implementation "com.github.bumptech.glide:glide:${Versions.GLIDE}"
@@ -126,7 +127,9 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:${Versions.NAVIGATION_COMPOSE}")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.VIEWMODEL_COMPOSE}")
 
-    implementation(project(":model"))
+    implementation(project(":core-model"))
     implementation(project(":core-data"))
     implementation(project(":core-ui"))
+    implementation(project(":core-common"))
+    implementation(project(":feature-movielist"))
 }

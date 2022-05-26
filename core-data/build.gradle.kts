@@ -79,6 +79,6 @@ dependencies {
     androidTestImplementation("com.google.dagger:hilt-android-testing:${Versions.HILT}")
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:${Versions.HILT}")
 
-    implementation(project(":model"))
+    implementation(project(":core-model"))
 
 }

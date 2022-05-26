@@ -1,4 +1,4 @@
-package com.themovieviewer.presentation
+package com.themovieviewer
 
 import android.app.Application
 import com.themovieviewer.core.model.data.Movie

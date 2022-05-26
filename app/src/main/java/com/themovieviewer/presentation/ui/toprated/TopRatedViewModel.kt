@@ -1,7 +1,7 @@
 package com.themovieviewer.presentation.ui.toprated
 
 import androidx.lifecycle.ViewModel
-import com.themovieviewer.presentation.BaseApplication
+import com.themovieviewer.BaseApplication
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

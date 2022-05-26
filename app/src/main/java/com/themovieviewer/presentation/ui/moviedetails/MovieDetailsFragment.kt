@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
@@ -14,14 +13,12 @@ import com.themovieviewer.R
 import com.themovieviewer.core.model.data.Trailer
 import com.themovieviewer.core.data.DaoMapper
 import com.themovieviewer.databinding.FragmentMovieDetailsBinding
-import com.themovieviewer.presentation.BaseApplication
+import com.themovieviewer.BaseApplication
 import com.themovieviewer.presentation.paging.CreditsAdapter
 import com.themovieviewer.presentation.paging.MovieRecommendationsAdapter
 import com.themovieviewer.presentation.paging.VideosAdapter
 import com.themovieviewer.util.TAG
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint

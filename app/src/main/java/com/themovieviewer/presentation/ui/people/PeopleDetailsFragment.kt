@@ -7,18 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.themovieviewer.core.data.DaoMapper
 import com.themovieviewer.databinding.FragmentPeopleBinding
-import com.themovieviewer.presentation.BaseApplication
+import com.themovieviewer.BaseApplication
 import com.themovieviewer.presentation.paging.ActingAdapter
 import com.themovieviewer.presentation.paging.MovieRecommendationsAdapter
 import com.themovieviewer.util.TAG
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint

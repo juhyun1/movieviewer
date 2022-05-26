@@ -14,7 +14,7 @@ import androidx.recyclerview.selection.StorageStrategy
 import com.themovieviewer.R
 import com.themovieviewer.core.data.DaoMapper
 import com.themovieviewer.databinding.FragmentNowPalyingBinding
-import com.themovieviewer.presentation.BaseApplication
+import com.themovieviewer.BaseApplication
 import com.themovieviewer.presentation.paging.MovieOneRowAdapter
 import com.themovieviewer.presentation.ui.main.MainFragmentDirections
 import com.themovieviewer.util.TAG

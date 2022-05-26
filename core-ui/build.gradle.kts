@@ -3,7 +3,7 @@ import com.themovieviewer.Versions
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-//    id("dagger.hilt.android.plugin")
+    id("dagger.hilt.android.plugin")
     kotlin("kapt")
     kotlin("plugin.serialization") version "1.6.21"
 }
@@ -87,14 +87,14 @@ dependencies {
 //    kapt("com.google.dagger:dagger-android-processor:${Versions.HILT}")
 
     // Dagger - Hilt
-//    implementation("com.google.dagger:hilt-android:${Versions.HILT}")
-//    kapt("com.google.dagger:hilt-android-compiler:${Versions.HILT}")
-//    implementation("androidx.hilt:hilt-lifecycle-viewmodel:${Versions.HILT_LIFECYCLE_VIEW_MODEL}")
-//    kapt("androidx.hilt:hilt-compiler:${Versions.HILT_COMPILER}")
+    implementation("com.google.dagger:hilt-android:${Versions.HILT}")
+    kapt("com.google.dagger:hilt-android-compiler:${Versions.HILT}")
+    implementation("androidx.hilt:hilt-lifecycle-viewmodel:${Versions.HILT_LIFECYCLE_VIEW_MODEL}")
+    kapt("androidx.hilt:hilt-compiler:${Versions.HILT_COMPILER}")
 
     // Hilt testing dependencies
-//    androidTestImplementation("com.google.dagger:hilt-android-testing:${Versions.HILT}")
-//    kaptAndroidTest("com.google.dagger:hilt-android-compiler:${Versions.HILT}")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:${Versions.HILT}")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:${Versions.HILT}")
 
     //kotlin serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
