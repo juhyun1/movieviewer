@@ -60,16 +60,14 @@ dependencies {
     //Kotlin Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.COROUTINES}")
 
-    implementation(project(":model"))
-
     // Dagger Core
-    implementation("com.google.dagger:dagger:${Versions.HILT}")
-    kapt("com.google.dagger:dagger-compiler:${Versions.HILT}")
+//    implementation("com.google.dagger:dagger:${Versions.HILT}")
+//    kapt("com.google.dagger:dagger-compiler:${Versions.HILT}")
 
     // Dagger Android
-    api("com.google.dagger:dagger-android:${Versions.HILT}")
-    api("com.google.dagger:dagger-android-support:${Versions.HILT}")
-    kapt("com.google.dagger:dagger-android-processor:${Versions.HILT}")
+//    api("com.google.dagger:dagger-android:${Versions.HILT}")
+//    api("com.google.dagger:dagger-android-support:${Versions.HILT}")
+//    kapt("com.google.dagger:dagger-android-processor:${Versions.HILT}")
 
     // Dagger - Hilt
     implementation("com.google.dagger:hilt-android:${Versions.HILT}")
@@ -80,5 +78,7 @@ dependencies {
     // Hilt testing dependencies
     androidTestImplementation("com.google.dagger:hilt-android-testing:${Versions.HILT}")
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:${Versions.HILT}")
+
+    implementation(project(":model"))
 
 }
