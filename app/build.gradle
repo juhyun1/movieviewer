@@ -45,7 +45,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.2.0-alpha03"
+        kotlinCompilerExtensionVersion = "1.2.0-alpha08"
     }
 }
 
@@ -126,25 +126,7 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:${Versions.NAVIGATION_COMPOSE}")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.VIEWMODEL_COMPOSE}")
 
-//    implementation "androidx.compose.ui:ui:1.2.0-beta02"
-//    // Integration with activities
-//    implementation 'androidx.activity:activity-compose:1.4.0'
-//    // Compose Material Design˛
-//    implementation 'androidx.compose.material:material:1.1.1'
-//    // Animations
-//    implementation 'androidx.compose.animation:animation:1.1.1'
-//    // Tooling support (Previews, etc.)
-//    implementation 'androidx.compose.ui:ui-tooling:1.2.0-beta02'
-//    // constraint layout
-//    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0"
-//    // image loader library
-//    implementation("io.coil-kt:coil-compose:2.0.0-rc01")
-//    // Integration with ViewModels
-//    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1'
-////    implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
-//    implementation "androidx.compose.ui:ui-util:1.2.0-beta02"
-
     implementation(project(":model"))
     implementation(project(":core-data"))
-//    implementation(project(":core-ui"))
+    implementation(project(":core-ui"))
 }
