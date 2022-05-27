@@ -1,4 +1,4 @@
-package com.themovieviewer.usecase
+package com.themovieviewer.feature.movielist.usecase
 
 import com.themovieviewer.core.data.network.datasource.NowPlayingDataSource
 import com.themovieviewer.core.model.repository.MovieRepository

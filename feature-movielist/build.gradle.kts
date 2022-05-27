@@ -52,6 +52,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:${Versions.KOTLIN_VERSION}")
     implementation("androidx.core:core-ktx:${Versions.CORE_KTX}")
+    implementation("androidx.paging:paging-runtime-ktx:${Versions.PAGING}")
 
     //LIFECYCLE
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:${Versions.LIFECYCLE_KTX}")
@@ -60,6 +61,7 @@ dependencies {
     //NAVIGATION
     implementation("androidx.navigation:navigation-fragment-ktx:${Versions.NAVIGATION_KTX}")
     implementation("androidx.navigation:navigation-ui-ktx:${Versions.NAVIGATION_KTX}")
+    implementation("androidx.hilt:hilt-navigation-fragment:1.0.0")
 
     // Compose
     implementation("androidx.compose.runtime:runtime:${Versions.COMPOSE}")
@@ -69,14 +71,20 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview:${Versions.COMPOSE}")
     implementation("androidx.compose.ui:ui-test-junit4:${Versions.COMPOSE}")
     implementation("androidx.activity:activity-compose:${Versions.ACTIVITY_COMPOSE}")
+
     implementation("androidx.navigation:navigation-compose:${Versions.NAVIGATION_COMPOSE}")
+
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.VIEWMODEL_COMPOSE}")
+    implementation("androidx.hilt:hilt-navigation-compose:${Versions.HILT_NAVIGATION_COMPOSE}")
 
     //material
     implementation("com.google.android.material:material:${Versions.MATERIAL}")
     implementation("androidx.compose.material:material-icons-extended:${Versions.COMPOSE}")
     implementation("androidx.compose.material3:material3:${Versions.MATERIAL3}")
     implementation("androidx.compose.material3:material3-window-size-class:${Versions.MATERIAL3}")
+
+    //TIMBER
+    implementation("com.jakewharton.timber:timber:${Versions.TIMBER}")
 
     // Dagger Core
 //    implementation("com.google.dagger:dagger:${Versions.HILT}")
@@ -92,6 +100,7 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:${Versions.HILT}")
     implementation("androidx.hilt:hilt-lifecycle-viewmodel:${Versions.HILT_LIFECYCLE_VIEW_MODEL}")
     kapt("androidx.hilt:hilt-compiler:${Versions.HILT_COMPILER}")
+    kapt("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.3.0")
 
     // Hilt testing dependencies
     androidTestImplementation("com.google.dagger:hilt-android-testing:${Versions.HILT}")

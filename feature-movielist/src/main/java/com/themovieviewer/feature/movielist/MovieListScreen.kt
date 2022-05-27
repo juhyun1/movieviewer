@@ -10,8 +10,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.themovieviewer.core.ui.component.TopAppBar
 
 @Composable
@@ -19,6 +21,10 @@ fun MovieListRoute(
     windowSizeClass: WindowSizeClass,
     modifier: Modifier = Modifier,
 ) {
+    val vm: MovieListViewModel = hiltViewModel()
+    LaunchedEffect(key1 = vm) {
+        vm.load()
+    }
     MovieListScreen(
         windowSizeClass = windowSizeClass,
         modifier = modifier,

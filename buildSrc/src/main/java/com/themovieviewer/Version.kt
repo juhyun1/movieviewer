@@ -12,7 +12,10 @@ object Versions {
     const val RETROFIT = "2.9.0"
     const val RETROFIT_COROUTINES = "0.9.2"
     const val COROUTINES = "1.6.1-native-mt"
-    const val HILT = "2.33-beta"
+    const val HILT = "2.35.1"
+    const val HILT_VIEW_MODEL_COMPOSE = "2.4.1"
+    const val HILT_NAVIGATION_COMPOSE = "1.0.0"
+
     const val HILT_COMPILER = "1.0.0"
     const val HILT_LIFECYCLE_VIEW_MODEL = "1.0.0-alpha03"
     const val VIEWPAGER2 = "1.0.0"
@@ -25,5 +28,5 @@ object Versions {
     const val VIEWMODEL_COMPOSE = "2.5.0-rc01"
     const val ACTIVITY_COMPOSE = "1.6.0-alpha03"
     const val APPCOMPAT = "1.4.1"
-
+    const val TIMBER = "5.0.1"
 }

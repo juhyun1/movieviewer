@@ -15,7 +15,7 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.themovieviewer.core.ui.theme.Theme
-import com.themovieviewer.navigation.DESTINATIONS
+import com.themovieviewer.navigation.BOTTOM_BAR_DESTINATIONS
 import com.themovieviewer.navigation.Destination
 import com.themovieviewer.navigation.MovieNavigation
 import com.themovieviewer.navigation.NavHost
@@ -80,7 +80,7 @@ private fun BottomBar(
             tonalElevation = 0.dp
         ) {
 
-            DESTINATIONS.forEach { destination ->
+            BOTTOM_BAR_DESTINATIONS.forEach { destination ->
                 val selected = currentDestination?.hierarchy?.any { it.route == destination.route } == true
                 NavigationBarItem(
                     selected = selected,

@@ -6,6 +6,7 @@ import com.themovieviewer.core.data.network.model.MovieDtoMapper
 import com.themovieviewer.core.data.network.response.TopRatedResponse
 import com.themovieviewer.core.model.data.Movie
 import com.themovieviewer.core.model.repository.MovieRepository
+import timber.log.Timber
 
 class NowPlayingDataSource(private val movieRepository: MovieRepository, private val language: String) : PagingSource<Int, Movie>() {
 
@@ -16,6 +17,13 @@ class NowPlayingDataSource(private val movieRepository: MovieRepository, private
         }
     }
 
+    suspend fun test() {
+        val pageData = movieRepository.getNowPlaying(language = language,page = 1)
+
+        pageData.list.forEach {
+            Timber.d("Test : $it")
+        }
+    }
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
         return try {
             val nextPageNumber = params.key ?: 0

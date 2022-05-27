@@ -37,11 +37,3 @@ object RepositoryModule {
         )
     }
 }
-
-
-@InstallIn(SingletonComponent::class)
-@Module
-interface RepositoryModule2 {
-    @Binds
-    fun bindMovieRepository(impl: MovieRepositoryImpl): MovieRepository
-}

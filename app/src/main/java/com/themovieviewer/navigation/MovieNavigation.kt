@@ -40,7 +40,7 @@ data class Destination(
     val iconTextId: Int
 )
 
-val DESTINATIONS = listOf(
+val BOTTOM_BAR_DESTINATIONS = listOf(
     Destination(
         route = MovieListDestination.route,
         selectedIcon = Icons.Filled.Movie,

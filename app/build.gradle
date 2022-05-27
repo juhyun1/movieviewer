@@ -127,6 +127,9 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:${Versions.NAVIGATION_COMPOSE}")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.VIEWMODEL_COMPOSE}")
 
+    //TIMBER
+    implementation("com.jakewharton.timber:timber:${Versions.TIMBER}")
+
     implementation(project(":core-model"))
     implementation(project(":core-data"))
     implementation(project(":core-ui"))
