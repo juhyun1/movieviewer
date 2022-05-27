@@ -1,4 +1,4 @@
-package com.themovieviewer.feature.movielist
+package com.themovieviewer.feature.favorites
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -13,13 +13,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.themovieviewer.core.ui.component.TopAppBar
+import com.themovieviewer.feature.favorites.R.string.top_app_bar_title_favorites
 
 @Composable
-fun MovieListRoute(
+fun FavoritesRoute(
     windowSizeClass: WindowSizeClass,
     modifier: Modifier = Modifier,
 ) {
-    MovieListScreen(
+    FavoritesScreen(
         windowSizeClass = windowSizeClass,
         modifier = modifier,
     )
@@ -27,14 +28,14 @@ fun MovieListRoute(
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
-fun MovieListScreen(
+fun FavoritesScreen(
     windowSizeClass: WindowSizeClass,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
         topBar = {
             TopAppBar(
-                titleRes = R.string.top_app_bar_preview_title,
+                titleRes = top_app_bar_title_favorites,
                 navigationIcon = Icons.Filled.Search,
                 navigationIconContentDescription = "navigationIconContentDescription",
                 actionIcon = Icons.Outlined.AccountCircle,
@@ -54,7 +55,7 @@ fun MovieListScreen(
                 .padding(innerPadding)
                 .consumedWindowInsets(innerPadding)
         ) {
-            Text(text = "This Screen is Movie List Screen")
+            Text(text = "This Screen is Favorites")
         }
     }
 }

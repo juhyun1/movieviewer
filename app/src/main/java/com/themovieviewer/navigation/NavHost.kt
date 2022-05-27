@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.themovieviewer.feature.favorites.navigation.favoritesGraph
 import com.themovieviewer.feature.movielist.navigation.MovieListDestination
 import com.themovieviewer.feature.movielist.navigation.movieListGraph
 
@@ -22,6 +23,9 @@ fun NavHost(
         modifier = modifier,
     ) {
         movieListGraph(
+            windowSizeClass = windowSizeClass
+        )
+        favoritesGraph(
             windowSizeClass = windowSizeClass
         )
     }
