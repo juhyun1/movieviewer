@@ -1,8 +1,10 @@
 package com.themovieviewer.navigation
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Upcoming
-import androidx.compose.material.icons.outlined.Upcoming
+import androidx.compose.material.icons.filled.Bookmark
+import androidx.compose.material.icons.filled.Movie
+import androidx.compose.material.icons.outlined.BookmarkBorder
+import androidx.compose.material.icons.outlined.Movie
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -41,14 +43,14 @@ data class Destination(
 val DESTINATIONS = listOf(
     Destination(
         route = MovieListDestination.route,
-        selectedIcon = Icons.Filled.Upcoming,
-        unselectedIcon = Icons.Outlined.Upcoming,
+        selectedIcon = Icons.Filled.Movie,
+        unselectedIcon = Icons.Outlined.Movie,
         iconTextId = movie
     ),
     Destination(
         route = FavoritesDestination.route,
-        selectedIcon = Icons.Filled.Upcoming,
-        unselectedIcon = Icons.Outlined.Upcoming,
+        selectedIcon = Icons.Filled.Bookmark,
+        unselectedIcon = Icons.Outlined.BookmarkBorder,
         iconTextId = favorites
     ),
 )
