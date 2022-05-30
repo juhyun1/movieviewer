@@ -56,6 +56,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:${Versions.KOTLIN_VERSION}"
     implementation "androidx.core:core-ktx:${Versions.CORE_KTX}"
     implementation "androidx.appcompat:appcompat:${Versions.APPCOMPAT}"
+    implementation("androidx.work:work-runtime:2.7.1")
+
 
     //LIFECYCLE
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:${Versions.LIFECYCLE_KTX}")
