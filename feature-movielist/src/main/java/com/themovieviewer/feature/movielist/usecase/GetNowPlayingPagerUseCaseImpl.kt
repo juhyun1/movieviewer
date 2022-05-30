@@ -10,6 +10,7 @@ class GetNowPlayingPagerUseCaseImpl @Inject constructor(
 ): GetNowPlayingPagerUseCase {
 
     override operator fun invoke(language: String): NowPlayingDataSource {
+
         return NowPlayingDataSource(movieRepository = movieRepository, language = language)
     }
 }

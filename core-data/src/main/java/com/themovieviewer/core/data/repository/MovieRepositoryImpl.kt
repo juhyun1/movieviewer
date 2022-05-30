@@ -23,7 +23,6 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun getNowPlaying(language: String, page: Int): PageData<Movie> {
         val movieListResponse: TopRatedResponse = movieService.nowPlaying(api_key = apiKey, language = language, page = page)
-        Timber.d("Test : movieListResponse : $movieListResponse")
         return PageData(list = movieDtoMapper.toDomainList(movieListResponse.results), pageCount = movieListResponse.total_pages)
     }
 //

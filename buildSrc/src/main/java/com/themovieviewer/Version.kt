@@ -27,6 +27,9 @@ object Versions {
     const val NAVIGATION_COMPOSE = "2.5.0-rc01"
     const val VIEWMODEL_COMPOSE = "2.5.0-rc01"
     const val ACTIVITY_COMPOSE = "1.6.0-alpha03"
+    const val PAGING_COMPOSE = "1.0.0-alpha14"
+
     const val APPCOMPAT = "1.4.1"
     const val TIMBER = "5.0.1"
+    const val COIL_COMPOSE = "2.1.0"
 }

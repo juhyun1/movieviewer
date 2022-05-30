@@ -78,10 +78,13 @@ dependencies {
     implementation("androidx.hilt:hilt-navigation-compose:${Versions.HILT_NAVIGATION_COMPOSE}")
 
     //material
-    implementation("com.google.android.material:material:${Versions.MATERIAL}")
+    implementation("com.google.android.material:material:1.6.0")
+    implementation("androidx.compose.material:material:${Versions.COMPOSE}")
     implementation("androidx.compose.material:material-icons-extended:${Versions.COMPOSE}")
     implementation("androidx.compose.material3:material3:${Versions.MATERIAL3}")
     implementation("androidx.compose.material3:material3-window-size-class:${Versions.MATERIAL3}")
+
+    implementation("androidx.paging:paging-compose:${Versions.PAGING_COMPOSE}")
 
     //TIMBER
     implementation("com.jakewharton.timber:timber:${Versions.TIMBER}")

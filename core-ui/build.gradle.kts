@@ -70,12 +70,16 @@ dependencies {
     implementation("androidx.activity:activity-compose:${Versions.ACTIVITY_COMPOSE}")
     implementation("androidx.navigation:navigation-compose:${Versions.NAVIGATION_COMPOSE}")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.VIEWMODEL_COMPOSE}")
+    implementation("androidx.paging:paging-compose:${Versions.PAGING_COMPOSE}")
 
     //material
     implementation("com.google.android.material:material:${Versions.MATERIAL}")
     implementation("androidx.compose.material:material-icons-extended:${Versions.COMPOSE}")
     implementation("androidx.compose.material3:material3:${Versions.MATERIAL3}")
     implementation("androidx.compose.material3:material3-window-size-class:${Versions.MATERIAL3}")
+
+    //Coil
+    implementation("io.coil-kt:coil-compose:${Versions.COIL_COMPOSE}")
 
     // Dagger Core
 //    implementation("com.google.dagger:dagger:${Versions.HILT}")
