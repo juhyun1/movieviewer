@@ -1,17 +1,18 @@
 package com.themovieviewer.core.data.repository
 
 import com.themovieviewer.core.data.network.MovieService
-import com.themovieviewer.core.data.network.model.MovieDtoMapper
-import com.themovieviewer.core.data.network.response.*
+import com.themovieviewer.core.data.network.mapper.toDomain
+import com.themovieviewer.core.data.network.mapper.toDomainList
+import com.themovieviewer.core.data.network.response.MovieDetailsResponse
+import com.themovieviewer.core.data.network.response.TopRatedResponse
 import com.themovieviewer.core.model.data.Movie
+import com.themovieviewer.core.model.data.MovieDetail
 import com.themovieviewer.core.model.data.PageData
 import com.themovieviewer.core.model.repository.MovieRepository
-import timber.log.Timber
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
     private val movieService: MovieService,
-    private val movieDtoMapper: MovieDtoMapper
 ) : MovieRepository {
 
 //    https://developers.themoviedb.org/3/getting-started/introduction
@@ -23,16 +24,17 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun getNowPlaying(language: String, page: Int): PageData<Movie> {
         val movieListResponse: TopRatedResponse = movieService.nowPlaying(api_key = apiKey, language = language, page = page)
-        return PageData(list = movieDtoMapper.toDomainList(movieListResponse.results), pageCount = movieListResponse.total_pages)
+        return PageData(list = movieListResponse.toDomainList(), pageCount = movieListResponse.total_pages)
     }
 //
 //    override suspend fun getPopular(language: String?, page: Int): TopRatedResponse {
 //        return movieService.popular(api_key = apiKey, language = language, page = page)
 //    }
 //
-//    override suspend fun getMovieDetails(language: String, movie_id: Int): MovieDetailsResponse {
-//        return movieService.getDetails(api_key = apiKey, language = language, movie_id = movie_id)
-//    }
+    override suspend fun getMovieDetails(language: String, movie_id: Int): MovieDetail {
+        val response: MovieDetailsResponse = movieService.getDetails(api_key = apiKey, language = language, movie_id = movie_id)
+        return response.toDomain()
+    }
 //
 //    override suspend fun getVideos(language: String, movie_id: Int): VideosResponse {
 //        return movieService.getVideos(api_key = apiKey, language = language, movie_id = movie_id)
