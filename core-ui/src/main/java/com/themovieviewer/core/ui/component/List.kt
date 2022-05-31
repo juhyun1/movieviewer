@@ -1,5 +1,6 @@
 package com.themovieviewer.core.ui.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -17,9 +18,12 @@ import coil.request.ImageRequest
 import com.themovieviewer.core.ui.R
 
 @Composable
-fun MovieInfoItem(imageSrc: String, title: String, date: String) {
+fun MovieInfoItem(movieId: Int, imageSrc: String, title: String, date: String, navigateToDetails: (String) -> Unit) {
 
-    Column(modifier = Modifier.width(width = 150.dp)) {
+    Column(modifier = Modifier
+        .width(width = 150.dp)
+        .clickable { navigateToDetails.invoke(movieId.toString()) }
+    ) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(imageSrc)

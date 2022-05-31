@@ -12,9 +12,10 @@ object MovieListDestination : NavigationDestination {
 }
 
 fun NavGraphBuilder.movieListGraph(
-    windowSizeClass: WindowSizeClass
+    windowSizeClass: WindowSizeClass,
+    navigateToDetails: (String) -> Unit
 ) {
     composable(route = MovieListDestination.route) {
-        MovieListRoute(windowSizeClass)
+        MovieListRoute(windowSizeClass, navigateToDetails = navigateToDetails)
     }
 }
