@@ -124,11 +124,11 @@ class NowPlayingFragment @Inject constructor(
     }
 
     private fun initObserve() {
-        lifecycleScope.launch {
-            viewModel.nowPlayingList.collectLatest { pagedData ->
-                oneRowAdapter.submitData(pagedData)
-            }
-        }
+//        lifecycleScope.launch {
+//            viewModel.nowPlayingList.collectLatest { pagedData ->
+//                oneRowAdapter.submitData(pagedData)
+//            }
+//        }
     }
 
     override fun onDestroyView() {
