@@ -14,10 +14,10 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.themovieviewer.core.common.navigation.Destination
+import com.themovieviewer.core.common.navigation.Navigation
 import com.themovieviewer.core.ui.theme.Theme
 import com.themovieviewer.navigation.BOTTOM_BAR_DESTINATIONS
-import com.themovieviewer.navigation.Destination
-import com.themovieviewer.navigation.MovieNavigation
 import com.themovieviewer.navigation.NavHost
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
@@ -26,7 +26,7 @@ fun MovieApp(windowSizeClass: WindowSizeClass) {
     Theme {
         val navController = rememberNavController()
         val navigation = remember(navController) {
-            MovieNavigation(navController)
+            Navigation(navController)
         }
 
         val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -37,7 +37,7 @@ fun MovieApp(windowSizeClass: WindowSizeClass) {
             containerColor = Color.Transparent,
             contentColor = MaterialTheme.colorScheme.onBackground,
             bottomBar = {
-                BottomBar(
+                MovieBottomBar(
                     onNavigateDestination = navigation::navigateTo,
                     currentDestination = currentDestination
                 )
@@ -66,7 +66,7 @@ fun MovieApp(windowSizeClass: WindowSizeClass) {
 
 
 @Composable
-private fun BottomBar(
+private fun MovieBottomBar(
     onNavigateDestination: (Destination) -> Unit,
     currentDestination: NavDestination?
 ) {

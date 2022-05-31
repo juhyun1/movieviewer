@@ -4,8 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/compose-model-1653558811515.xml" value="0.8202247191011236" />
-        <entry key="../../../../layout/compose-model-1653878905271.xml" value="0.1" />
-        <entry key="../../../../layout/compose-model-1653883495489.xml" value="0.9688346883468835" />
+        <entry key="..\:/workspace/example/movieviewer/app/src/main/res/layout/fragment_movie_details.xml" value="0.15096251266464034" />
         <entry key="app/src/main/res/layout/fragment_movie_details.xml" value="0.43125" />
         <entry key="app/src/main/res/layout/widget_movie_recommendations.xml" value="0.43125" />
       </map>

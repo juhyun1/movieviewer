@@ -85,7 +85,6 @@ dependencies {
     implementation("androidx.compose.material3:material3-window-size-class:${Versions.MATERIAL3}")
 
     implementation("androidx.paging:paging-compose:${Versions.PAGING_COMPOSE}")
-
     //TIMBER
     implementation("com.jakewharton.timber:timber:${Versions.TIMBER}")
 

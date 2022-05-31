@@ -25,7 +25,6 @@ fun NavGraphBuilder.detailsGraph(
             }
         )
     ) { backStackEntry ->
-        val arg = backStackEntry.arguments?.getInt(DetailsDestination.detailsArg) ?: 0
-        DetailsRoute(windowSizeClass, movieId = arg)
+        DetailsRoute(windowSizeClass)
     }
 }

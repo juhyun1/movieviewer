@@ -12,7 +12,6 @@ class GetCreditsPagerUseCaseImpl @Inject constructor(
 ): GetCreditsPagerUseCase {
     override operator fun invoke(movieId: Int, language: String): CreditsDataSource = CreditsDataSource(
                 movieRepository = movieRepository,
-                movieDtoMapper = movieDtoMapper,
                 movieId = movieId,
                 language = language
             )

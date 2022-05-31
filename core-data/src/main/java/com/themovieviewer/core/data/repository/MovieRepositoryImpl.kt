@@ -3,8 +3,11 @@ package com.themovieviewer.core.data.repository
 import com.themovieviewer.core.data.network.MovieService
 import com.themovieviewer.core.data.network.mapper.toDomain
 import com.themovieviewer.core.data.network.mapper.toDomainList
+import com.themovieviewer.core.data.network.response.MovieCreditsResponse
 import com.themovieviewer.core.data.network.response.MovieDetailsResponse
+import com.themovieviewer.core.data.network.response.PeopleDetailsResponse
 import com.themovieviewer.core.data.network.response.TopRatedResponse
+import com.themovieviewer.core.model.data.CreditsCastCrew
 import com.themovieviewer.core.model.data.Movie
 import com.themovieviewer.core.model.data.MovieDetail
 import com.themovieviewer.core.model.data.PageData
@@ -41,12 +44,13 @@ class MovieRepositoryImpl @Inject constructor(
 //    }
 //
 //
-//    override suspend fun getMovieCredits(language: String, movie_id: Int): MovieCreditsResponse {
-//        return movieService.getCredits(api_key = apiKey, language = language, movie_id = movie_id)
-//    }
-//
+    override suspend fun getMovieCredits(language: String, movie_id: Int): PageData<CreditsCastCrew> {
+        val response: MovieCreditsResponse = movieService.getCredits(api_key = apiKey, language = language, movie_id = movie_id)
+        return PageData(list = response.toDomainList(), pageCount = 1)
+    }
 //    override suspend fun getPeopleDetails(language: String, person_id: Int): PeopleDetailsResponse {
-//        return movieService.getPeopleDetails(api_key = apiKey, language = language, person_id = person_id)
+//        val response: PeopleDetailsResponse = movieService.getPeopleDetails(api_key = apiKey, language = language, person_id = person_id)
+//        return PageData(list = response.to, pageCount = movieListResponse.total_pages)
 //    }
 //
 //    override suspend fun getPeopleMovieCredits(language: String, person_id: Int): PeopleMovieCreditsResponse {

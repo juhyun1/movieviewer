@@ -89,6 +89,9 @@ dependencies {
     //TIMBER
     implementation("com.jakewharton.timber:timber:${Versions.TIMBER}")
 
+    //Coil
+    implementation("io.coil-kt:coil-compose:${Versions.COIL_COMPOSE}")
+
     // Dagger - Hilt
     implementation("com.google.dagger:hilt-android:${Versions.HILT}")
     kapt("com.google.dagger:hilt-android-compiler:${Versions.HILT}")

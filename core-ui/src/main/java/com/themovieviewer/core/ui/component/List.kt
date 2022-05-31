@@ -1,10 +1,10 @@
 package com.themovieviewer.core.ui.component
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -31,7 +32,7 @@ fun MovieInfoItem(movieId: Int, imageSrc: String, title: String, date: String, n
                 .build(),
             placeholder = painterResource(R.drawable.placeholder),
             contentDescription = null,
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.FillBounds,
             modifier = Modifier
                 .size(width = 150.dp, height = 230.dp)
                 .clip(RoundedCornerShape(10.dp))
@@ -49,5 +50,42 @@ fun MovieInfoItem(movieId: Int, imageSrc: String, title: String, date: String, n
         )
 
         Spacer(modifier = Modifier.height(20.dp))
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CastItem(imageSrc: String, name: String, character: String) {
+    Card(modifier = Modifier
+        .size(width = 150.dp, height = 280.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+        border = BorderStroke(width = 1.dp, color = Color.Gray.copy(alpha = 0.1f))
+    ) {
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(imageSrc)
+                .crossfade(true)
+                .build(),
+            placeholder = painterResource(R.drawable.placeholder),
+            contentDescription = null,
+            contentScale = ContentScale.FillWidth,
+            modifier = Modifier
+                .size(width = 150.dp, height = 180.dp)
+                .clip(RoundedCornerShape(10.dp))
+        )
+        Spacer(modifier = Modifier.height(5.dp))
+        Text(
+            text = name,
+            modifier = Modifier.padding(start = 10.dp),
+            color = Color.Black,
+            style = MaterialTheme.typography.titleMedium
+        )
+        Text(
+            text = character,
+            modifier = Modifier.padding(start = 10.dp),
+            color = Color.Black,
+            style = MaterialTheme.typography.bodyMedium
+        )
     }
 }

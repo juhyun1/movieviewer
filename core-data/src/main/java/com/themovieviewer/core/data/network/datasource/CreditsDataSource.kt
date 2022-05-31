@@ -5,31 +5,29 @@ import androidx.paging.PagingState
 import com.themovieviewer.core.data.network.model.CreditsCastCrewDto
 import com.themovieviewer.core.data.network.model.MovieDtoMapper
 import com.themovieviewer.core.data.network.response.MovieCreditsResponse
+import com.themovieviewer.core.model.data.CreditsCastCrew
 import com.themovieviewer.core.model.repository.MovieRepository
+import timber.log.Timber
 
-class CreditsDataSource(private val movieRepository: MovieRepository, private val movieDtoMapper: MovieDtoMapper, private val movieId: Int, private val language: String) : PagingSource<Int, CreditsCastCrewDto>() {
+class CreditsDataSource(private val movieRepository: MovieRepository, var movieId: Int = 0, private val language: String = "en_US") : PagingSource<Int, CreditsCastCrew>() {
 
-    override fun getRefreshKey(state: PagingState<Int, CreditsCastCrewDto>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, CreditsCastCrew>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
         }
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CreditsCastCrewDto> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CreditsCastCrew> {
         return try {
-//            val movieCreditsResponse: MovieCreditsResponse = movieRepository.getMovieCredits(
-//                language = language,
-//                movie_id = movieId
-//            )
-//
-//            LoadResult.Page(
-//                data = movieCreditsResponse.cast,
-//                prevKey = null,
-//                nextKey = null
-//            )
+
+            val pageData = movieRepository.getMovieCredits(language = language, movie_id = movieId)
+            pageData.list.forEach {
+                Timber.d("Test : getMovieCredits : $it")
+            }
+
             LoadResult.Page(
-                data = emptyList(),
+                data = pageData.list,
                 prevKey = null,
                 nextKey = null
             )
