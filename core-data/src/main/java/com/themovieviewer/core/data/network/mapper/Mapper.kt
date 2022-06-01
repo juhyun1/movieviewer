@@ -4,10 +4,8 @@ import android.text.TextUtils
 import com.themovieviewer.core.data.network.model.CreditsCastCrewDto
 import com.themovieviewer.core.data.network.model.MovieDto
 import com.themovieviewer.core.data.network.model.PeopleMovieCreditsCastDto
-import com.themovieviewer.core.data.network.response.MovieCreditsResponse
-import com.themovieviewer.core.data.network.response.MovieDetailsResponse
-import com.themovieviewer.core.data.network.response.PeopleDetailsResponse
-import com.themovieviewer.core.data.network.response.TopRatedResponse
+import com.themovieviewer.core.data.network.model.VideosDto
+import com.themovieviewer.core.data.network.response.*
 import com.themovieviewer.core.model.data.*
 import timber.log.Timber
 
@@ -96,6 +94,29 @@ fun CreditsCastCrewDto.toDomain(): CreditsCastCrew {
 fun MovieCreditsResponse.toDomainList(): List<CreditsCastCrew> {
     val list = mutableListOf<CreditsCastCrew>()
     this.cast.forEach {
+        Timber.d("Test : CreditsCastCrew : $it")
+        list.add(it.toDomain())
+    }
+    return list
+}
+
+fun VideosDto.toDomain(): Trailer {
+    return Trailer(
+        id = this.id,
+        iso_6391_1 = this.iso_6391_1,
+        iso_3166_1 = this.iso_3166_1,
+        key = this.key,
+        name = this.name,
+        site = this.site,
+        size = this.size,
+        type = this.type
+    )
+}
+
+
+fun VideosResponse.toDomainList(): List<Trailer> {
+    val list = mutableListOf<Trailer>()
+    this.results.forEach {
         Timber.d("Test : CreditsCastCrew : $it")
         list.add(it.toDomain())
     }

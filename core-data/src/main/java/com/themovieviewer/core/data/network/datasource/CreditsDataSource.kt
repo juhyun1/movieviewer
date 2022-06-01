@@ -22,9 +22,6 @@ class CreditsDataSource(private val movieRepository: MovieRepository, var movieI
         return try {
 
             val pageData = movieRepository.getMovieCredits(language = language, movie_id = movieId)
-            pageData.list.forEach {
-                Timber.d("Test : getMovieCredits : $it")
-            }
 
             LoadResult.Page(
                 data = pageData.list,

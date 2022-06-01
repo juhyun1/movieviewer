@@ -1,15 +1,14 @@
 package com.themovieviewer.feature.details
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.*
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
@@ -31,11 +31,16 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.google.android.youtube.player.YouTubeStandalonePlayer
+import com.themovieviewer.core.model.data.Movie
+import com.themovieviewer.core.model.data.Trailer
 import com.themovieviewer.core.ui.R
 import com.themovieviewer.core.ui.component.CastItem
 import com.themovieviewer.core.ui.component.HeightSpacer
 import com.themovieviewer.core.ui.component.WidthSpacer
 import com.themovieviewer.core.ui.util.imagePath
+import com.themovieviewer.core.ui.util.score
+import com.themovieviewer.core.ui.util.thumbnailPath
 import timber.log.Timber
 
 @Composable
@@ -140,6 +145,22 @@ fun DetailsScreen(
                 )
                 HeightSpacer(height = 10f)
                 CreditsList()
+                HeightSpacer(height = 30f)
+                Text(
+                    text = "Videos",
+                    color = Color.Black,
+                    style = MaterialTheme.typography.titleLarge
+                )
+                HeightSpacer(height = 10f)
+                TrailerList()
+                HeightSpacer(height = 30f)
+                Text(
+                    text = "Recommendations",
+                    color = Color.Black,
+                    style = MaterialTheme.typography.titleLarge
+                )
+                HeightSpacer(height = 10f)
+                RecommendationsItemList()
             }
             HeightSpacer(height = 50f)
         }
@@ -175,6 +196,165 @@ fun CreditsList() {
                         .wrapContentWidth(Alignment.CenterHorizontally)
                 )
             }
+        }
+    }
+}
+
+@Composable
+fun TrailerList() {
+    val vm: DetailsViewModel = hiltViewModel()
+    val pager = remember {
+        Pager(
+            PagingConfig(
+                pageSize = 1,
+                enablePlaceholders = true,
+                maxSize = 3
+            )
+        ) { vm.getTrailerDataSource() }
+    }
+
+    val lazyPagingItems = pager.flow.collectAsLazyPagingItems()
+    val context = LocalContext.current
+
+    LazyRow {
+        itemsIndexed(lazyPagingItems) { index, item ->
+            Box(
+                contentAlignment = Alignment.Center,
+            ) {
+                item?.let {
+                    TrailerItem(trailer = item, onClick = {
+                        val intent = YouTubeStandalonePlayer.createVideoIntent(
+                            context as Activity?,
+                            item.id,
+                            item.key,
+                            0,
+                            true,
+                            true
+                        )
+                        context.startActivity(intent)
+                    })
+                }
+            }
+            WidthSpacer(width = 10f)
+        }
+
+        if (lazyPagingItems.loadState.append == LoadState.Loading) {
+            item {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentWidth(Alignment.CenterHorizontally)
+                )
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TrailerItem(trailer: Trailer, onClick: () -> Unit) {
+    Box(
+        contentAlignment = Alignment.Center
+    ) {
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(trailer.key.thumbnailPath())
+                .crossfade(true)
+                .build(),
+            placeholder = painterResource(R.drawable.placeholder),
+            contentDescription = null,
+            contentScale = ContentScale.FillWidth,
+            modifier = Modifier
+                .heightIn(max = 180.dp)
+                .clip(RoundedCornerShape(10.dp))
+                .clickable {
+                    onClick.invoke()
+                }
+        )
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(R.drawable.ic_trailer_payler)
+                .crossfade(true)
+                .build(),
+            contentDescription = null,
+            contentScale = ContentScale.Fit,
+        )
+    }
+}
+
+@Composable
+fun RecommendationsItemList() {
+    val vm: DetailsViewModel = hiltViewModel()
+    val pager = remember {
+        Pager(
+            PagingConfig(
+                pageSize = 1,
+                enablePlaceholders = true,
+                maxSize = 3
+            )
+        ) { vm.getRecommendationsDataSource() }
+    }
+
+    val lazyPagingItems = pager.flow.collectAsLazyPagingItems()
+
+    LazyRow {
+        itemsIndexed(lazyPagingItems) { index, item ->
+            item?.let {
+                RecommendationsItem(movie = item, onClick = { })
+            }
+            WidthSpacer(width = 10f)
+        }
+
+        if (lazyPagingItems.loadState.append == LoadState.Loading) {
+            item {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentWidth(Alignment.CenterHorizontally)
+                )
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun RecommendationsItem(movie: Movie, onClick: () -> Unit) {
+    Column(modifier = Modifier
+        .width(width = 250.dp)
+    ) {
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(movie.backdrop_path?.imagePath())
+                .crossfade(true)
+                .build(),
+            placeholder = painterResource(R.drawable.placeholder),
+            contentDescription = null,
+            contentScale = ContentScale.FillHeight,
+            modifier = Modifier
+                .size(width = 250.dp, height = 150.dp)
+                .clip(RoundedCornerShape(10.dp))
+                .clickable {
+                    onClick.invoke()
+                }
+        )
+        HeightSpacer(height = 5f)
+        Row(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                modifier = Modifier.widthIn(max = 180.dp),
+                text = movie.title ?: "",
+                color = Color.Black,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                style = MaterialTheme.typography.titleMedium
+            )
+            Text(modifier = Modifier.weight(weight = 1f).wrapContentWidth(align = Alignment.End),
+                text = movie.vote_average.score(),
+                color = Color.Black,
+                style = MaterialTheme.typography.titleMedium
+            )
         }
     }
 }

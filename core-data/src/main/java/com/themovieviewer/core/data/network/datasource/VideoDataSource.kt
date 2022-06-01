@@ -6,8 +6,9 @@ import com.themovieviewer.core.data.network.model.VideosDtoMapper
 import com.themovieviewer.core.data.network.response.VideosResponse
 import com.themovieviewer.core.model.data.Trailer
 import com.themovieviewer.core.model.repository.MovieRepository
+import timber.log.Timber
 
-class VideoDataSource(private val movieRepository: MovieRepository, private val videosDtoMapper: VideosDtoMapper, private val movieId: Int, private val language: String) : PagingSource<Int, Trailer>() {
+class VideoDataSource(private val movieRepository: MovieRepository, var movieId: Int = 0, private val language: String = "en_US") : PagingSource<Int, Trailer>() {
 
     override fun getRefreshKey(state: PagingState<Int, Trailer>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -18,20 +19,12 @@ class VideoDataSource(private val movieRepository: MovieRepository, private val 
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Trailer> {
         return try {
-//            val videosResponse: VideosResponse = movieRepository.getVideos(
-//                language = language,
-//                movie_id = movieId
-//            )
-//
-//            val list = videosResponse.results.sortedWith { o1, o2 -> o1.compareTo(o2) }
-//
-//            LoadResult.Page(
-//                data = videosDtoMapper.toDomainList(list),
-//                prevKey = null,
-//                nextKey = null
-//            )
+            val pageData = movieRepository.getVideos(language = language, movie_id = movieId)
+            pageData.list.forEach {
+                Timber.d("Test : getVideos : $it")
+            }
             LoadResult.Page(
-                data = emptyList(),
+                data = pageData.list,
                 prevKey = null,
                 nextKey = null
             )
