@@ -45,7 +45,6 @@ android {
 }
 
 dependencies {
-
     implementation("androidx.appcompat:appcompat:${Versions.APPCOMPAT}")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
@@ -85,17 +84,12 @@ dependencies {
     implementation("androidx.compose.material3:material3-window-size-class:${Versions.MATERIAL3}")
 
     implementation("androidx.paging:paging-compose:${Versions.PAGING_COMPOSE}")
+
     //TIMBER
     implementation("com.jakewharton.timber:timber:${Versions.TIMBER}")
 
-    // Dagger Core
-//    implementation("com.google.dagger:dagger:${Versions.HILT}")
-//    kapt("com.google.dagger:dagger-compiler:${Versions.HILT}")
-
-    // Dagger Android
-//    api("com.google.dagger:dagger-android:${Versions.HILT}")
-//    api("com.google.dagger:dagger-android-support:${Versions.HILT}")
-//    kapt("com.google.dagger:dagger-android-processor:${Versions.HILT}")
+    //Coil
+    implementation("io.coil-kt:coil-compose:${Versions.COIL_COMPOSE}")
 
     // Dagger - Hilt
     implementation("com.google.dagger:hilt-android:${Versions.HILT}")
@@ -112,5 +106,4 @@ dependencies {
     implementation(project(":core-ui"))
     implementation(project(":core-data"))
     implementation(project(":core-common"))
-
 }

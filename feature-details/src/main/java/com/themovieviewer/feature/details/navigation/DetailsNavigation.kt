@@ -18,7 +18,8 @@ object DetailsDestination : NavigationDestination {
 
 fun NavGraphBuilder.detailsGraph(
     windowSizeClass: WindowSizeClass,
-    onClickMovie: (Int) -> Unit
+    onClickMovie: (Int) -> Unit,
+    onClickPeople: (Int) -> Unit,
 ) {
     composable(
         route = "${DetailsDestination.route}/{${DetailsDestination.detailsArg}}",
@@ -33,7 +34,8 @@ fun NavGraphBuilder.detailsGraph(
         DetailsRoute(
             windowSizeClass = windowSizeClass,
             movieId = args?.getInt(DetailsDestination.detailsArg) ?: vm.movieID,
-            onClickMovie = onClickMovie
+            onClickMovie = onClickMovie,
+            onClickPeople = onClickPeople
         )
     }
 }

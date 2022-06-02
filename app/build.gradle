@@ -139,4 +139,5 @@ dependencies {
     implementation(project(":feature-movielist"))
     implementation(project(":feature-favorites"))
     implementation(project(":feature-details"))
+    implementation(project(":feature-people"))
 }

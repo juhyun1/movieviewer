@@ -1,9 +1,6 @@
 package com.themovieviewer.core.data.di
 
-import com.themovieviewer.core.data.network.datasource.CreditsDataSource
-import com.themovieviewer.core.data.network.datasource.NowPlayingDataSource
-import com.themovieviewer.core.data.network.datasource.RecommendationsDataSource
-import com.themovieviewer.core.data.network.datasource.VideoDataSource
+import com.themovieviewer.core.data.network.datasource.*
 import com.themovieviewer.core.model.repository.MovieRepository
 import dagger.Module
 import dagger.Provides
@@ -41,4 +38,12 @@ object DataSourceModule {
     ): RecommendationsDataSource {
         return RecommendationsDataSource(movieRepository = movieRepository)
     }
+
+    @Provides
+    fun providesPeopleMovieCreditsDataSource(
+        movieRepository: MovieRepository
+    ): PeopleMovieCreditsDataSource {
+        return PeopleMovieCreditsDataSource(movieRepository = movieRepository)
+    }
+
 }

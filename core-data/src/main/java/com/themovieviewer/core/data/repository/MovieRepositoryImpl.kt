@@ -43,15 +43,16 @@ class MovieRepositoryImpl @Inject constructor(
         val response: MovieCreditsResponse = movieService.getCredits(api_key = apiKey, language = language, movie_id = movie_id)
         return PageData(list = response.toDomainList(), pageCount = 1)
     }
-//    override suspend fun getPeopleDetails(language: String, person_id: Int): PeopleDetailsResponse {
-//        val response: PeopleDetailsResponse = movieService.getPeopleDetails(api_key = apiKey, language = language, person_id = person_id)
-//        return PageData(list = response.to, pageCount = movieListResponse.total_pages)
-//    }
-//
-//    override suspend fun getPeopleMovieCredits(language: String, person_id: Int): PeopleMovieCreditsResponse {
-//        return movieService.getPeopleMovieCredits(api_key = apiKey, language = language, person_id = person_id)
-//    }
-//
+    override suspend fun getPeopleDetails(language: String, person_id: Int): People {
+        val response: PeopleDetailsResponse = movieService.getPeopleDetails(api_key = apiKey, language = language, person_id = person_id)
+        return response.toDomain()
+    }
+
+    override suspend fun getPeopleMovieCredits(language: String, person_id: Int): PageData<CastCrew> {
+        val response: PeopleMovieCreditsResponse = movieService.getPeopleMovieCredits(api_key = apiKey, language = language, person_id = person_id)
+        return PageData(list = response.toDomainList(), pageCount = 1)
+    }
+
     override suspend fun getRecommendations(language: String, page: Int, movieId: Int): PageData<Movie> {
         val response: TopRatedResponse = movieService.recommendations(api_key = apiKey, language = language, page = page, movie_id = movieId)
         return PageData(list = response.toDomainList(), pageCount = response.total_pages)

@@ -20,6 +20,7 @@
             <option value="$PROJECT_DIR$/feature-details" />
             <option value="$PROJECT_DIR$/feature-favorites" />
             <option value="$PROJECT_DIR$/feature-movielist" />
+            <option value="$PROJECT_DIR$/feature-people" />
           </set>
         </option>
       </GradleProjectSettings>

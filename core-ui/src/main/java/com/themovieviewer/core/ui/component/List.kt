@@ -55,9 +55,13 @@ fun MovieInfoItem(movieId: Int, imageSrc: String, title: String, date: String, n
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CastItem(imageSrc: String, name: String, character: String) {
+fun CastItem(personId: Int, imageSrc: String, name: String, character: String, onClickPeople: (Int) -> Unit,) {
     Card(modifier = Modifier
-        .size(width = 150.dp, height = 280.dp),
+        .size(width = 150.dp, height = 280.dp)
+        .clickable {
+            onClickPeople.invoke(personId)
+        }
+        ,
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
         border = BorderStroke(width = 1.dp, color = Color.Gray.copy(alpha = 0.1f))

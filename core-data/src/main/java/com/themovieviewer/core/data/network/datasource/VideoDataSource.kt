@@ -20,9 +20,6 @@ class VideoDataSource(private val movieRepository: MovieRepository, var movieId:
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Trailer> {
         return try {
             val pageData = movieRepository.getVideos(language = language, movie_id = movieId)
-            pageData.list.forEach {
-                Timber.d("Test : getVideos : $it")
-            }
             LoadResult.Page(
                 data = pageData.list,
                 prevKey = null,

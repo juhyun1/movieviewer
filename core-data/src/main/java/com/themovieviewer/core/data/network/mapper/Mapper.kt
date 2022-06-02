@@ -94,7 +94,6 @@ fun CreditsCastCrewDto.toDomain(): CreditsCastCrew {
 fun MovieCreditsResponse.toDomainList(): List<CreditsCastCrew> {
     val list = mutableListOf<CreditsCastCrew>()
     this.cast.forEach {
-        Timber.d("Test : CreditsCastCrew : $it")
         list.add(it.toDomain())
     }
     return list
@@ -117,8 +116,38 @@ fun VideosDto.toDomain(): Trailer {
 fun VideosResponse.toDomainList(): List<Trailer> {
     val list = mutableListOf<Trailer>()
     this.results.forEach {
-        Timber.d("Test : CreditsCastCrew : $it")
         list.add(it.toDomain())
     }
     return list
 }
+
+fun PeopleMovieCreditsCastDto.toDomain(): CastCrew {
+    return CastCrew(
+        character = this.character,
+        credit_id = this.credit_id,
+        release_date = this.release_date,
+        vote_count = this.vote_count,
+        video = this.video,
+        adult = this.adult,
+        vote_average = this.vote_average,
+        title = this.title,
+        genre_ids = this.genre_ids,
+        original_language = this.original_language,
+        original_title = this.original_title,
+        popularity = this.popularity,
+        id = this.id,
+        backdrop_path = this.backdrop_path,
+        overview = this.overview,
+        poster_path = this.poster_path,
+    )
+}
+
+
+fun PeopleMovieCreditsResponse.toDomainList(): List<CastCrew> {
+    val list = mutableListOf<CastCrew>()
+    this.cast.forEach {
+        list.add(it.toDomain())
+    }
+    return list
+}
+

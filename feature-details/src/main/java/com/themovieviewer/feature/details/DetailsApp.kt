@@ -18,6 +18,8 @@ import com.themovieviewer.core.common.navigation.Navigation
 import com.themovieviewer.core.ui.theme.Theme
 import com.themovieviewer.feature.details.navigation.DetailsDestination
 import com.themovieviewer.feature.details.navigation.detailsGraph
+import com.themovieviewer.feature.people.navigation.PeopleDestination
+import com.themovieviewer.feature.people.navigation.peopleGraph
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
@@ -74,7 +76,13 @@ fun DetailsNavHost(
             windowSizeClass = windowSizeClass,
             onClickMovie = {
                 navigation.navigateTo(DetailsDestination.route, it.toString())
+            },
+            onClickPeople = {
+                navigation.navigateTo(PeopleDestination.route, it.toString())
             }
+        )
+        peopleGraph(
+            windowSizeClass = windowSizeClass,
         )
     }
 }

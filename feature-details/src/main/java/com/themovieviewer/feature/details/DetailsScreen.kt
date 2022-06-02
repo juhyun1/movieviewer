@@ -49,12 +49,14 @@ fun DetailsRoute(
     windowSizeClass: WindowSizeClass,
     modifier: Modifier = Modifier,
     movieId: Int,
-    onClickMovie: (Int) -> Unit
+    onClickMovie: (Int) -> Unit,
+    onClickPeople: (Int) -> Unit,
 ) {
     DetailsScreen(
         windowSizeClass = windowSizeClass,
         movieId = movieId,
         onClickMovie = onClickMovie,
+        onClickPeople = onClickPeople,
         modifier = modifier,
     )
 }
@@ -66,11 +68,10 @@ fun DetailsScreen(
     modifier: Modifier = Modifier,
     movieId: Int,
     onClickMovie: (Int) -> Unit,
+    onClickPeople: (Int) -> Unit,
     vm: DetailsViewModel = hiltViewModel()
 ) {
     val state by vm.movieDetail.observeAsState()
-    Timber.d("Test : This Screen is Details Screen state : $state")
-
     LaunchedEffect(key1 = vm) {
         vm.getDetailsInfo(movieId = movieId)
     }
@@ -155,7 +156,7 @@ fun DetailsScreen(
                     style = MaterialTheme.typography.titleLarge
                 )
                 HeightSpacer(height = 10f)
-                CreditsList()
+                CreditsList(onClickPeople = onClickPeople)
                 HeightSpacer(height = 30f)
                 Text(
                     text = "Videos",
@@ -179,7 +180,7 @@ fun DetailsScreen(
 }
 
 @Composable
-fun CreditsList() {
+fun CreditsList(onClickPeople: (Int) -> Unit,) {
     val vm: DetailsViewModel = hiltViewModel()
     val pager = remember {
         Pager(
@@ -195,7 +196,7 @@ fun CreditsList() {
 
     LazyRow {
         itemsIndexed(lazyPagingItems) { index, item ->
-            CastItem(imageSrc = item?.profile_path?.imagePath() ?: "", name = item?.name ?: "", character = item?.character ?: "")
+            CastItem(personId = item?.id ?: 0, imageSrc = item?.profile_path?.imagePath() ?: "", name = item?.name ?: "", character = item?.character ?: "", onClickPeople = onClickPeople)
             WidthSpacer(width = 10f)
         }
 
