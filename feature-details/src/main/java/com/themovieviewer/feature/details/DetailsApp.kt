@@ -7,27 +7,22 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.themovieviewer.core.common.navigation.Navigation
 import com.themovieviewer.core.ui.theme.Theme
+import com.themovieviewer.feature.details.navigation.DetailsDestination
+import com.themovieviewer.feature.details.navigation.detailsGraph
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun DetailsApp(windowSizeClass: WindowSizeClass, movieId: Int) {
     Theme {
-//        val navController = rememberNavController()
-//        val navigation = remember(navController) {
-//            Navigation(navController)
-//        }
-//        val navBackStackEntry by navController.currentBackStackEntryAsState()
-//        val currentDestination = navBackStackEntry?.destination
-
-        val vm: DetailsViewModel = hiltViewModel()
-        LaunchedEffect(key1 = vm) {
-            vm.getDetailsInfo(movieId = movieId)
-        }
-
         Scaffold(
             modifier = Modifier,
             containerColor = Color.Transparent,
@@ -42,13 +37,44 @@ fun DetailsApp(windowSizeClass: WindowSizeClass, movieId: Int) {
                         )
                     )
             ) {
-                DetailsRoute(
+                DetailsNavHost(
                     windowSizeClass = windowSizeClass,
+                    movieId = movieId,
                     modifier = Modifier
                         .padding(padding)
                         .consumedWindowInsets(padding)
                 )
             }
         }
+    }
+}
+
+@Composable
+fun DetailsNavHost(
+    windowSizeClass: WindowSizeClass,
+    modifier: Modifier = Modifier,
+    movieId: Int,
+    navController: NavHostController = rememberNavController(),
+    startDestination: String = "dummy"
+) {
+    val navigation = remember(navController) {
+        Navigation(navController)
+    }
+    NavHost(
+        navController = navController,
+        startDestination = startDestination,
+        modifier = modifier,
+    ) {
+        composable("dummy") {
+            LaunchedEffect(key1 = true) {
+                navigation.navigateTo(route = DetailsDestination.route, args = movieId.toString(), popup = true)
+            }
+        }
+        detailsGraph(
+            windowSizeClass = windowSizeClass,
+            onClickMovie = {
+                navigation.navigateTo(DetailsDestination.route, it.toString())
+            }
+        )
     }
 }

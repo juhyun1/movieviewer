@@ -11,6 +11,7 @@ import androidx.compose.material.Text
 import androidx.compose.material3.*
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
@@ -47,9 +48,13 @@ import timber.log.Timber
 fun DetailsRoute(
     windowSizeClass: WindowSizeClass,
     modifier: Modifier = Modifier,
+    movieId: Int,
+    onClickMovie: (Int) -> Unit
 ) {
     DetailsScreen(
         windowSizeClass = windowSizeClass,
+        movieId = movieId,
+        onClickMovie = onClickMovie,
         modifier = modifier,
     )
 }
@@ -59,10 +64,16 @@ fun DetailsRoute(
 fun DetailsScreen(
     windowSizeClass: WindowSizeClass,
     modifier: Modifier = Modifier,
+    movieId: Int,
+    onClickMovie: (Int) -> Unit,
     vm: DetailsViewModel = hiltViewModel()
 ) {
     val state by vm.movieDetail.observeAsState()
     Timber.d("Test : This Screen is Details Screen state : $state")
+
+    LaunchedEffect(key1 = vm) {
+        vm.getDetailsInfo(movieId = movieId)
+    }
 
     Scaffold(
         topBar = {}
@@ -160,7 +171,7 @@ fun DetailsScreen(
                     style = MaterialTheme.typography.titleLarge
                 )
                 HeightSpacer(height = 10f)
-                RecommendationsItemList()
+                RecommendationsItemList( onClickMovie = onClickMovie )
             }
             HeightSpacer(height = 50f)
         }
@@ -283,7 +294,7 @@ fun TrailerItem(trailer: Trailer, onClick: () -> Unit) {
 }
 
 @Composable
-fun RecommendationsItemList() {
+fun RecommendationsItemList(onClickMovie: (Int) -> Unit) {
     val vm: DetailsViewModel = hiltViewModel()
     val pager = remember {
         Pager(
@@ -300,7 +311,7 @@ fun RecommendationsItemList() {
     LazyRow {
         itemsIndexed(lazyPagingItems) { index, item ->
             item?.let {
-                RecommendationsItem(movie = item, onClick = { })
+                RecommendationsItem(movie = item, onClickMovie = onClickMovie)
             }
             WidthSpacer(width = 10f)
         }
@@ -319,7 +330,7 @@ fun RecommendationsItemList() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RecommendationsItem(movie: Movie, onClick: () -> Unit) {
+fun RecommendationsItem(movie: Movie, onClickMovie: (Int) -> Unit) {
     Column(modifier = Modifier
         .width(width = 250.dp)
     ) {
@@ -335,7 +346,7 @@ fun RecommendationsItem(movie: Movie, onClick: () -> Unit) {
                 .size(width = 250.dp, height = 150.dp)
                 .clip(RoundedCornerShape(10.dp))
                 .clickable {
-                    onClick.invoke()
+                    onClickMovie.invoke(movie.id)
                 }
         )
         HeightSpacer(height = 5f)

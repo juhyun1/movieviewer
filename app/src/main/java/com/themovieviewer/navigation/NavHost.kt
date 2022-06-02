@@ -10,7 +10,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.themovieviewer.feature.details.DetailsActivity
 import com.themovieviewer.feature.details.navigation.DetailsDestination
-import com.themovieviewer.feature.details.navigation.detailsGraph
 import com.themovieviewer.feature.favorites.navigation.favoritesGraph
 import com.themovieviewer.feature.movielist.navigation.MovieListDestination
 import com.themovieviewer.feature.movielist.navigation.movieListGraph
@@ -34,6 +33,5 @@ fun NavHost(
             context.startActivity(intent)
         })
         favoritesGraph(windowSizeClass = windowSizeClass)
-        detailsGraph(windowSizeClass = windowSizeClass)
     }
 }

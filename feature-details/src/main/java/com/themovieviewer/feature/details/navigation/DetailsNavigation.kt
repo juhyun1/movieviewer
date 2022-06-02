@@ -1,12 +1,14 @@
 package com.themovieviewer.feature.details.navigation
 
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.themovieviewer.core.common.navigation.NavigationDestination
 import com.themovieviewer.feature.details.DetailsRoute
+import com.themovieviewer.feature.details.DetailsViewModel
 
 object DetailsDestination : NavigationDestination {
     override val route = "details_route"
@@ -15,7 +17,8 @@ object DetailsDestination : NavigationDestination {
 }
 
 fun NavGraphBuilder.detailsGraph(
-    windowSizeClass: WindowSizeClass
+    windowSizeClass: WindowSizeClass,
+    onClickMovie: (Int) -> Unit
 ) {
     composable(
         route = "${DetailsDestination.route}/{${DetailsDestination.detailsArg}}",
@@ -25,6 +28,12 @@ fun NavGraphBuilder.detailsGraph(
             }
         )
     ) { backStackEntry ->
-        DetailsRoute(windowSizeClass)
+        val vm: DetailsViewModel = hiltViewModel()
+        val args = backStackEntry.arguments
+        DetailsRoute(
+            windowSizeClass = windowSizeClass,
+            movieId = args?.getInt(DetailsDestination.detailsArg) ?: vm.movieID,
+            onClickMovie = onClickMovie
+        )
     }
 }
