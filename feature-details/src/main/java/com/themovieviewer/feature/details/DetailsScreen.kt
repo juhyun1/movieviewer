@@ -40,6 +40,7 @@ import com.themovieviewer.core.ui.component.CastItem
 import com.themovieviewer.core.ui.component.HeightSpacer
 import com.themovieviewer.core.ui.component.MovieInfoItemRow
 import com.themovieviewer.core.ui.component.WidthSpacer
+import com.themovieviewer.core.ui.util.currency
 import com.themovieviewer.core.ui.util.imagePath
 import com.themovieviewer.core.ui.util.score
 import com.themovieviewer.core.ui.util.thumbnailPath
@@ -174,6 +175,54 @@ fun DetailsScreen(
                 )
                 HeightSpacer(height = 10f)
                 RecommendationsItemList( onClickMovie = onClickMovie )
+                HeightSpacer(height = 30f)
+                Text(
+                    text = "Status",
+                    color = Color.Black,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                HeightSpacer(height = 10f)
+                Text(
+                    text = it.status,
+                    color = Color.Black,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                HeightSpacer(height = 20f)
+                Text(
+                    text = "Original Language",
+                    color = Color.Black,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                HeightSpacer(height = 10f)
+                Text(
+                    text = it.originalLanguage,
+                    color = Color.Black,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                HeightSpacer(height = 20f)
+                Text(
+                    text = "Budget",
+                    color = Color.Black,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                HeightSpacer(height = 10f)
+                Text(
+                    text = it.budget.currency(),
+                    color = Color.Black,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                HeightSpacer(height = 20f)
+                Text(
+                    text = "Revenue",
+                    color = Color.Black,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                HeightSpacer(height = 10f)
+                Text(
+                    text = it.revenue.currency(),
+                    color = Color.Black,
+                    style = MaterialTheme.typography.bodyMedium
+                )
             }
             HeightSpacer(height = 50f)
         }
