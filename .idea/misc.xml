@@ -12,6 +12,7 @@
         <entry key="..\:/workspace/example/movieviewer/feature-details/src/main/res/drawable/ic_trailer_payler.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_movie_details.xml" value="0.43125" />
         <entry key="app/src/main/res/layout/widget_movie_recommendations.xml" value="0.43125" />
+        <entry key="app/src/main/res/layout/widget_people_acting.xml" value="0.43125" />
       </map>
     </option>
   </component>

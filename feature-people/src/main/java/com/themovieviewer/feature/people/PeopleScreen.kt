@@ -37,6 +37,7 @@ import com.themovieviewer.core.ui.R
 import com.themovieviewer.core.ui.component.HeightSpacer
 import com.themovieviewer.core.ui.component.MovieInfoItemRow
 import com.themovieviewer.core.ui.component.WidthSpacer
+import com.themovieviewer.core.ui.util.actingText
 import com.themovieviewer.core.ui.util.imagePath
 
 @Composable
@@ -143,17 +144,6 @@ fun PeopleScreen(
                             color = Color.Black,
                             style = MaterialTheme.typography.bodyMedium
                         )
-                        HeightSpacer(height = 10f)
-                        Text(
-                            text = "Place of Birth",
-                            color = Color.Black,
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                        Text(
-                            text = it.placeOfBirths ?: "",
-                            color = Color.Black,
-                            style = MaterialTheme.typography.bodyMedium
-                        )
                     }
                 }
                 HeightSpacer(height = 10f)
@@ -168,7 +158,7 @@ fun PeopleScreen(
                     color = Color.Black,
                     style = MaterialTheme.typography.labelMedium
                 )
-                HeightSpacer(height = 10f)
+                HeightSpacer(height = 30f)
                 Text(
                     text = "Known For",
                     color = Color.Black,
@@ -176,6 +166,15 @@ fun PeopleScreen(
                 )
                 HeightSpacer(height = 5f)
                 PeopleMovieCreditsList(onClickMovie = onClickMovie)
+
+                HeightSpacer(height = 30f)
+                Text(
+                    text = "Acting",
+                    color = Color.Black,
+                    style = MaterialTheme.typography.titleLarge
+                )
+                HeightSpacer(height = 5f)
+                PeopleActingList()
                 HeightSpacer(height = 50f)
             }
         }
@@ -183,7 +182,7 @@ fun PeopleScreen(
 }
 
 @Composable
-fun PeopleMovieCreditsList( vm: PeopleViewModel = hiltViewModel(), onClickMovie: (Int) -> Unit) {
+fun PeopleMovieCreditsList(vm: PeopleViewModel = hiltViewModel(), onClickMovie: (Int) -> Unit) {
 
     val pager = remember {
         Pager(
@@ -213,6 +212,25 @@ fun PeopleMovieCreditsList( vm: PeopleViewModel = hiltViewModel(), onClickMovie:
                         .wrapContentWidth(Alignment.CenterHorizontally)
                 )
             }
+        }
+    }
+}
+
+@Composable
+fun PeopleActingList(vm: PeopleViewModel = hiltViewModel()) {
+
+    LaunchedEffect(key1 = vm) {
+        vm.getActingData()
+    }
+    val acting by vm.castList.observeAsState()
+    Column {
+        acting?.forEach {
+            Text(
+                text = it.actingText(),
+                color = Color.Black,
+                style = MaterialTheme.typography.bodyMedium
+            )
+            HeightSpacer(height = 10f)
         }
     }
 }

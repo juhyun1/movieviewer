@@ -50,7 +50,7 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun getPeopleMovieCredits(language: String, person_id: Int): PageData<CastCrew> {
         val response: PeopleMovieCreditsResponse = movieService.getPeopleMovieCredits(api_key = apiKey, language = language, person_id = person_id)
-        return PageData(list = response.toDomainList(), pageCount = 1)
+        return PageData(list = response.toDomainList().sortedByDescending { it.release_date }, pageCount = 1)
     }
 
     override suspend fun getRecommendations(language: String, page: Int, movieId: Int): PageData<Movie> {

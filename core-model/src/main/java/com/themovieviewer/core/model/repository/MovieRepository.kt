@@ -10,7 +10,7 @@ interface MovieRepository {
     suspend fun getVideos(language: String = "en_US", movie_id: Int): PageData<Trailer>
     suspend fun getMovieCredits(language: String = "en_US", movie_id: Int): PageData<CreditsCastCrew>
     suspend fun getPeopleDetails(language: String = "en_US", person_id: Int): People
-    suspend fun getPeopleMovieCredits(language: String, person_id: Int): PageData<CastCrew>
-    suspend fun getRecommendations(language: String, page: Int, movieId: Int): PageData<Movie>
+    suspend fun getPeopleMovieCredits(language: String = "en_US", person_id: Int): PageData<CastCrew>
+    suspend fun getRecommendations(language: String = "en_US", page: Int, movieId: Int): PageData<Movie>
 //    suspend fun getExternalIds(language: String, personId: Int): PeopleExternalIdsResponse
 }
