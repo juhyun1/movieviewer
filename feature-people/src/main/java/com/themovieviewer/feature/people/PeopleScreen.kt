@@ -2,17 +2,21 @@ package com.themovieviewer.feature.people
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -21,24 +25,32 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.LoadState
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemsIndexed
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.themovieviewer.core.data.network.mapper.toMovie
 import com.themovieviewer.core.ui.R
 import com.themovieviewer.core.ui.component.HeightSpacer
+import com.themovieviewer.core.ui.component.MovieInfoItemRow
 import com.themovieviewer.core.ui.component.WidthSpacer
 import com.themovieviewer.core.ui.util.imagePath
-import timber.log.Timber
 
 @Composable
 fun PeopleRoute(
     windowSizeClass: WindowSizeClass,
     modifier: Modifier = Modifier,
-    personId: Int
+    personId: Int,
+    onClickMovie: (Int) -> Unit
 ) {
     PeopleScreen(
         windowSizeClass = windowSizeClass,
         modifier = modifier,
-        personId = personId
+        personId = personId,
+        onClickMovie = onClickMovie
     )
 }
 
@@ -48,15 +60,15 @@ fun PeopleScreen(
     windowSizeClass: WindowSizeClass,
     modifier: Modifier = Modifier,
     personId: Int,
+    onClickMovie: (Int) -> Unit
 
 ) {
-    Timber.d("Test : backStackEntry")
     val vm: PeopleViewModel = hiltViewModel()
-    Timber.d("Test : vm")
     val state by vm.peopleDetail.observeAsState()
     LaunchedEffect(key1 = vm) {
         vm.getPeopleInfo(personId = personId)
     }
+
     Scaffold(
         topBar = {}
     ) {
@@ -155,6 +167,50 @@ fun PeopleScreen(
                     text = it.biography,
                     color = Color.Black,
                     style = MaterialTheme.typography.labelMedium
+                )
+                HeightSpacer(height = 10f)
+                Text(
+                    text = "Known For",
+                    color = Color.Black,
+                    style = MaterialTheme.typography.titleLarge
+                )
+                HeightSpacer(height = 5f)
+                PeopleMovieCreditsList(onClickMovie = onClickMovie)
+                HeightSpacer(height = 50f)
+            }
+        }
+    }
+}
+
+@Composable
+fun PeopleMovieCreditsList( vm: PeopleViewModel = hiltViewModel(), onClickMovie: (Int) -> Unit) {
+
+    val pager = remember {
+        Pager(
+            PagingConfig(
+                pageSize = 20,
+                enablePlaceholders = true,
+                maxSize = 1000
+            )
+        ) { vm.getPeopleMovieCreditsDataSource() }
+    }
+
+    val lazyPagingItems = pager.flow.collectAsLazyPagingItems()
+
+    LazyRow {
+        itemsIndexed(lazyPagingItems) { index, item ->
+            item?.let {
+                MovieInfoItemRow(movie = item.toMovie(), onClickMovie = onClickMovie)
+            }
+            WidthSpacer(width = 10f)
+        }
+
+        if (lazyPagingItems.loadState.append == LoadState.Loading) {
+            item {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentWidth(Alignment.CenterHorizontally)
                 )
             }
         }

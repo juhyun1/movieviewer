@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -13,10 +14,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.themovieviewer.core.model.data.Movie
 import com.themovieviewer.core.ui.R
+import com.themovieviewer.core.ui.util.imagePath
+import com.themovieviewer.core.ui.util.score
 
 @Composable
 fun MovieInfoItem(movieId: Int, imageSrc: String, title: String, date: String, navigateToDetails: (String) -> Unit) {
@@ -91,5 +96,47 @@ fun CastItem(personId: Int, imageSrc: String, name: String, character: String, o
             color = Color.Black,
             style = MaterialTheme.typography.bodyMedium
         )
+    }
+}
+
+@Composable
+fun MovieInfoItemRow(movie: Movie, onClickMovie: (Int) -> Unit) {
+    Column(modifier = Modifier
+        .width(width = 250.dp)
+    ) {
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(movie.backdrop_path?.imagePath())
+                .crossfade(true)
+                .build(),
+            placeholder = painterResource(R.drawable.placeholder),
+            contentDescription = null,
+            contentScale = ContentScale.FillHeight,
+            error = painterResource(R.drawable.placeholder),
+            modifier = Modifier
+                .size(width = 250.dp, height = 150.dp)
+                .clip(RoundedCornerShape(10.dp))
+                .clickable {
+                    onClickMovie.invoke(movie.id)
+                }
+        )
+        HeightSpacer(height = 5f)
+        Row(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                modifier = Modifier.widthIn(max = 180.dp),
+                text = movie.title ?: "",
+                color = Color.Black,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                style = MaterialTheme.typography.titleMedium
+            )
+            Text(modifier = Modifier.weight(weight = 1f).wrapContentWidth(align = Alignment.End),
+                text = movie.vote_average.score(),
+                color = Color.Black,
+                style = MaterialTheme.typography.titleMedium
+            )
+        }
     }
 }

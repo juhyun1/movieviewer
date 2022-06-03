@@ -102,4 +102,6 @@ dependencies {
 
     //kotlin serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
+
+    implementation(project(":core-model"))
 }
