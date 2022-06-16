@@ -38,7 +38,9 @@ import com.themovieviewer.core.model.data.Trailer
 import com.themovieviewer.core.ui.R
 import com.themovieviewer.core.ui.component.CastItem
 import com.themovieviewer.core.ui.component.HeightSpacer
+import com.themovieviewer.core.ui.component.MovieInfoItemRow
 import com.themovieviewer.core.ui.component.WidthSpacer
+import com.themovieviewer.core.ui.util.currency
 import com.themovieviewer.core.ui.util.imagePath
 import com.themovieviewer.core.ui.util.score
 import com.themovieviewer.core.ui.util.thumbnailPath
@@ -173,6 +175,54 @@ fun DetailsScreen(
                 )
                 HeightSpacer(height = 10f)
                 RecommendationsItemList( onClickMovie = onClickMovie )
+                HeightSpacer(height = 30f)
+                Text(
+                    text = "Status",
+                    color = Color.Black,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                HeightSpacer(height = 10f)
+                Text(
+                    text = it.status,
+                    color = Color.Black,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                HeightSpacer(height = 20f)
+                Text(
+                    text = "Original Language",
+                    color = Color.Black,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                HeightSpacer(height = 10f)
+                Text(
+                    text = it.originalLanguage,
+                    color = Color.Black,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                HeightSpacer(height = 20f)
+                Text(
+                    text = "Budget",
+                    color = Color.Black,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                HeightSpacer(height = 10f)
+                Text(
+                    text = it.budget.currency(),
+                    color = Color.Black,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                HeightSpacer(height = 20f)
+                Text(
+                    text = "Revenue",
+                    color = Color.Black,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                HeightSpacer(height = 10f)
+                Text(
+                    text = it.revenue.currency(),
+                    color = Color.Black,
+                    style = MaterialTheme.typography.bodyMedium
+                )
             }
             HeightSpacer(height = 50f)
         }
@@ -312,7 +362,7 @@ fun RecommendationsItemList(onClickMovie: (Int) -> Unit) {
     LazyRow {
         itemsIndexed(lazyPagingItems) { index, item ->
             item?.let {
-                RecommendationsItem(movie = item, onClickMovie = onClickMovie)
+                MovieInfoItemRow(movie = item, onClickMovie = onClickMovie)
             }
             WidthSpacer(width = 10f)
         }
@@ -325,48 +375,6 @@ fun RecommendationsItemList(onClickMovie: (Int) -> Unit) {
                         .wrapContentWidth(Alignment.CenterHorizontally)
                 )
             }
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun RecommendationsItem(movie: Movie, onClickMovie: (Int) -> Unit) {
-    Column(modifier = Modifier
-        .width(width = 250.dp)
-    ) {
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(movie.backdrop_path?.imagePath())
-                .crossfade(true)
-                .build(),
-            placeholder = painterResource(R.drawable.placeholder),
-            contentDescription = null,
-            contentScale = ContentScale.FillHeight,
-            modifier = Modifier
-                .size(width = 250.dp, height = 150.dp)
-                .clip(RoundedCornerShape(10.dp))
-                .clickable {
-                    onClickMovie.invoke(movie.id)
-                }
-        )
-        HeightSpacer(height = 5f)
-        Row(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(
-                modifier = Modifier.widthIn(max = 180.dp),
-                text = movie.title ?: "",
-                color = Color.Black,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(modifier = Modifier.weight(weight = 1f).wrapContentWidth(align = Alignment.End),
-                text = movie.vote_average.score(),
-                color = Color.Black,
-                style = MaterialTheme.typography.titleMedium
-            )
         }
     }
 }

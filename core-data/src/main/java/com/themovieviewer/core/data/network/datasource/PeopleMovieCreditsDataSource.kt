@@ -28,7 +28,7 @@ class PeopleMovieCreditsDataSource(
             )
 
             LoadResult.Page(
-                data = pageData.list,
+                data = pageData.list.sortedByDescending { it.release_date },
                 prevKey = null,
                 nextKey = null
             )

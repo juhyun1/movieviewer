@@ -46,4 +46,12 @@ object DataSourceModule {
         return PeopleMovieCreditsDataSource(movieRepository = movieRepository)
     }
 
+    @Provides
+    fun providesActingDataSource(
+        movieRepository: MovieRepository
+    ): ActingDataSource {
+        return ActingDataSource(movieRepository = movieRepository)
+    }
+
+
 }

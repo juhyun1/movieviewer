@@ -83,6 +83,9 @@ fun DetailsNavHost(
         )
         peopleGraph(
             windowSizeClass = windowSizeClass,
+            onClickMovie = {
+                navigation.navigateTo(DetailsDestination.route, it.toString())
+            }
         )
     }
 }

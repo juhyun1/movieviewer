@@ -18,7 +18,8 @@ object PeopleDestination : NavigationDestination {
 }
 
 fun NavGraphBuilder.peopleGraph(
-    windowSizeClass: WindowSizeClass
+    windowSizeClass: WindowSizeClass,
+    onClickMovie: (Int) -> Unit
 ) {
     composable(
         route = "${PeopleDestination.route}/{${PeopleDestination.peopleArg}}",
@@ -30,7 +31,8 @@ fun NavGraphBuilder.peopleGraph(
     ) { backStackEntry ->
         PeopleRoute(
             windowSizeClass,
-            personId = backStackEntry.arguments?.getInt(PeopleDestination.peopleArg) ?: 0
+            personId = backStackEntry.arguments?.getInt(PeopleDestination.peopleArg) ?: 0,
+            onClickMovie = onClickMovie
         )
     }
 }

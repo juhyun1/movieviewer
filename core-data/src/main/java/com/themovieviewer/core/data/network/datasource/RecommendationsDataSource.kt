@@ -23,7 +23,7 @@ class RecommendationsDataSource(private val movieRepository: MovieRepository, va
             val requestPage = nextPageNumber + 1
             val pageData = movieRepository.getRecommendations(language = language, movieId = movieId, page = requestPage)
             LoadResult.Page(
-                data = pageData.list,
+                data = pageData.list.sortedByDescending { it.release_date },
                 prevKey = if (nextPageNumber > 0) nextPageNumber - 1 else null,
                 nextKey = if (nextPageNumber < pageData.pageCount) nextPageNumber + 1 else null
             )

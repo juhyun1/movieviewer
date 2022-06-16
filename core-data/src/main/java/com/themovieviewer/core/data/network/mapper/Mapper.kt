@@ -151,3 +151,22 @@ fun PeopleMovieCreditsResponse.toDomainList(): List<CastCrew> {
     return list
 }
 
+
+fun CastCrew.toMovie(): Movie {
+    return Movie(
+        id = this.id,
+        poster_path = this.poster_path,
+        adult = this.adult,
+        overview = this.overview,
+        release_date = this.release_date,
+        genre_ids = this.genre_ids,
+        original_title = this.original_title,
+        original_language = this.original_language,
+        title = this.title,
+        backdrop_path = this.backdrop_path,
+        popularity = this.popularity,
+        vote_count = this.vote_count,
+        video = this.video,
+        vote_average = this.vote_average,
+    )
+}
