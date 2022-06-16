@@ -40,7 +40,7 @@ fun MovieListRoute(
     )
 }
 
-@OptIn(ExperimentalLayoutApi::class,
+@OptIn(
     ExperimentalMaterialApi::class
 )
 @Composable
@@ -48,112 +48,20 @@ fun MovieListScreen(
     windowSizeClass: WindowSizeClass,
     modifier: Modifier = Modifier,
     navigateToDetails: (String) -> Unit,
-    vm: MovieListViewModel = hiltViewModel()
 ) {
-
-    val pager = remember {
-        Pager(
-            PagingConfig(
-                pageSize = 20,
-                enablePlaceholders = true,
-                maxSize = 1000
-            )
-        ) { vm.getNowPlayingDataSource() }
-    }
-
-    val lazyPagingItems = pager.flow.collectAsLazyPagingItems()
-
-    val scope = rememberCoroutineScope()
     val scaffoldState = rememberBottomSheetScaffoldState()
     BottomSheetScaffold(
         sheetContent = {
-            val state by vm.preferenceState
-            DisposableEffect(key1 = scaffoldState.bottomSheetState.isCollapsed) {
-                onDispose {
-                    if (scaffoldState.bottomSheetState.isCollapsed) {
-                        vm.onPreferencesStateChange(state = PreferenceState.Hide)
-                    }
-                }
-            }
-
-            LaunchedEffect(key1 = state) {
-                when(state) {
-                    PreferenceState.Show -> {
-                        scaffoldState.bottomSheetState.expand()
-                    }
-                    else -> {}
-                }
-            }
-
-            Box(
-                Modifier
-                    .fillMaxWidth()
-                    .height(128.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Text("Swipe up to expand sheet")
-            }
-            Column(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(64.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text("Sheet content")
-                Spacer(Modifier.height(20.dp))
-                Button(
-                    onClick = {
-                        scope.launch { scaffoldState.bottomSheetState.collapse() }
-                    }
-                ) {
-                    Text("Click to collapse sheet")
-                }
-            }
+            MovieBottomSheetPart(scaffoldState = scaffoldState)
         },
         sheetPeekHeight = 0.dp,
         scaffoldState = scaffoldState,
         topBar = {
-            TopAppBar(
-                titleRes = R.string.top_app_bar_preview_title,
-                navigationIcon = Icons.Filled.Search,
-                navigationIconContentDescription = "navigationIconContentDescription",
-                actionIcon = Icons.Outlined.AccountCircle,
-                actionIconContentDescription = "actionIconContentDescription",
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = Color.Transparent
-                ),
-                modifier = Modifier.windowInsetsPadding(
-                    WindowInsets.safeDrawing.only(WindowInsetsSides.Top)
-                ),
-                onActionClick = { vm.onPreferencesStateChange(state = PreferenceState.Show)}
-            )
+            MovieTopBarPart()
         },
         contentColor = Color.Transparent
     ) { innerPadding ->
-        BoxWithConstraints(
-            modifier = modifier
-                .padding(innerPadding)
-                .consumedWindowInsets(innerPadding)
-        ) {
-            LazyColumn {
-                itemsIndexed(lazyPagingItems) { index, item ->
-
-                    if (index % 2 == 0) {
-                        MovieColumnItem(movie1 = item, movie2 = if (lazyPagingItems.itemCount > index + 1) lazyPagingItems[index + 1] else null, navigateToDetails = navigateToDetails)
-                    }
-                }
-
-                if (lazyPagingItems.loadState.append == LoadState.Loading) {
-                    item {
-                        CircularProgressIndicator(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .wrapContentWidth(Alignment.CenterHorizontally)
-                        )
-                    }
-                }
-            }
-        }
+        MovieContentsPart(modifier = modifier, innerPadding = innerPadding, navigateToDetails = navigateToDetails)
     }
 }
 
@@ -169,6 +77,117 @@ fun MovieColumnItem(movie1: Movie?, movie2: Movie?, navigateToDetails: (String) 
         Spacer(modifier = Modifier.width(30.dp))
         movie2?.let{
             MovieInfoItem(movieId = movie2.id, imageSrc = it.poster_path?.imagePath() ?: "", title = it.title ?: "", date = it.release_date ?: "", navigateToDetails = navigateToDetails)
+        }
+    }
+}
+
+@OptIn(
+    ExperimentalMaterialApi::class
+)
+@Composable
+fun MovieBottomSheetPart(scaffoldState: BottomSheetScaffoldState) {
+    val vm: MovieListViewModel = hiltViewModel()
+    val scope = rememberCoroutineScope()
+    val state by vm.preferenceState
+    DisposableEffect(key1 = scaffoldState.bottomSheetState.isCollapsed) {
+        onDispose {
+            if (scaffoldState.bottomSheetState.isCollapsed) {
+                vm.onPreferencesStateChange(state = PreferenceState.Hide)
+            }
+        }
+    }
+
+    LaunchedEffect(key1 = state) {
+        when(state) {
+            PreferenceState.Show -> {
+                scaffoldState.bottomSheetState.expand()
+            }
+            else -> {}
+        }
+    }
+
+    Box(
+        Modifier
+            .fillMaxWidth()
+            .height(128.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Text("Swipe up to expand sheet")
+    }
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .padding(64.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text("Sheet content")
+        Spacer(Modifier.height(20.dp))
+        Button(
+            onClick = {
+                scope.launch { scaffoldState.bottomSheetState.collapse() }
+            }
+        ) {
+            Text("Click to collapse sheet")
+        }
+    }
+}
+
+@Composable
+fun MovieTopBarPart() {
+    val vm: MovieListViewModel = hiltViewModel()
+    TopAppBar(
+        titleRes = R.string.top_app_bar_preview_title,
+        navigationIcon = Icons.Filled.Search,
+        navigationIconContentDescription = "navigationIconContentDescription",
+        actionIcon = Icons.Outlined.AccountCircle,
+        actionIconContentDescription = "actionIconContentDescription",
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+            containerColor = Color.Transparent
+        ),
+        modifier = Modifier.windowInsetsPadding(
+            WindowInsets.safeDrawing.only(WindowInsetsSides.Top)
+        ),
+        onActionClick = { vm.onPreferencesStateChange(state = PreferenceState.Show)}
+    )
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun MovieContentsPart(modifier: Modifier, innerPadding: PaddingValues, navigateToDetails: (String) -> Unit) {
+    val vm: MovieListViewModel = hiltViewModel()
+    val pager = remember {
+        Pager(
+            PagingConfig(
+                pageSize = 20,
+                enablePlaceholders = true,
+                maxSize = 1000
+            )
+        ) { vm.getNowPlayingDataSource() }
+    }
+
+    val lazyPagingItems = pager.flow.collectAsLazyPagingItems()
+
+    BoxWithConstraints(
+        modifier = modifier
+            .padding(innerPadding)
+            .consumedWindowInsets(innerPadding)
+    ) {
+        LazyColumn {
+            itemsIndexed(lazyPagingItems) { index, item ->
+                if (index % 2 == 0) {
+                    MovieColumnItem(movie1 = item, movie2 = if (lazyPagingItems.itemCount > index + 1) lazyPagingItems[index + 1] else null, navigateToDetails = navigateToDetails)
+                }
+            }
+
+            if (lazyPagingItems.loadState.append == LoadState.Loading) {
+                item {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentWidth(Alignment.CenterHorizontally)
+                    )
+                }
+            }
         }
     }
 }

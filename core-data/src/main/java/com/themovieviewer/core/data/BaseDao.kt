@@ -15,7 +15,7 @@ interface BaseDao<T> {
      * @param obj the object to be inserted.
      */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(obj: T)
+    fun insert(obj: T)
 
     /**
      * Insert an array of objects in the database.
@@ -23,7 +23,7 @@ interface BaseDao<T> {
      * @param obj the objects to be inserted.
      */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(vararg obj: T)
+    fun insert(vararg obj: T)
 
     /**
      * Update an object from the database.
@@ -31,7 +31,7 @@ interface BaseDao<T> {
      * @param obj the object to be updated
      */
     @Update
-    suspend fun update(obj: T)
+    fun update(obj: T)
 
     /**
      * Delete an object from the database
@@ -39,5 +39,5 @@ interface BaseDao<T> {
      * @param obj the object to be deleted
      */
     @Delete
-    suspend fun delete(obj: T)
+    fun delete(obj: T)
 }
