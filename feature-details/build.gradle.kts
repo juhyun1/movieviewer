@@ -45,8 +45,7 @@ android {
 }
 
 dependencies {
-    implementation(files("libs/YouTubeAndroidPlayerApi.jar"))
-    implementation(files("libs/YouTubeAndroidPlayerApi.jar"))
+//    implementation(files("libs/YouTubeAndroidPlayerApi.jar"))
 
     implementation("androidx.appcompat:appcompat:${Versions.APPCOMPAT}")
     testImplementation("junit:junit:4.13.2")
@@ -99,7 +98,7 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:${Versions.HILT}")
     implementation("androidx.hilt:hilt-lifecycle-viewmodel:${Versions.HILT_LIFECYCLE_VIEW_MODEL}")
     kapt("androidx.hilt:hilt-compiler:${Versions.HILT_COMPILER}")
-    kapt("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.3.0")
+    kapt("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.4.2")
 
     // Hilt testing dependencies
     androidTestImplementation("com.google.dagger:hilt-android-testing:${Versions.HILT}")

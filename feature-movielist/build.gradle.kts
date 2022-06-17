@@ -42,9 +42,9 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.2.0-alpha08"
     }
-    hilt {
-        enableAggregatingTask = true
-    }
+//    hilt {
+//        enableAggregatingTask = true
+//    }
 }
 
 dependencies {

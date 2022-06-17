@@ -8,8 +8,8 @@ message UserPreferences {
     Category category = 1;
 
     enum Category {
-        POPULAR = 0;
-        NOW_PLAYING = 1;
+        NOW_PLAYING = 0;
+        POPULAR = 1;
         UPCOMING = 2;
         TOP_RATED = 3;
     }
