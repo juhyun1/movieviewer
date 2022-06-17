@@ -41,13 +41,18 @@ android {
         jvmTarget = JavaVersion.VERSION_11
     }
     buildFeatures {
-        viewBinding true
+        viewBinding = true
         compose = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.2.0-alpha08"
     }
+    hilt {
+        enableAggregatingTask = true
+    }
 }
+
+
 
 dependencies {
 

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.dataStoreFile
+import com.themovieviewer.core.datastore.PreferencesDataSource
 import com.themovieviewer.core.datastore.UserPreferences
 import com.themovieviewer.core.datastore.UserPreferencesSerializer
 import dagger.Module
@@ -32,4 +33,13 @@ object DataStoreModule {
         ) {
             context.dataStoreFile("user_preferences.pb")
         }
+
+    @Provides
+    @Singleton
+    fun providesUserPreferencesDataSource(
+        userPreferences: DataStore<UserPreferences>
+    ): PreferencesDataSource =
+        PreferencesDataSource(
+            userPreferences = userPreferences
+        )
 }

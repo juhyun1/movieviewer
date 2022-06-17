@@ -42,6 +42,9 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.2.0-alpha08"
     }
+    hilt {
+        enableAggregatingTask = true
+    }
 }
 
 dependencies {
@@ -112,5 +115,6 @@ dependencies {
     implementation(project(":core-ui"))
     implementation(project(":core-data"))
     implementation(project(":core-common"))
+    implementation(project(":core-datastore"))
 
 }

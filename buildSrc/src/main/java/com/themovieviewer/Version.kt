@@ -12,7 +12,7 @@ object Versions {
     const val RETROFIT = "2.9.0"
     const val RETROFIT_COROUTINES = "0.9.2"
     const val COROUTINES = "1.6.1-native-mt"
-    const val HILT = "2.35.1"
+    const val HILT = "2.4.2"
     const val HILT_VIEW_MODEL_COMPOSE = "2.4.1"
     const val HILT_NAVIGATION_COMPOSE = "1.0.0"
 

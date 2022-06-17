@@ -16,7 +16,7 @@ android {
     compileSdk = 32
 
     defaultConfig {
-        minSdk = 26
+        minSdk = 27
         targetSdk = 32
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -43,15 +43,18 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.4.2")
-    implementation("com.google.android.material:material:1.6.1")
+    implementation("androidx.core:core-ktx:${Versions.CORE_KTX}")
+    implementation("androidx.appcompat:appcompat:${Versions.APPCOMPAT}")
+    implementation("com.google.android.material:material:${Versions.MATERIAL}")
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.3")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
 
     implementation("androidx.datastore:datastore:1.0.0")
     implementation("com.google.protobuf:protobuf-javalite:3.21.1")
 
     //Kotlin Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${com.themovieviewer.Versions.COROUTINES}")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.COROUTINES}")
 
     // Dagger - Hilt
     implementation("com.google.dagger:hilt-android:${Versions.HILT}")
@@ -59,16 +62,15 @@ dependencies {
     implementation("androidx.hilt:hilt-lifecycle-viewmodel:${Versions.HILT_LIFECYCLE_VIEW_MODEL}")
     kapt("androidx.hilt:hilt-compiler:${Versions.HILT_COMPILER}")
 
+
     // Hilt testing dependencies
     androidTestImplementation("com.google.dagger:hilt-android-testing:${Versions.HILT}")
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:${Versions.HILT}")
 
     //TIMBER
-    implementation("com.jakewharton.timber:timber:${com.themovieviewer.Versions.TIMBER}")
+    implementation("com.jakewharton.timber:timber:${Versions.TIMBER}")
 
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    kapt("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.4.2")
 }
 
 protobuf {
