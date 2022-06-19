@@ -22,4 +22,7 @@
     <string name="card_tap_action">Open Resource Link</string>
 
     <string name="top_app_bar_preview_title">Title</string>
+    <string name="bottom_sheet_item_now_playing">Now Playing</string>
+    <string name="bottom_sheet_item_popular">Popular</string>
+    <string name="bottom_sheet_item_upcoming">Upcoming</string>
 </resources>

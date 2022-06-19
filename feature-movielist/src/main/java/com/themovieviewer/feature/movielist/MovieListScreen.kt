@@ -4,7 +4,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Rectangle
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.TopAppBarDefaults
@@ -21,11 +23,15 @@ import androidx.paging.PagingConfig
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import com.themovieviewer.core.model.data.Movie
+import com.themovieviewer.core.ui.component.BottomSheetOptionItem
+import com.themovieviewer.core.ui.component.HeightSpacer
 import com.themovieviewer.core.ui.component.MovieInfoItem
 import com.themovieviewer.core.ui.component.TopAppBar
 import com.themovieviewer.core.ui.util.imagePath
 import com.themovieviewer.feature.movielist.model.PreferenceState
+import com.themovieviewer.feature.movielist.util.category
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @Composable
 fun MovieListRoute(
@@ -105,29 +111,28 @@ fun MovieBottomSheetPart(scaffoldState: BottomSheetScaffoldState) {
             else -> {}
         }
     }
-
-    Box(
-        Modifier
-            .fillMaxWidth()
-            .height(128.dp),
-        contentAlignment = Alignment.Center
+    Surface(
+        color = Color.White
     ) {
-        Text("Swipe up to expand sheet")
-    }
-    Column(
-        Modifier
-            .fillMaxWidth()
-            .padding(64.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text("Sheet content")
-        Spacer(Modifier.height(20.dp))
-        Button(
-            onClick = {
-                scope.launch { scaffoldState.bottomSheetState.collapse() }
-            }
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .height(128.dp),
         ) {
-            Text("Click to collapse sheet")
+            HeightSpacer(height = 20f)
+            BottomSheetOptionItem(icon = Icons.Default.Rectangle, text = R.string.bottom_sheet_item_now_playing) {
+                vm.onCategoryChanged(category = it.category())
+                scope.launch {
+                    scaffoldState.bottomSheetState.collapse()
+                }
+            }
+            HeightSpacer(height = 20f)
+            BottomSheetOptionItem(icon = Icons.Default.Star, text = R.string.bottom_sheet_item_upcoming) {
+                vm.onCategoryChanged(category = it.category())
+                scope.launch {
+                    scaffoldState.bottomSheetState.collapse()
+                }
+            }
         }
     }
 }
@@ -155,17 +160,9 @@ fun MovieTopBarPart() {
 @Composable
 fun MovieContentsPart(modifier: Modifier, innerPadding: PaddingValues, navigateToDetails: (String) -> Unit) {
     val vm: MovieListViewModel = hiltViewModel()
-    val pager = remember {
-        Pager(
-            PagingConfig(
-                pageSize = 20,
-                enablePlaceholders = true,
-                maxSize = 1000
-            )
-        ) { vm.getNowPlayingDataSource() }
-    }
+    val state by vm.pager
 
-    val lazyPagingItems = pager.flow.collectAsLazyPagingItems()
+    val lazyPagingItems = state.flow.collectAsLazyPagingItems()
 
     BoxWithConstraints(
         modifier = modifier

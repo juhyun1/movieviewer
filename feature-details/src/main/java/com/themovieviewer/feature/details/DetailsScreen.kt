@@ -22,7 +22,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
@@ -32,8 +31,6 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.google.android.youtube.player.YouTubeStandalonePlayer
-import com.themovieviewer.core.model.data.Movie
 import com.themovieviewer.core.model.data.Trailer
 import com.themovieviewer.core.ui.R
 import com.themovieviewer.core.ui.component.CastItem
@@ -42,9 +39,7 @@ import com.themovieviewer.core.ui.component.MovieInfoItemRow
 import com.themovieviewer.core.ui.component.WidthSpacer
 import com.themovieviewer.core.ui.util.currency
 import com.themovieviewer.core.ui.util.imagePath
-import com.themovieviewer.core.ui.util.score
 import com.themovieviewer.core.ui.util.thumbnailPath
-import timber.log.Timber
 
 @Composable
 fun DetailsRoute(
@@ -53,12 +48,14 @@ fun DetailsRoute(
     movieId: Int,
     onClickMovie: (Int) -> Unit,
     onClickPeople: (Int) -> Unit,
+    onClickTrailer: (Trailer) -> Unit
 ) {
     DetailsScreen(
         windowSizeClass = windowSizeClass,
         movieId = movieId,
         onClickMovie = onClickMovie,
         onClickPeople = onClickPeople,
+        onClickTrailer = onClickTrailer,
         modifier = modifier,
     )
 }
@@ -71,6 +68,7 @@ fun DetailsScreen(
     movieId: Int,
     onClickMovie: (Int) -> Unit,
     onClickPeople: (Int) -> Unit,
+    onClickTrailer: (Trailer) -> Unit,
     vm: DetailsViewModel = hiltViewModel()
 ) {
     val state by vm.movieDetail.observeAsState()
@@ -166,7 +164,7 @@ fun DetailsScreen(
                     style = MaterialTheme.typography.titleLarge
                 )
                 HeightSpacer(height = 10f)
-                TrailerList()
+                TrailerList(onClickTrailer = onClickTrailer)
                 HeightSpacer(height = 30f)
                 Text(
                     text = "Recommendations",
@@ -263,7 +261,7 @@ fun CreditsList(onClickPeople: (Int) -> Unit,) {
 }
 
 @Composable
-fun TrailerList() {
+fun TrailerList(onClickTrailer: (Trailer) -> Unit) {
     val vm: DetailsViewModel = hiltViewModel()
     val pager = remember {
         Pager(
@@ -285,15 +283,7 @@ fun TrailerList() {
             ) {
                 item?.let {
                     TrailerItem(trailer = item, onClick = {
-                        val intent = YouTubeStandalonePlayer.createVideoIntent(
-                            context as Activity?,
-                            item.id,
-                            item.key,
-                            0,
-                            true,
-                            true
-                        )
-                        context.startActivity(intent)
+                        onClickTrailer(item)
                     })
                 }
             }

@@ -45,7 +45,7 @@ android {
 }
 
 dependencies {
-//    implementation(files("libs/YouTubeAndroidPlayerApi.jar"))
+    implementation(files("libs/YouTubeAndroidPlayerApi.jar"))
 
     implementation("androidx.appcompat:appcompat:${Versions.APPCOMPAT}")
     testImplementation("junit:junit:4.13.2")

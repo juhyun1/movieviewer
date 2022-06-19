@@ -55,7 +55,7 @@ android {
 
 
 dependencies {
-    implementation files('libs/YouTubeAndroidPlayerApi.jar')
+//    implementation files('libs/YouTubeAndroidPlayerApi.jar')
     implementation "org.jetbrains.kotlin:kotlin-stdlib:${Versions.KOTLIN_VERSION}"
     implementation "androidx.core:core-ktx:${Versions.CORE_KTX}"
     implementation "androidx.appcompat:appcompat:${Versions.APPCOMPAT}"

@@ -1,18 +1,24 @@
 package com.themovieviewer.core.ui.component
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Movie
+import androidx.compose.material.icons.filled.Rectangle
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -132,11 +138,32 @@ fun MovieInfoItemRow(movie: Movie, onClickMovie: (Int) -> Unit) {
                 overflow = TextOverflow.Ellipsis,
                 style = MaterialTheme.typography.titleMedium
             )
-            Text(modifier = Modifier.weight(weight = 1f).wrapContentWidth(align = Alignment.End),
+            Text(modifier = Modifier
+                .weight(weight = 1f)
+                .wrapContentWidth(align = Alignment.End),
                 text = movie.vote_average.score(),
                 color = Color.Black,
                 style = MaterialTheme.typography.titleMedium
             )
         }
+    }
+}
+
+@Composable
+fun BottomSheetOptionItem(icon: ImageVector, @StringRes text: Int, onClick: (Int) -> Unit ) {
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .padding(horizontal = 30.dp)
+        .clickable {
+            onClick(text)
+        }
+    ) {
+        Icon(imageVector = icon, tint = Color.Black, contentDescription = null)
+        WidthSpacer(width = 5f)
+        Text(
+            text = stringResource(id = text),
+            color = Color.Black,
+            style = MaterialTheme.typography.bodyMedium
+        )
     }
 }

@@ -24,6 +24,7 @@
             <option value="$PROJECT_DIR$/feature-people" />
           </set>
         </option>
+        <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
   </component>

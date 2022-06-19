@@ -1,6 +1,5 @@
 package com.themovieviewer.di
 
-import com.themovieviewer.presentation.ui.favorite.FavoriteFragment
 import com.themovieviewer.presentation.ui.nowplaying.NowPlayingFragment
 import com.themovieviewer.presentation.ui.popular.MoviePopularFragment
 import com.themovieviewer.presentation.ui.toprated.TopRatedFragment
@@ -21,11 +20,6 @@ object FragmentModule {
     @Provides
     fun provideNowPlayingFragment(): NowPlayingFragment {
         return NowPlayingFragment()
-    }
-
-    @Provides
-    fun provideFavoriteFragment(): FavoriteFragment {
-        return FavoriteFragment()
     }
 
     @Provides

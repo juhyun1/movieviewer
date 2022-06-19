@@ -1,5 +1,6 @@
 package com.themovieviewer.feature.details
 
+import android.app.Activity
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -10,10 +11,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.android.youtube.player.YouTubeStandalonePlayer
 import com.themovieviewer.core.common.navigation.Navigation
 import com.themovieviewer.core.ui.theme.Theme
 import com.themovieviewer.feature.details.navigation.DetailsDestination
@@ -62,6 +65,7 @@ fun DetailsNavHost(
     val navigation = remember(navController) {
         Navigation(navController)
     }
+    val context = LocalContext.current as Activity
     NavHost(
         navController = navController,
         startDestination = startDestination,
@@ -79,6 +83,17 @@ fun DetailsNavHost(
             },
             onClickPeople = {
                 navigation.navigateTo(PeopleDestination.route, it.toString())
+            },
+            onClickTrailer = { item ->
+                val intent = YouTubeStandalonePlayer.createVideoIntent(
+                    context,
+                    item.id,
+                    item.key,
+                    0,
+                    true,
+                    true
+                )
+                context.startActivity(intent)
             }
         )
         peopleGraph(

@@ -53,22 +53,6 @@ class PeopleDetailsFragment : Fragment() {
 
     private fun initAdapter() {
 
-        binding.moviesRecyclerView.adapter = movieRecommendationsAdapter
-        movieRecommendationsAdapter.onItemClick = {
-            Log.d(TAG, it.toString())
-            application.selectedMovie = it
-            try {
-                val action = PeopleDetailsFragmentDirections.actionPeopleDetailsToMovieDetails(it, false)
-                findNavController().navigate(action)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-
-        binding.actingList.adapter = actingAdapter
-        actingAdapter.onItemClick = {
-            Log.d(TAG, it.toString())
-        }
     }
 
     private fun initObserve() {

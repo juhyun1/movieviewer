@@ -7,6 +7,7 @@ import com.themovieviewer.core.data.network.response.*
 import com.themovieviewer.core.model.data.*
 import com.themovieviewer.core.model.repository.MovieRepository
 import javax.inject.Inject
+import timber.log.Timber
 
 class MovieRepositoryImpl @Inject constructor(
     private val movieService: MovieService,
@@ -23,11 +24,17 @@ class MovieRepositoryImpl @Inject constructor(
         val movieListResponse: TopRatedResponse = movieService.nowPlaying(api_key = apiKey, language = language, page = page)
         return PageData(list = movieListResponse.toDomainList(), pageCount = movieListResponse.total_pages)
     }
-//
-//    override suspend fun getPopular(language: String?, page: Int): TopRatedResponse {
-//        return movieService.popular(api_key = apiKey, language = language, page = page)
-//    }
-//
+
+    override suspend fun getPopular(language: String, page: Int): PageData<Movie> {
+        val movieListResponse: TopRatedResponse = movieService.upcoming(api_key = apiKey, language = language, page = page)
+        return PageData(list = movieListResponse.toDomainList(), pageCount = movieListResponse.total_pages)
+    }
+
+    override suspend fun getUpcoming(language: String, page: Int): PageData<Movie> {
+        val movieListResponse: TopRatedResponse = movieService.upcoming(api_key = apiKey, language = language, page = page)
+        return PageData(list = movieListResponse.toDomainList(), pageCount = movieListResponse.total_pages)
+    }
+
     override suspend fun getMovieDetails(language: String, movie_id: Int): MovieDetail {
         val response: MovieDetailsResponse = movieService.getDetails(api_key = apiKey, language = language, movie_id = movie_id)
         return response.toDomain()

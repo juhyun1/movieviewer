@@ -1,15 +1,11 @@
-import com.google.protobuf.gradle.builtins
-import com.google.protobuf.gradle.generateProtoTasks
-import com.google.protobuf.gradle.protobuf
-import com.google.protobuf.gradle.protoc
 import com.themovieviewer.Versions
 
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("com.google.protobuf") version "0.8.18"
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
+    kotlin("plugin.serialization") version "1.6.21"
 }
 
 android {
@@ -53,10 +49,9 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
 
+    // Preferences DataStore
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation("androidx.datastore:datastore:1.0.0")
-    implementation("androidx.datastore:datastore-core:1.0.0")
-    implementation("com.google.protobuf:protobuf-javalite:3.21.1")
-
     //Kotlin Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.COROUTINES}")
 
@@ -75,23 +70,6 @@ dependencies {
     implementation("com.jakewharton.timber:timber:${Versions.TIMBER}")
 
     kapt("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.4.2")
-}
 
-protobuf {
-    protoc {
-        artifact = "com.google.protobuf:protoc:3.14.0"
-    }
-
-    // Generates the java Protobuf-lite code for the Protobufs in this project. See
-    // https://github.com/google/protobuf-gradle-plugin#customizing-protobuf-compilation
-    // for more information.
-    generateProtoTasks {
-        all().forEach { task ->
-            task.builtins {
-                val java by registering {
-                    option("lite")
-                }
-            }
-        }
-    }
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
 }
