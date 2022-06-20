@@ -22,7 +22,14 @@
     <string name="card_tap_action">Open Resource Link</string>
 
     <string name="top_app_bar_preview_title">Title</string>
+
+    <string name="bottom_sheet_item_category">Category</string>
     <string name="bottom_sheet_item_now_playing">Now Playing</string>
     <string name="bottom_sheet_item_popular">Popular</string>
     <string name="bottom_sheet_item_upcoming">Upcoming</string>
+    <string name="bottom_sheet_item_top_rate">TopRate</string>
+
+    <string name="bottom_sheet_item_language">Language</string>
+    <string name="bottom_sheet_item_english">English</string>
+    <string name="bottom_sheet_item_korean">Korean</string>
 </resources>

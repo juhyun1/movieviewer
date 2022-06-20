@@ -11,7 +11,7 @@ import com.themovieviewer.core.model.repository.MovieRepository
 class PeopleMovieCreditsDataSource(
     private val movieRepository: MovieRepository,
     var personId: Int = 0,
-    private val language: String = "en_US") : PagingSource<Int, CastCrew>() {
+    var language: String = "en_US") : PagingSource<Int, CastCrew>() {
 
     override fun getRefreshKey(state: PagingState<Int, CastCrew>): Int? {
         return state.anchorPosition?.let { anchorPosition ->

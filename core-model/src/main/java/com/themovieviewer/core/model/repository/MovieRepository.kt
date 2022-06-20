@@ -3,7 +3,7 @@ package com.themovieviewer.core.model.repository
 import com.themovieviewer.core.model.data.*
 
 interface MovieRepository {
-//    suspend fun getTopRated(language: String?, page: Int): TopRatedResponse
+    suspend fun getTopRated(language: String?, page: Int): PageData<Movie>
     suspend fun getNowPlaying(language: String = "en_US", page: Int): PageData<Movie>
     suspend fun getPopular(language: String = "en_US", page: Int): PageData<Movie>
     suspend fun getUpcoming(language: String = "en_US", page: Int): PageData<Movie>

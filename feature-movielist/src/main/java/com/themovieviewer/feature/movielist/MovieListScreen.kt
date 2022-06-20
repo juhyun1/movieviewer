@@ -4,17 +4,17 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Rectangle
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
@@ -22,6 +22,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
+import com.themovieviewer.core.datastore.Category
 import com.themovieviewer.core.model.data.Movie
 import com.themovieviewer.core.ui.component.BottomSheetOptionItem
 import com.themovieviewer.core.ui.component.HeightSpacer
@@ -30,6 +31,7 @@ import com.themovieviewer.core.ui.component.TopAppBar
 import com.themovieviewer.core.ui.util.imagePath
 import com.themovieviewer.feature.movielist.model.PreferenceState
 import com.themovieviewer.feature.movielist.util.category
+import com.themovieviewer.feature.movielist.util.language
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -111,24 +113,64 @@ fun MovieBottomSheetPart(scaffoldState: BottomSheetScaffoldState) {
             else -> {}
         }
     }
+    val selected = vm.categoryState
+
     Surface(
         color = Color.White
     ) {
         Column(
             Modifier
                 .fillMaxWidth()
-                .height(128.dp),
+                .height(450.dp),
         ) {
             HeightSpacer(height = 20f)
-            BottomSheetOptionItem(icon = Icons.Default.Rectangle, text = R.string.bottom_sheet_item_now_playing) {
+            Text(modifier = Modifier.padding(start = 30.dp),
+                text = stringResource(id = R.string.bottom_sheet_item_category),
+                color = Color.Black,
+                style = MaterialTheme.typography.bodyLarge
+            )
+            HeightSpacer(height = 20f)
+
+            BottomSheetOptionItem(icon = Icons.Default.Diamond, selected = selected.value == Category.NowPlaying, text = R.string.bottom_sheet_item_now_playing) {
                 vm.onCategoryChanged(category = it.category())
                 scope.launch {
                     scaffoldState.bottomSheetState.collapse()
                 }
             }
-            HeightSpacer(height = 20f)
-            BottomSheetOptionItem(icon = Icons.Default.Star, text = R.string.bottom_sheet_item_upcoming) {
+            BottomSheetOptionItem(icon = Icons.Default.Star, selected = selected.value == Category.Upcoming, text = R.string.bottom_sheet_item_upcoming) {
                 vm.onCategoryChanged(category = it.category())
+                scope.launch {
+                    scaffoldState.bottomSheetState.collapse()
+                }
+            }
+            BottomSheetOptionItem(icon = Icons.Default.Train, selected = selected.value == Category.Popular, text = R.string.bottom_sheet_item_popular) {
+                vm.onCategoryChanged(category = it.category())
+                scope.launch {
+                    scaffoldState.bottomSheetState.collapse()
+                }
+            }
+            BottomSheetOptionItem(icon = Icons.Default.MonitorHeart, selected = selected.value == Category.TopRate, text = R.string.bottom_sheet_item_top_rate) {
+                vm.onCategoryChanged(category = it.category())
+                scope.launch {
+                    scaffoldState.bottomSheetState.collapse()
+                }
+            }
+
+            HeightSpacer(height = 20f)
+            Text(modifier = Modifier.padding(start = 30.dp),
+                text = stringResource(id = R.string.bottom_sheet_item_language),
+                color = Color.Black,
+                style = MaterialTheme.typography.bodyLarge
+            )
+            HeightSpacer(height = 20f)
+            BottomSheetOptionItem(icon = Icons.Default.Train, selected = selected.value == Category.Popular, text = R.string.bottom_sheet_item_english) {
+                vm.onLanguageChanged(language = it.language())
+                scope.launch {
+                    scaffoldState.bottomSheetState.collapse()
+                }
+            }
+            BottomSheetOptionItem(icon = Icons.Default.MonitorHeart, selected = selected.value == Category.TopRate, text = R.string.bottom_sheet_item_korean) {
+                vm.onLanguageChanged(language = it.language())
                 scope.launch {
                     scaffoldState.bottomSheetState.collapse()
                 }

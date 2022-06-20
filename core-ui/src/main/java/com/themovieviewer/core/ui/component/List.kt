@@ -150,20 +150,24 @@ fun MovieInfoItemRow(movie: Movie, onClickMovie: (Int) -> Unit) {
 }
 
 @Composable
-fun BottomSheetOptionItem(icon: ImageVector, @StringRes text: Int, onClick: (Int) -> Unit ) {
-    Row(modifier = Modifier
-        .fillMaxWidth()
-        .padding(horizontal = 30.dp)
-        .clickable {
-            onClick(text)
-        }
+fun BottomSheetOptionItem(icon: ImageVector, @StringRes text: Int, selected: Boolean,onClick: (Int) -> Unit ) {
+    Surface(
+        color = if (selected) Color.LightGray else Color.White
     ) {
-        Icon(imageVector = icon, tint = Color.Black, contentDescription = null)
-        WidthSpacer(width = 5f)
-        Text(
-            text = stringResource(id = text),
-            color = Color.Black,
-            style = MaterialTheme.typography.bodyMedium
-        )
+        Row(modifier = Modifier
+            .fillMaxWidth().height(height = 50.dp)
+            .padding(start = 30.dp, end = 30.dp, top = 10.dp, bottom = 10.dp)
+            .clickable {
+                onClick(text)
+            }
+        ) {
+            Icon(imageVector = icon, tint = Color.Black, contentDescription = null)
+            WidthSpacer(width = 5f)
+            Text(
+                text = stringResource(id = text),
+                color = Color.Black,
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
     }
 }

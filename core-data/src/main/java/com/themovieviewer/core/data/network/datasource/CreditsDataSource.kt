@@ -9,7 +9,7 @@ import com.themovieviewer.core.model.data.CreditsCastCrew
 import com.themovieviewer.core.model.repository.MovieRepository
 import timber.log.Timber
 
-class CreditsDataSource(private val movieRepository: MovieRepository, var movieId: Int = 0, private val language: String = "en_US") : PagingSource<Int, CreditsCastCrew>() {
+class CreditsDataSource(private val movieRepository: MovieRepository, var movieId: Int = 0, var language: String = "en_US") : PagingSource<Int, CreditsCastCrew>() {
 
     override fun getRefreshKey(state: PagingState<Int, CreditsCastCrew>): Int? {
         return state.anchorPosition?.let { anchorPosition ->

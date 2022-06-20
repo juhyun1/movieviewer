@@ -109,5 +109,5 @@ dependencies {
     implementation(project(":core-data"))
     implementation(project(":core-common"))
     implementation(project(":feature-people"))
-
+    implementation(project(":core-datastore"))
 }

@@ -7,7 +7,7 @@ import com.themovieviewer.core.data.network.response.TopRatedResponse
 import com.themovieviewer.core.model.data.Movie
 import com.themovieviewer.core.model.repository.MovieRepository
 
-class TopRatedListDataSource(private val movieRepository: MovieRepository, private val movieDtoMapper: MovieDtoMapper, private val language: String) : PagingSource<Int, Movie>() {
+class TopRatedListDataSource(private val movieRepository: MovieRepository, var language: String = "en_US") : PagingSource<Int, Movie>() {
 
     override fun getRefreshKey(state: PagingState<Int, Movie>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -18,23 +18,15 @@ class TopRatedListDataSource(private val movieRepository: MovieRepository, priva
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
         return try {
-//            val nextPageNumber = params.key ?: 0
-//            val requestPage = nextPageNumber + 1
-//
-//            val movieListResponse: TopRatedResponse = movieRepository.getTopRated(
-//                language = language,
-//                page = requestPage
-//            )
-//
-//            LoadResult.Page(
-//                data = movieDtoMapper.toDomainList(movieListResponse.results),
-//                prevKey = if (nextPageNumber > 0) nextPageNumber - 1 else null,
-//                nextKey = if (nextPageNumber < movieListResponse.total_pages) nextPageNumber + 1 else null
-//            )
+            val nextPageNumber = params.key ?: 0
+            val requestPage = nextPageNumber + 1
+
+            val pageData = movieRepository.getTopRated(language = language,page = requestPage)
+
             LoadResult.Page(
-                data = emptyList(),
-                prevKey = null,
-                nextKey = null
+                data = pageData.list,
+                prevKey = if (nextPageNumber > 0) nextPageNumber - 1 else null,
+                nextKey = if (nextPageNumber < pageData.pageCount) nextPageNumber + 1 else null
             )
         } catch (e: Exception) {
             e.printStackTrace()

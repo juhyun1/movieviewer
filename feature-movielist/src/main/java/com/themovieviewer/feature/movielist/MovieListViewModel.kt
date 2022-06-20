@@ -6,14 +6,15 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingSource
-import com.themovieviewer.core.data.network.datasource.NowPlayingDataSource
-import com.themovieviewer.core.data.network.datasource.PopularDataSource
-import com.themovieviewer.core.data.network.datasource.UpcomingDataSource
+import com.themovieviewer.core.data.network.datasource.*
 import com.themovieviewer.core.datastore.Category
+import com.themovieviewer.core.datastore.Language
 import com.themovieviewer.core.datastore.repository.PreferencesRepository
 import com.themovieviewer.core.model.data.Movie
 import com.themovieviewer.feature.movielist.model.PreferenceState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
@@ -24,14 +25,12 @@ class MovieListViewModel @Inject constructor(
     private val nowPlayingDataSource: NowPlayingDataSource,
     private val popularDataSource: PopularDataSource,
     private val upcomingDataSource: UpcomingDataSource,
+    private val topRatedListDataSource: TopRatedListDataSource,
     private val preferencesRepository: PreferencesRepository
 ) : ViewModel() {
 
     private val _preferenceState = mutableStateOf<PreferenceState>(PreferenceState.Hide)
     val preferenceState get() = _preferenceState
-
-    private val _category = mutableStateOf<PagingSource<Int, Movie>>(getDataSource())
-    val category get() = _category
 
     private val _pager = mutableStateOf(Pager(
         PagingConfig(
@@ -41,21 +40,38 @@ class MovieListViewModel @Inject constructor(
         )
     ) { getDataSource() })
 
+    private var _categoryState = mutableStateOf( Category.NowPlaying )
+    val categoryState get() = _categoryState
+
     val pager get() = _pager
+
+    init {
+        viewModelScope.launch {
+            _categoryState.value = preferencesRepository.getCategory()
+        }
+    }
 
     private fun getDataSource(): PagingSource<Int, Movie> = runBlocking {
 
+        val language: Language = runBlocking {
+            preferencesRepository.getLanguage()
+        }
+
         when (preferencesRepository.getCategory()) {
             Category.NowPlaying -> {
-                Timber.d("Test : getDataSource NowPlaying")
-                nowPlayingDataSource
+                nowPlayingDataSource.apply { this.language = language.getLocale() }
             }
             Category.Upcoming -> {
-                Timber.d("Test : getDataSource Popular")
-                upcomingDataSource
+                upcomingDataSource.apply { this.language = language.getLocale() }
+            }
+            Category.TopRate -> {
+                topRatedListDataSource.apply { this.language = language.getLocale() }
+            }
+            Category.Popular -> {
+                popularDataSource.apply { this.language = language.getLocale() }
             }
             else -> {
-                nowPlayingDataSource
+                nowPlayingDataSource.apply { this.language = language.getLocale() }
             }
         }
     }
@@ -73,8 +89,21 @@ class MovieListViewModel @Inject constructor(
 
     fun onCategoryChanged(category: Category) {
         viewModelScope.launch {
+            _categoryState.value = category
             preferencesRepository.setCategory(category = category)
-//            _category.value = getDataSource()
+            _pager.value = Pager(
+                PagingConfig(
+                    pageSize = 20,
+                    enablePlaceholders = true,
+                    maxSize = 1000
+                )
+            ) { getDataSource() }
+        }
+    }
+    fun onLanguageChanged(language: Language) {
+        viewModelScope.launch {
+//            _categoryState.value = category
+            preferencesRepository.setLanguage(language = language)
             _pager.value = Pager(
                 PagingConfig(
                     pageSize = 20,

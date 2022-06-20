@@ -15,7 +15,6 @@ class PreferencesDataSource @Inject constructor(
 ) {
     suspend fun setCategory(category: Category) {
         val value = encodeToString(value = category)
-        Timber.d("Test : setCategory $value")
         dataStore.storeValue(key = PreferencesKeys.CATEGORY, value)
 
 //        userPreferences.updateData(category = category)
@@ -23,9 +22,16 @@ class PreferencesDataSource @Inject constructor(
 
     suspend fun getCategory(): Category {
         val value: String = dataStore.readValue(key = PreferencesKeys.CATEGORY) ?: encodeToString(value = Category.NowPlaying)
+        return value.decodeFromString()
+    }
 
-        Timber.d("Test : value $value")
-        Timber.d("Test : value2 ${encodeToString(value = Category.NowPlaying)}")
+
+    suspend fun setLanguage(language: Language) {
+        val value = encodeToString(value = language)
+        dataStore.storeValue(key = PreferencesKeys.LANGUAGE, value)
+    }
+    suspend fun getLanguage(): Language {
+        val value: String = dataStore.readValue(key = PreferencesKeys.LANGUAGE) ?: encodeToString(value = Language.English)
         return value.decodeFromString()
     }
 

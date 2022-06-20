@@ -5,7 +5,7 @@ import androidx.paging.PagingState
 import com.themovieviewer.core.model.data.Movie
 import com.themovieviewer.core.model.repository.MovieRepository
 
-class PopularDataSource(private val movieRepository: MovieRepository, val language: String = "ko_KR") : PagingSource<Int, Movie>() {
+class PopularDataSource(private val movieRepository: MovieRepository, var language: String = "ko_KR") : PagingSource<Int, Movie>() {
 
     override fun getRefreshKey(state: PagingState<Int, Movie>): Int? {
         return state.anchorPosition?.let { anchorPosition ->

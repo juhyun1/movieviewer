@@ -35,6 +35,13 @@ object DataSourceModule {
     }
 
     @Provides
+    fun providesTopRatedListDataSource(
+        movieRepository: MovieRepository
+    ): TopRatedListDataSource {
+        return TopRatedListDataSource(movieRepository = movieRepository)
+    }
+
+    @Provides
     fun providesCreditsDataSource(
         movieRepository: MovieRepository
     ): CreditsDataSource {

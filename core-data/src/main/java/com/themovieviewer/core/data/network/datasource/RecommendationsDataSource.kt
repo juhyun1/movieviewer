@@ -8,7 +8,7 @@ import com.themovieviewer.core.model.data.Movie
 import com.themovieviewer.core.model.repository.MovieRepository
 import timber.log.Timber
 
-class RecommendationsDataSource(private val movieRepository: MovieRepository, var movieId: Int = 0, private val language: String = "en_US") : PagingSource<Int, Movie>() {
+class RecommendationsDataSource(private val movieRepository: MovieRepository, var movieId: Int = 0, var language: String = "en_US") : PagingSource<Int, Movie>() {
 
     override fun getRefreshKey(state: PagingState<Int, Movie>): Int? {
         return state.anchorPosition?.let { anchorPosition ->

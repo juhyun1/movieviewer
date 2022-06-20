@@ -5,7 +5,7 @@ import androidx.paging.PagingState
 import com.themovieviewer.core.model.data.Movie
 import com.themovieviewer.core.model.repository.MovieRepository
 
-class UpcomingDataSource(private val movieRepository: MovieRepository, val language: String = "ko_KR") : PagingSource<Int, Movie>() {
+class UpcomingDataSource(private val movieRepository: MovieRepository, var language: String = "ko_KR") : PagingSource<Int, Movie>() {
 
     override fun getRefreshKey(state: PagingState<Int, Movie>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -22,7 +22,7 @@ class UpcomingDataSource(private val movieRepository: MovieRepository, val langu
             val pageData = movieRepository.getUpcoming(language = language,page = requestPage)
 
             LoadResult.Page(
-                data = pageData.list,
+                data = pageData.list.sortedByDescending { it.release_date },
                 prevKey = if (nextPageNumber > 0) nextPageNumber - 1 else null,
                 nextKey = if (nextPageNumber < pageData.pageCount) nextPageNumber + 1 else null
             )

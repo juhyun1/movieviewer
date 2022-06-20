@@ -7,10 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.themovieviewer.core.data.network.datasource.CreditsDataSource
 import com.themovieviewer.core.data.network.datasource.RecommendationsDataSource
 import com.themovieviewer.core.data.network.datasource.VideoDataSource
+import com.themovieviewer.core.datastore.Language
+import com.themovieviewer.core.datastore.repository.PreferencesRepository
 import com.themovieviewer.core.model.data.MovieDetail
 import com.themovieviewer.core.model.repository.MovieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -20,22 +23,34 @@ class DetailsViewModel @Inject constructor(
     private val creditsDataSource: CreditsDataSource,
     private val trailerDataSource: VideoDataSource,
     private val recommendationsDataSource: RecommendationsDataSource,
+    private val preferencesRepository: PreferencesRepository
 ) : ViewModel() {
 
     var movieID = 0
+    private var locale: Language = runBlocking {
+        preferencesRepository.getLanguage()
+    }
+
     private val _movieDetail = MutableLiveData<MovieDetail>()
     val movieDetail: LiveData<MovieDetail> get() = _movieDetail
-    fun getCreditsDataSource(): CreditsDataSource = creditsDataSource.apply { this.movieId = movieID }
-    fun getTrailerDataSource(): VideoDataSource = trailerDataSource.apply { this.movieId = movieID }
-    fun getRecommendationsDataSource(): RecommendationsDataSource = recommendationsDataSource.apply { this.movieId = movieID }
+    fun getCreditsDataSource(): CreditsDataSource = creditsDataSource.apply {
+        this.movieId = movieID
+        this.language = locale.getLocale()
+    }
+    fun getTrailerDataSource(): VideoDataSource = trailerDataSource.apply {
+        this.movieId = movieID
+        this.language = locale.getLocale()
+    }
+    fun getRecommendationsDataSource(): RecommendationsDataSource = recommendationsDataSource.apply {
+        this.movieId = movieID
+        this.language = locale.getLocale()
+    }
 
     fun getDetailsInfo(movieId: Int) {
         this.movieID = movieId
         viewModelScope.launch {
-            Timber.d("Test : details before movieId : $movieId")
-            val detail = repository.getMovieDetails(movie_id = movieId)
+            val detail = repository.getMovieDetails(language = locale.getLocale(), movie_id = movieId)
             _movieDetail.value = detail
-            Timber.d("Test : details : $detail")
         }
     }
 }

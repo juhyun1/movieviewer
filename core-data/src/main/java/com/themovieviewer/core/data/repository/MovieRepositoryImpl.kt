@@ -16,9 +16,10 @@ class MovieRepositoryImpl @Inject constructor(
 //    https://developers.themoviedb.org/3/getting-started/introduction
     private val apiKey = "1139b15b6e07c636d6a411506eea3362"
 
-//    override suspend fun getTopRated(language: String?, page: Int): TopRatedResponse {
-//        return movieService.topRated(api_key = apiKey, language = language, page = page)
-//    }
+    override suspend fun getTopRated(language: String?, page: Int): PageData<Movie> {
+        val movieListResponse: TopRatedResponse = movieService.topRated(api_key = apiKey, language = language, page = page)
+        return PageData(list = movieListResponse.toDomainList(), pageCount = movieListResponse.total_pages)
+    }
 
     override suspend fun getNowPlaying(language: String, page: Int): PageData<Movie> {
         val movieListResponse: TopRatedResponse = movieService.nowPlaying(api_key = apiKey, language = language, page = page)
@@ -26,7 +27,7 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getPopular(language: String, page: Int): PageData<Movie> {
-        val movieListResponse: TopRatedResponse = movieService.upcoming(api_key = apiKey, language = language, page = page)
+        val movieListResponse: TopRatedResponse = movieService.popular(api_key = apiKey, language = language, page = page)
         return PageData(list = movieListResponse.toDomainList(), pageCount = movieListResponse.total_pages)
     }
 
