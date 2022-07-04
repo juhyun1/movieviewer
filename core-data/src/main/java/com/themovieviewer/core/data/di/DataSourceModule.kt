@@ -1,9 +1,7 @@
 package com.themovieviewer.core.data.di
 
-import androidx.paging.PagingSource
 import com.themovieviewer.core.data.network.datasource.*
-import com.themovieviewer.core.model.data.Movie
-import com.themovieviewer.core.model.repository.MovieRepository
+import com.themovieviewer.core.data.repository.MovieRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

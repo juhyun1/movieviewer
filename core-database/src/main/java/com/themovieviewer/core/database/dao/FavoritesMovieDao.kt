@@ -1,9 +1,9 @@
-package com.themovieviewer.core.data
+package com.themovieviewer.core.database.dao
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Query
-import com.themovieviewer.core.model.data.vo.FavoritesMovieVo
+import com.themovieviewer.core.database.model.FavoritesMovieVo
 
 @Dao
 interface FavoritesMovieDao : BaseDao<FavoritesMovieVo> {

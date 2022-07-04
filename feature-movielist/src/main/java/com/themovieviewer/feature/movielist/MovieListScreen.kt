@@ -18,11 +18,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import com.themovieviewer.core.datastore.Category
+import com.themovieviewer.core.datastore.Language
 import com.themovieviewer.core.model.data.Movie
 import com.themovieviewer.core.ui.component.BottomSheetOptionItem
 import com.themovieviewer.core.ui.component.HeightSpacer
@@ -33,7 +32,6 @@ import com.themovieviewer.feature.movielist.model.PreferenceState
 import com.themovieviewer.feature.movielist.util.category
 import com.themovieviewer.feature.movielist.util.language
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 @Composable
 fun MovieListRoute(
@@ -58,6 +56,8 @@ fun MovieListScreen(
     navigateToDetails: (String) -> Unit,
 ) {
     val scaffoldState = rememberBottomSheetScaffoldState()
+    val vm: MovieListViewModel = hiltViewModel()
+
     BottomSheetScaffold(
         sheetContent = {
             MovieBottomSheetPart(scaffoldState = scaffoldState)
@@ -74,17 +74,17 @@ fun MovieListScreen(
 }
 
 @Composable
-fun MovieColumnItem(movie1: Movie?, movie2: Movie?, navigateToDetails: (String) -> Unit) {
+fun MovieColumnItem(movie1: Movie?, movie2: Movie?, checkBookMark: suspend (Int) -> Boolean, onClickBookMark: (Int) -> Unit, navigateToDetails: (String) -> Unit) {
     Row(
         modifier = Modifier.fillMaxSize(),
         horizontalArrangement = Arrangement.Center
     ) {
         movie1?.let {
-            MovieInfoItem(movieId = movie1.id, imageSrc = it.poster_path?.imagePath() ?: "", title = it.title ?: "", date = it.release_date ?: "", navigateToDetails = navigateToDetails)
+            MovieInfoItem(movieId = movie1.id, imageSrc = it.poster_path?.imagePath() ?: "", title = it.title ?: "", date = it.release_date ?: "", checkBookMark = checkBookMark, onClickBookMark = onClickBookMark, navigateToDetails = navigateToDetails)
         }
         Spacer(modifier = Modifier.width(30.dp))
         movie2?.let{
-            MovieInfoItem(movieId = movie2.id, imageSrc = it.poster_path?.imagePath() ?: "", title = it.title ?: "", date = it.release_date ?: "", navigateToDetails = navigateToDetails)
+            MovieInfoItem(movieId = movie2.id, imageSrc = it.poster_path?.imagePath() ?: "", title = it.title ?: "", date = it.release_date ?: "",  checkBookMark = checkBookMark, onClickBookMark = onClickBookMark, navigateToDetails = navigateToDetails)
         }
     }
 }
@@ -113,7 +113,8 @@ fun MovieBottomSheetPart(scaffoldState: BottomSheetScaffoldState) {
             else -> {}
         }
     }
-    val selected = vm.categoryState
+    val categorySelected = vm.categoryState
+    val languageSelected = vm.languageState
 
     Surface(
         color = Color.White
@@ -131,25 +132,25 @@ fun MovieBottomSheetPart(scaffoldState: BottomSheetScaffoldState) {
             )
             HeightSpacer(height = 20f)
 
-            BottomSheetOptionItem(icon = Icons.Default.Diamond, selected = selected.value == Category.NowPlaying, text = R.string.bottom_sheet_item_now_playing) {
+            BottomSheetOptionItem(icon = Icons.Default.Diamond, selected = categorySelected.value == Category.NowPlaying, text = R.string.bottom_sheet_item_now_playing) {
                 vm.onCategoryChanged(category = it.category())
                 scope.launch {
                     scaffoldState.bottomSheetState.collapse()
                 }
             }
-            BottomSheetOptionItem(icon = Icons.Default.Star, selected = selected.value == Category.Upcoming, text = R.string.bottom_sheet_item_upcoming) {
+            BottomSheetOptionItem(icon = Icons.Default.Star, selected = categorySelected.value == Category.Upcoming, text = R.string.bottom_sheet_item_upcoming) {
                 vm.onCategoryChanged(category = it.category())
                 scope.launch {
                     scaffoldState.bottomSheetState.collapse()
                 }
             }
-            BottomSheetOptionItem(icon = Icons.Default.Train, selected = selected.value == Category.Popular, text = R.string.bottom_sheet_item_popular) {
+            BottomSheetOptionItem(icon = Icons.Default.Train, selected = categorySelected.value == Category.Popular, text = R.string.bottom_sheet_item_popular) {
                 vm.onCategoryChanged(category = it.category())
                 scope.launch {
                     scaffoldState.bottomSheetState.collapse()
                 }
             }
-            BottomSheetOptionItem(icon = Icons.Default.MonitorHeart, selected = selected.value == Category.TopRate, text = R.string.bottom_sheet_item_top_rate) {
+            BottomSheetOptionItem(icon = Icons.Default.MonitorHeart, selected = categorySelected.value == Category.TopRate, text = R.string.bottom_sheet_item_top_rate) {
                 vm.onCategoryChanged(category = it.category())
                 scope.launch {
                     scaffoldState.bottomSheetState.collapse()
@@ -163,13 +164,13 @@ fun MovieBottomSheetPart(scaffoldState: BottomSheetScaffoldState) {
                 style = MaterialTheme.typography.bodyLarge
             )
             HeightSpacer(height = 20f)
-            BottomSheetOptionItem(icon = Icons.Default.Train, selected = selected.value == Category.Popular, text = R.string.bottom_sheet_item_english) {
+            BottomSheetOptionItem(icon = Icons.Default.Train, selected = languageSelected.value == Language.English, text = R.string.bottom_sheet_item_english) {
                 vm.onLanguageChanged(language = it.language())
                 scope.launch {
                     scaffoldState.bottomSheetState.collapse()
                 }
             }
-            BottomSheetOptionItem(icon = Icons.Default.MonitorHeart, selected = selected.value == Category.TopRate, text = R.string.bottom_sheet_item_korean) {
+            BottomSheetOptionItem(icon = Icons.Default.MonitorHeart, selected = languageSelected.value == Language.Korean, text = R.string.bottom_sheet_item_korean) {
                 vm.onLanguageChanged(language = it.language())
                 scope.launch {
                     scaffoldState.bottomSheetState.collapse()
@@ -182,8 +183,10 @@ fun MovieBottomSheetPart(scaffoldState: BottomSheetScaffoldState) {
 @Composable
 fun MovieTopBarPart() {
     val vm: MovieListViewModel = hiltViewModel()
+    val title by vm.titleState
+
     TopAppBar(
-        titleRes = R.string.top_app_bar_preview_title,
+        titleRes = title,
         navigationIcon = Icons.Filled.Search,
         navigationIconContentDescription = "navigationIconContentDescription",
         actionIcon = Icons.Outlined.AccountCircle,
@@ -205,6 +208,8 @@ fun MovieContentsPart(modifier: Modifier, innerPadding: PaddingValues, navigateT
     val state by vm.pager
 
     val lazyPagingItems = state.flow.collectAsLazyPagingItems()
+    val onClickBookMark: (Int) -> Unit = vm::onClickBookMark
+    val checkBookMark: suspend (Int) -> Boolean = vm::checkBookMark
 
     BoxWithConstraints(
         modifier = modifier
@@ -214,7 +219,13 @@ fun MovieContentsPart(modifier: Modifier, innerPadding: PaddingValues, navigateT
         LazyColumn {
             itemsIndexed(lazyPagingItems) { index, item ->
                 if (index % 2 == 0) {
-                    MovieColumnItem(movie1 = item, movie2 = if (lazyPagingItems.itemCount > index + 1) lazyPagingItems[index + 1] else null, navigateToDetails = navigateToDetails)
+                    MovieColumnItem(
+                        movie1 = item,
+                        movie2 = if (lazyPagingItems.itemCount > index + 1) lazyPagingItems[index + 1] else null,
+                        navigateToDetails = navigateToDetails,
+                        onClickBookMark = onClickBookMark,
+                        checkBookMark = checkBookMark
+                    )
                 }
             }
 

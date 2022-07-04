@@ -1,4 +1,4 @@
-package com.themovieviewer.core.data.util
+package com.themovieviewer.core.database.util
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

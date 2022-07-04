@@ -2,7 +2,7 @@ package com.themovieviewer.usecase
 
 import com.themovieviewer.core.data.network.datasource.CreditsDataSource
 import com.themovieviewer.core.data.network.model.MovieDtoMapper
-import com.themovieviewer.core.model.repository.MovieRepository
+import com.themovieviewer.core.data.repository.MovieRepository
 import com.themovieviewer.core.model.usecase.GetCreditsPagerUseCase
 import javax.inject.Inject
 

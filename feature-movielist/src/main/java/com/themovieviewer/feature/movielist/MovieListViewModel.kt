@@ -1,24 +1,26 @@
 package com.themovieviewer.feature.movielist
 
+import androidx.annotation.StringRes
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingSource
-import com.themovieviewer.core.data.network.datasource.*
+import com.themovieviewer.core.data.network.datasource.NowPlayingDataSource
+import com.themovieviewer.core.data.network.datasource.PopularDataSource
+import com.themovieviewer.core.data.network.datasource.TopRatedListDataSource
+import com.themovieviewer.core.data.network.datasource.UpcomingDataSource
 import com.themovieviewer.core.datastore.Category
 import com.themovieviewer.core.datastore.Language
 import com.themovieviewer.core.datastore.repository.PreferencesRepository
 import com.themovieviewer.core.model.data.Movie
 import com.themovieviewer.feature.movielist.model.PreferenceState
+import com.themovieviewer.feature.movielist.util.title
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
-import timber.log.Timber
 
 @HiltViewModel
 class MovieListViewModel @Inject constructor(
@@ -26,7 +28,7 @@ class MovieListViewModel @Inject constructor(
     private val popularDataSource: PopularDataSource,
     private val upcomingDataSource: UpcomingDataSource,
     private val topRatedListDataSource: TopRatedListDataSource,
-    private val preferencesRepository: PreferencesRepository
+    private val preferencesRepository: PreferencesRepository,
 ) : ViewModel() {
 
     private val _preferenceState = mutableStateOf<PreferenceState>(PreferenceState.Hide)
@@ -40,14 +42,22 @@ class MovieListViewModel @Inject constructor(
         )
     ) { getDataSource() })
 
+    @StringRes private var _titleState = mutableStateOf<Int>( R.string.bottom_sheet_item_now_playing )
+    val titleState get() = _titleState
+
     private var _categoryState = mutableStateOf( Category.NowPlaying )
     val categoryState get() = _categoryState
+
+    private var _languageState = mutableStateOf( Language.English )
+    val languageState get() = _languageState
 
     val pager get() = _pager
 
     init {
         viewModelScope.launch {
             _categoryState.value = preferencesRepository.getCategory()
+            _languageState.value = preferencesRepository.getLanguage()
+            _titleState.value = _categoryState.value.title()
         }
     }
 
@@ -99,10 +109,11 @@ class MovieListViewModel @Inject constructor(
                 )
             ) { getDataSource() }
         }
+        _titleState.value = category.title()
     }
     fun onLanguageChanged(language: Language) {
         viewModelScope.launch {
-//            _categoryState.value = category
+            _languageState.value = language
             preferencesRepository.setLanguage(language = language)
             _pager.value = Pager(
                 PagingConfig(
@@ -112,5 +123,13 @@ class MovieListViewModel @Inject constructor(
                 )
             ) { getDataSource() }
         }
+    }
+
+    fun onClickBookMark(movieId: Int) {
+
+    }
+
+    suspend fun checkBookMark(movieId: Int): Boolean {
+
     }
 }

@@ -1,4 +1,4 @@
-package com.themovieviewer.core.model.repository
+package com.themovieviewer.core.data.repository
 
 import com.themovieviewer.core.model.data.*
 

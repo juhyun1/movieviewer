@@ -32,4 +32,5 @@ object Versions {
     const val APPCOMPAT = "1.4.1"
     const val TIMBER = "5.0.1"
     const val COIL_COMPOSE = "2.1.0"
+    const val GSON = "2.9.0"
 }

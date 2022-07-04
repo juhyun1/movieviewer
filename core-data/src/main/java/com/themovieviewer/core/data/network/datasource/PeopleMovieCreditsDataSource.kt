@@ -2,11 +2,8 @@ package com.themovieviewer.core.data.network.datasource
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.themovieviewer.core.data.network.model.MovieDtoMapper
-import com.themovieviewer.core.data.network.response.PeopleMovieCreditsResponse
 import com.themovieviewer.core.model.data.CastCrew
-import com.themovieviewer.core.model.data.Movie
-import com.themovieviewer.core.model.repository.MovieRepository
+import com.themovieviewer.core.data.repository.MovieRepository
 
 class PeopleMovieCreditsDataSource(
     private val movieRepository: MovieRepository,

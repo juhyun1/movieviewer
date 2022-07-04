@@ -5,7 +5,7 @@ package com.themovieviewer.core.model.usecase
 //import androidx.paging.PagingData
 //import androidx.paging.cachedIn
 //import com.themovieviewer.core.model.data.Movie
-//import com.themovieviewer.core.model.repository.MovieRepository
+//import com.themovieviewer.core.data.repository.MovieRepository
 //import com.themovieviewer.core.model.usecase.UseCase
 //import com.themovieviewer.network.model.MovieDtoMapper
 //import com.themovieviewer.presentation.paging.RecommendationsDataSource

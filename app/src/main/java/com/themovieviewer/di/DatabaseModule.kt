@@ -2,10 +2,8 @@ package com.themovieviewer.di
 
 import android.content.Context
 import androidx.room.Room
-import com.themovieviewer.core.data.AppDatabase
+import com.themovieviewer.core.database.AppDatabase
 import com.themovieviewer.core.data.DaoMapper
-import com.themovieviewer.core.data.FavoritesDao
-import com.themovieviewer.core.data.FavoritesMovieDao
 import com.themovieviewer.util.DATABASE_NAME
 import dagger.Module
 import dagger.Provides
@@ -20,22 +18,22 @@ object DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
+    fun provideAppDatabase(@ApplicationContext context: Context): com.themovieviewer.core.database.AppDatabase {
         return Room
-            .databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
+            .databaseBuilder(context, com.themovieviewer.core.database.AppDatabase::class.java, DATABASE_NAME)
             .fallbackToDestructiveMigration()
             .build()
     }
 
     @Singleton
     @Provides
-    fun provideMovieDao(appDatabase: AppDatabase): FavoritesMovieDao {
+    fun provideMovieDao(appDatabase: com.themovieviewer.core.database.AppDatabase): FavoritesMovieDao {
         return appDatabase.favoritesMovieDao()
     }
 
     @Singleton
     @Provides
-    fun provideFavoritesDao(appDatabase: AppDatabase): FavoritesDao {
+    fun provideFavoritesDao(appDatabase: com.themovieviewer.core.database.AppDatabase): FavoritesDao {
         return appDatabase.favoritesDao()
     }
 

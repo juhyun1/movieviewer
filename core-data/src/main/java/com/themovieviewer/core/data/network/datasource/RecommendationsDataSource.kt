@@ -2,11 +2,8 @@ package com.themovieviewer.core.data.network.datasource
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.themovieviewer.core.data.network.model.MovieDtoMapper
-import com.themovieviewer.core.data.network.response.TopRatedResponse
 import com.themovieviewer.core.model.data.Movie
-import com.themovieviewer.core.model.repository.MovieRepository
-import timber.log.Timber
+import com.themovieviewer.core.data.repository.MovieRepository
 
 class RecommendationsDataSource(private val movieRepository: MovieRepository, var movieId: Int = 0, var language: String = "en_US") : PagingSource<Int, Movie>() {
 

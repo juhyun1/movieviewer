@@ -1,7 +1,7 @@
 package com.themovieviewer.core.data.di
 
 import com.themovieviewer.core.data.repository.MovieRepositoryImpl
-import com.themovieviewer.core.model.repository.MovieRepository
+import com.themovieviewer.core.data.repository.MovieRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

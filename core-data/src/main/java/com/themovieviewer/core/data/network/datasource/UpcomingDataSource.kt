@@ -3,7 +3,7 @@ package com.themovieviewer.core.data.network.datasource
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.themovieviewer.core.model.data.Movie
-import com.themovieviewer.core.model.repository.MovieRepository
+import com.themovieviewer.core.data.repository.MovieRepository
 
 class UpcomingDataSource(private val movieRepository: MovieRepository, var language: String = "ko_KR") : PagingSource<Int, Movie>() {
 

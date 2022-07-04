@@ -5,9 +5,7 @@ import com.themovieviewer.core.data.network.mapper.toDomain
 import com.themovieviewer.core.data.network.mapper.toDomainList
 import com.themovieviewer.core.data.network.response.*
 import com.themovieviewer.core.model.data.*
-import com.themovieviewer.core.model.repository.MovieRepository
 import javax.inject.Inject
-import timber.log.Timber
 
 class MovieRepositoryImpl @Inject constructor(
     private val movieService: MovieService,

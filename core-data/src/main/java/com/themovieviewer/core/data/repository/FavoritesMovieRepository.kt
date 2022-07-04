@@ -2,7 +2,6 @@ package com.themovieviewer.core.data.repository
 
 import androidx.annotation.WorkerThread
 import androidx.paging.PagingSource
-import com.themovieviewer.core.data.FavoritesMovieDao
 import com.themovieviewer.core.model.data.vo.FavoritesMovieVo
 import javax.inject.Inject
 

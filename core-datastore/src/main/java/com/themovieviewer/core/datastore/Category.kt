@@ -1,6 +1,6 @@
 package com.themovieviewer.core.datastore
 
 enum class Category {
-    NowPlaying, Popular, Upcoming, TopRate, Latest
+    NowPlaying, Popular, Upcoming, TopRate
 }
 

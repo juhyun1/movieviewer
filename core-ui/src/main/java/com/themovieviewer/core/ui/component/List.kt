@@ -6,10 +6,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Movie
-import androidx.compose.material.icons.filled.Rectangle
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.Bookmark
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,24 +30,42 @@ import com.themovieviewer.core.ui.util.imagePath
 import com.themovieviewer.core.ui.util.score
 
 @Composable
-fun MovieInfoItem(movieId: Int, imageSrc: String, title: String, date: String, navigateToDetails: (String) -> Unit) {
+fun MovieInfoItem(movieId: Int, imageSrc: String, title: String, date: String, checkBookMark: suspend (Int) -> Boolean, onClickBookMark: (Int) -> Unit, navigateToDetails: (String) -> Unit) {
+
+    var saved by remember { mutableStateOf(false) }
+
+    LaunchedEffect(key1 = true) {
+        saved = checkBookMark(movieId)
+    }
 
     Column(modifier = Modifier
         .width(width = 150.dp)
         .clickable { navigateToDetails.invoke(movieId.toString()) }
     ) {
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(imageSrc)
-                .crossfade(true)
-                .build(),
-            placeholder = painterResource(R.drawable.placeholder),
-            contentDescription = null,
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier
-                .size(width = 150.dp, height = 230.dp)
-                .clip(RoundedCornerShape(10.dp))
-        )
+        Box {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(imageSrc)
+                    .crossfade(true)
+                    .build(),
+                placeholder = painterResource(R.drawable.placeholder),
+                contentDescription = null,
+                contentScale = ContentScale.FillBounds,
+                modifier = Modifier
+                    .size(width = 150.dp, height = 230.dp)
+                    .clip(RoundedCornerShape(10.dp))
+            )
+            Icon(modifier = Modifier
+                .align(alignment = Alignment.TopEnd)
+                .clickable {
+                    saved = !saved
+                    onClickBookMark(movieId)
+                },
+                imageVector = if (saved) Icons.Filled.BookmarkBorder else Icons.Filled.Bookmark,
+                contentDescription = null,
+                tint = Color.Red)
+        }
+
         Spacer(modifier = Modifier.height(5.dp))
         Text(
             text = title,
@@ -155,7 +173,8 @@ fun BottomSheetOptionItem(icon: ImageVector, @StringRes text: Int, selected: Boo
         color = if (selected) Color.LightGray else Color.White
     ) {
         Row(modifier = Modifier
-            .fillMaxWidth().height(height = 50.dp)
+            .fillMaxWidth()
+            .height(height = 50.dp)
             .padding(start = 30.dp, end = 30.dp, top = 10.dp, bottom = 10.dp)
             .clickable {
                 onClick(text)
