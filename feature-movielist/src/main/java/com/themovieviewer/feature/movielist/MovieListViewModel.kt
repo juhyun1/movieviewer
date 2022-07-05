@@ -13,7 +13,7 @@ import com.themovieviewer.core.data.network.datasource.TopRatedListDataSource
 import com.themovieviewer.core.data.network.datasource.UpcomingDataSource
 import com.themovieviewer.core.datastore.Category
 import com.themovieviewer.core.datastore.Language
-import com.themovieviewer.core.datastore.repository.PreferencesRepository
+import com.themovieviewer.core.data.repository.PreferencesRepository
 import com.themovieviewer.core.model.data.Movie
 import com.themovieviewer.feature.movielist.model.PreferenceState
 import com.themovieviewer.feature.movielist.util.title
@@ -131,5 +131,6 @@ class MovieListViewModel @Inject constructor(
 
     suspend fun checkBookMark(movieId: Int): Boolean {
 
+        return false
     }
 }

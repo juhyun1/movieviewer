@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.themovieviewer.core.data.network.datasource.ActingDataSource
 import com.themovieviewer.core.data.network.datasource.PeopleMovieCreditsDataSource
 import com.themovieviewer.core.datastore.Language
-import com.themovieviewer.core.datastore.repository.PreferencesRepository
+import com.themovieviewer.core.data.repository.PreferencesRepository
 import com.themovieviewer.core.model.data.CastCrew
 import com.themovieviewer.core.model.data.People
 import com.themovieviewer.core.data.repository.MovieRepository

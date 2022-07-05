@@ -8,7 +8,7 @@ import com.themovieviewer.core.data.network.datasource.CreditsDataSource
 import com.themovieviewer.core.data.network.datasource.RecommendationsDataSource
 import com.themovieviewer.core.data.network.datasource.VideoDataSource
 import com.themovieviewer.core.datastore.Language
-import com.themovieviewer.core.datastore.repository.PreferencesRepository
+import com.themovieviewer.core.data.repository.PreferencesRepository
 import com.themovieviewer.core.model.data.MovieDetail
 import com.themovieviewer.core.data.repository.MovieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

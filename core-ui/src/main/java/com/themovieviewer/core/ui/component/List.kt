@@ -61,7 +61,7 @@ fun MovieInfoItem(movieId: Int, imageSrc: String, title: String, date: String, c
                     saved = !saved
                     onClickBookMark(movieId)
                 },
-                imageVector = if (saved) Icons.Filled.BookmarkBorder else Icons.Filled.Bookmark,
+                imageVector = if (saved) Icons.Filled.Bookmark else Icons.Filled.BookmarkBorder,
                 contentDescription = null,
                 tint = Color.Red)
         }

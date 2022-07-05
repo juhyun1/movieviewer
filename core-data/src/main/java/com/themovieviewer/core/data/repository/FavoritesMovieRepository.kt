@@ -1,18 +1,11 @@
 package com.themovieviewer.core.data.repository
 
-import androidx.annotation.WorkerThread
-import androidx.paging.PagingSource
-import com.themovieviewer.core.model.data.vo.FavoritesMovieVo
-import javax.inject.Inject
+import com.themovieviewer.core.database.model.FavoritesMovieVo
 
-class FavoritesMovieRepository @Inject constructor(private val favoritesMovieDao: FavoritesMovieDao) {
+interface FavoritesMovieRepository {
+    suspend fun getFavoritesMovies(id: Int): FavoritesMovieVo
 
-    fun getFavoritesMovies(): PagingSource<Int, FavoritesMovieVo> = favoritesMovieDao.getFavoritesMovies()
-    fun getFavoritesMovies(id: Int): FavoritesMovieVo = favoritesMovieDao.getFavoritesMovies(id)
+    suspend fun deleteFavoritesMovie(favoritesMovie: FavoritesMovieVo)
 
-    @WorkerThread
-    suspend fun deleteFavoritesMovie(favoritesMovie: FavoritesMovieVo) = favoritesMovieDao.delete(favoritesMovie)
-
-    @WorkerThread
-    suspend fun insertFavoritesMovie(favoritesMovie: FavoritesMovieVo) = favoritesMovieDao.insert(favoritesMovie)
+    suspend fun insertFavoritesMovie(favoritesMovie: FavoritesMovieVo)
 }

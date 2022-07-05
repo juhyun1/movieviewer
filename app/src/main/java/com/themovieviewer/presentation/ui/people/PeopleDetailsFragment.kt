@@ -30,7 +30,7 @@ class PeopleDetailsFragment : Fragment() {
     lateinit var movieRecommendationsAdapter: MovieRecommendationsAdapter
     @Inject
     lateinit var actingAdapter: ActingAdapter
-    @Inject
+//    @Inject
     lateinit var daoMapper: DaoMapper
 
     private val binding get() = _binding!!

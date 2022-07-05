@@ -4,11 +4,11 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.themovieviewer.core.data.DaoMapper
 import com.themovieviewer.core.data.repository.FavoritesMovieRepository
-import com.themovieviewer.core.data.repository.FavoritesRepository
-import com.themovieviewer.core.model.data.vo.FavoritesMovieVo
+import com.themovieviewer.core.data.repository.FavoritesMovieRepositoryImpl
+import com.themovieviewer.core.database.model.FavoritesMovieVo
 import com.themovieviewer.core.model.data.Movie
 
-class FavoritesDataSource(private val favoritesRepository: FavoritesRepository, private val favoritesMovieRepository: FavoritesMovieRepository, private val daoMapper: DaoMapper) : PagingSource<Int, Movie>() {
+class FavoritesDataSource(private val favoritesMovieRepository: FavoritesMovieRepository) : PagingSource<Int, Movie>() {
 
     override fun getRefreshKey(state: PagingState<Int, Movie>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -19,22 +19,17 @@ class FavoritesDataSource(private val favoritesRepository: FavoritesRepository, 
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
         return try {
-//
-//            val favoritesList = favoritesRepository.getFavorites()
-//
-//            val list: ArrayList<FavoritesMovieVo> = ArrayList()
-//
-//            favoritesList.forEach { favorite ->
-//                list.add(favoritesMovieRepository.getFavoritesMovies(favorite.kindId))
-//            }
-//
-//            LoadResult.Page(
-//                data = daoMapper.toDomainList(list),
-//                prevKey = null,
-//                nextKey = null
-//            )
+
+            val favoritesList = favoritesMovieRepository.get
+
+            val list: ArrayList<FavoritesMovieVo> = ArrayList()
+
+            favoritesList.forEach { favorite ->
+                list.add(favoritesMovieRepository.getFavoritesMovies(favorite.kindId))
+            }
+
             LoadResult.Page(
-                data = emptyList(),
+                data = daoMapper.toDomainList(list),
                 prevKey = null,
                 nextKey = null
             )

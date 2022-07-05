@@ -1,4 +1,4 @@
-package com.themovieviewer.core.datastore.repository
+package com.themovieviewer.core.data.repository
 
 import com.themovieviewer.core.datastore.Category
 import com.themovieviewer.core.datastore.Language

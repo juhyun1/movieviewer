@@ -1,7 +1,6 @@
 package com.themovieviewer.di
 
-import com.themovieviewer.core.data.repository.FavoritesMovieRepository
-import com.themovieviewer.core.data.repository.FavoritesRepository
+import com.themovieviewer.core.data.repository.FavoritesMovieRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,20 +14,16 @@ object RepositoryModule {
     @Singleton
     @Provides
     fun provideFavoritesRepository(
-        favoritesDao: FavoritesDao
     ): FavoritesRepository {
         return FavoritesRepository(
-            favoritesDao = favoritesDao
         )
     }
 
     @Singleton
     @Provides
     fun provideFavoritesMovieRepository(
-        favoritesMovieDao: FavoritesMovieDao
-    ): FavoritesMovieRepository {
-        return FavoritesMovieRepository(
-            favoritesMovieDao = favoritesMovieDao
+    ): FavoritesMovieRepositoryImpl {
+        return FavoritesMovieRepositoryImpl(
         )
     }
 }

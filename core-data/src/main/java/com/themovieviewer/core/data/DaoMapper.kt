@@ -3,8 +3,9 @@ package com.themovieviewer.core.data
 import com.themovieviewer.core.model.data.vo.FavoritesMovieVo
 import com.themovieviewer.core.model.data.Movie
 import com.themovieviewer.core.model.util.DomainMapper
+import javax.inject.Inject
 
-class DaoMapper : DomainMapper<FavoritesMovieVo, Movie> {
+class DaoMapper @Inject constructor(): DomainMapper<FavoritesMovieVo, Movie> {
     override fun mapToDomainModel(model: FavoritesMovieVo): Movie {
         return Movie(
             poster_path = model.poster_path,
