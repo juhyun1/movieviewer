@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class FavoritesMovieRepositoryImpl @Inject constructor(
     private val dataSource: DatabaseDataSource
-) {
+) : FavoritesMovieRepository {
 
     suspend fun getFavoritesMovies(id: Int): FavoritesMovieVo = dataSource.getFavoritesMovies(id)
 

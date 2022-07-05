@@ -45,7 +45,6 @@ object DataBaseModule {
         favoritesMovieDao: FavoritesMovieDao,
     ): DatabaseDataSource {
         return DatabaseDataSource(
-            favoritesDao = favoritesDao,
             favoritesMovieDao = favoritesMovieDao
         )
     }

@@ -17,5 +17,5 @@ interface RepositoryModule2 {
     fun bindPreferencesRepository(impl: PreferencesRepositoryImpl): PreferencesRepository
 
     @Binds
-    fun bindPreferencesRepository(impl: FavoritesMovieRepositoryImpl): FavoritesMovieRepository
+    fun bindFavoritesMovieRepository(impl: FavoritesMovieRepositoryImpl): FavoritesMovieRepository
 }
