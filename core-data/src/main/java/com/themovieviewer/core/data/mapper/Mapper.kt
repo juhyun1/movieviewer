@@ -1,9 +1,9 @@
 package com.themovieviewer.core.data.mapper
 
+import com.themovieviewer.core.database.model.FavoritesMovieVo
+import com.themovieviewer.core.database.model.FavoritesVo
 import com.themovieviewer.core.model.data.Favorites
 import com.themovieviewer.core.model.data.Movie
-import com.themovieviewer.core.model.data.vo.FavoritesMovieVo
-import com.themovieviewer.core.model.data.vo.FavoritesVo
 
 fun FavoritesMovieVo.asModel(): Movie {
     return Movie(

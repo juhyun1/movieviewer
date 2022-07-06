@@ -12,5 +12,5 @@ interface FavoritesMovieDao : BaseDao<FavoritesMovieVo> {
     fun getFavoritesMovies(): PagingSource<Int, FavoritesMovieVo>
 
     @Query("SELECT * FROM movies WHERE id = :id")
-    fun getFavoritesMovies(id: Int): FavoritesMovieVo
+    fun getFavoritesMovies(id: Int): FavoritesMovieVo?
 }

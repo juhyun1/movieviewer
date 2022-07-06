@@ -37,7 +37,6 @@ fun loadThumbnailImage(imageView: ImageView, key: String?) {
         .into(imageView)
 }
 
-
 @BindingAdapter("itemSelected")
 fun itemSelected(view: View, selected: Boolean) {
     if (selected) {
@@ -59,7 +58,7 @@ fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
 
 @BindingAdapter("visible")
 fun visible(view: View, visible: Boolean) {
-    if(visible) {
+    if (visible) {
         view.visibility = View.VISIBLE
     } else {
         view.visibility = View.GONE
@@ -68,7 +67,7 @@ fun visible(view: View, visible: Boolean) {
 
 @BindingAdapter("showPoster")
 fun showPoster(view: View, showPoster: Boolean) {
-    if(showPoster) {
+    if (showPoster) {
         view.visibility = View.VISIBLE
     } else {
         view.visibility = View.INVISIBLE
@@ -96,28 +95,28 @@ fun setVoteAverage(view: TextView, voteAverage: Float) {
 
 @BindingAdapter("gender")
 fun setGender(view: TextView, gender: Int) {
-    when(gender) {
+    when (gender) {
         1 -> view.text = "Woman"
-        2 -> view.text  = "Man"
+        2 -> view.text = "Man"
     }
 }
 
 @BindingAdapter("runtime")
 fun setRuntime(view: TextView, runtime: Int) {
-        val temp = runtime.div(60)
-        val temp2 = runtime.rem(60)
-        val b = StringBuilder()
-        b.append(temp)
-        b.append("h ")
-        b.append(temp2)
-        b.append("m")
-        view.text = b.toString()
+    val temp = runtime.div(60)
+    val temp2 = runtime.rem(60)
+    val b = StringBuilder()
+    b.append(temp)
+    b.append("h ")
+    b.append(temp2)
+    b.append("m")
+    view.text = b.toString()
 }
 
 @BindingAdapter("revenue")
 fun setRevenue(view: TextView, revenue: Long) {
-        val format = DecimalFormat("###,###,###,###")
-        view.text = "$${format.format(revenue)}"
+    val format = DecimalFormat("###,###,###,###")
+    view.text = "$${format.format(revenue)}"
 }
 
 @BindingAdapter("budget")
@@ -125,10 +124,3 @@ fun setBudget(view: TextView, budget: Long) {
     val format = DecimalFormat("###,###,###,###")
     view.text = "$${format.format(budget)}"
 }
-
-
-
-
-
-
-

@@ -133,5 +133,4 @@ interface UseCaseModule2 {
 
     @Binds
     fun bindDeleteFavoriteMovieUseCase(impl: DeleteFavoriteMovieUseCaseImpl): DeleteFavoriteMovieUseCase
-
 }

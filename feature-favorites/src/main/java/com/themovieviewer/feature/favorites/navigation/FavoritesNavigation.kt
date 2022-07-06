@@ -12,9 +12,13 @@ object FavoritesDestination : NavigationDestination {
 }
 
 fun NavGraphBuilder.favoritesGraph(
-    windowSizeClass: WindowSizeClass
+    windowSizeClass: WindowSizeClass,
+    navigateToDetails: (String) -> Unit
 ) {
     composable(route = FavoritesDestination.route) {
-        FavoritesRoute(windowSizeClass)
+        FavoritesRoute(
+            windowSizeClass = windowSizeClass,
+            navigateToDetails = navigateToDetails
+        )
     }
 }

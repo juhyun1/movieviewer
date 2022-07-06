@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.themovieviewer.databinding.FragmentMainBinding
 import com.themovieviewer.presentation.ui.nowplaying.NowPlayingFragment
-import com.themovieviewer.presentation.ui.toprated.TopRatedFragment
 import com.themovieviewer.presentation.ui.popular.MoviePopularFragment
+import com.themovieviewer.presentation.ui.toprated.TopRatedFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

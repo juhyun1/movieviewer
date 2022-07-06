@@ -1,6 +1,11 @@
 package com.themovieviewer.di
 
-import com.themovieviewer.presentation.paging.*
+import com.themovieviewer.presentation.paging.ActingAdapter
+import com.themovieviewer.presentation.paging.CreditsAdapter
+import com.themovieviewer.presentation.paging.MovieOneRowAdapter
+import com.themovieviewer.presentation.paging.MovieRecommendationsAdapter
+import com.themovieviewer.presentation.paging.MovieTwoColumnsAdapter
+import com.themovieviewer.presentation.paging.VideosAdapter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,5 +44,4 @@ object PagingModule {
     fun actingAdapter(): ActingAdapter {
         return ActingAdapter()
     }
-
 }

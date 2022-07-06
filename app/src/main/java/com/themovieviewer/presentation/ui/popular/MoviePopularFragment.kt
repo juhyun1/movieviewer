@@ -2,7 +2,6 @@ package com.themovieviewer.presentation.ui.popular
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -39,7 +38,6 @@ class MoviePopularFragment : Fragment() {
     }
 
     private fun initAdapter() {
-
     }
 
     private fun initObserve() {

@@ -23,10 +23,7 @@ import androidx.paging.compose.itemsIndexed
 import com.themovieviewer.core.datastore.Category
 import com.themovieviewer.core.datastore.Language
 import com.themovieviewer.core.model.data.Movie
-import com.themovieviewer.core.ui.component.BottomSheetOptionItem
-import com.themovieviewer.core.ui.component.HeightSpacer
-import com.themovieviewer.core.ui.component.MovieInfoItem
-import com.themovieviewer.core.ui.component.TopAppBar
+import com.themovieviewer.core.ui.component.*
 import com.themovieviewer.core.ui.util.imagePath
 import com.themovieviewer.feature.movielist.model.PreferenceState
 import com.themovieviewer.feature.movielist.util.category
@@ -70,22 +67,6 @@ fun MovieListScreen(
         contentColor = Color.Transparent
     ) { innerPadding ->
         MovieContentsPart(modifier = modifier, innerPadding = innerPadding, navigateToDetails = navigateToDetails)
-    }
-}
-
-@Composable
-fun MovieColumnItem(movie1: Movie?, movie2: Movie?, checkBookMark: suspend (Int) -> Boolean, onClickBookMark: (Int) -> Unit, navigateToDetails: (String) -> Unit) {
-    Row(
-        modifier = Modifier.fillMaxSize(),
-        horizontalArrangement = Arrangement.Center
-    ) {
-        movie1?.let {
-            MovieInfoItem(movieId = movie1.id, imageSrc = it.poster_path?.imagePath() ?: "", title = it.title ?: "", date = it.release_date ?: "", checkBookMark = checkBookMark, onClickBookMark = onClickBookMark, navigateToDetails = navigateToDetails)
-        }
-        Spacer(modifier = Modifier.width(30.dp))
-        movie2?.let{
-            MovieInfoItem(movieId = movie2.id, imageSrc = it.poster_path?.imagePath() ?: "", title = it.title ?: "", date = it.release_date ?: "",  checkBookMark = checkBookMark, onClickBookMark = onClickBookMark, navigateToDetails = navigateToDetails)
-        }
     }
 }
 
@@ -208,7 +189,7 @@ fun MovieContentsPart(modifier: Modifier, innerPadding: PaddingValues, navigateT
     val state by vm.pager
 
     val lazyPagingItems = state.flow.collectAsLazyPagingItems()
-    val onClickBookMark: (Int) -> Unit = vm::onClickBookMark
+    val onClickBookMark: (Movie) -> Unit = vm::onClickBookMark
     val checkBookMark: suspend (Int) -> Boolean = vm::checkBookMark
 
     BoxWithConstraints(

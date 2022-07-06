@@ -1,6 +1,5 @@
 package com.themovieviewer.presentation.paging
 
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -54,7 +53,7 @@ class ActingAdapter : PagingDataAdapter<CastCrew, ActingAdapter.ViewHolder>(diff
 
     class ViewHolder(
         private val binding: WidgetPeopleActingBinding
-        ) : RecyclerView.ViewHolder(binding.root) {
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bindTo(item: CastCrew?) {
             binding.model = item
             binding.executePendingBindings()

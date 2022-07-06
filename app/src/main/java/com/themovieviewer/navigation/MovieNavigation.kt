@@ -7,8 +7,8 @@ import androidx.compose.material.icons.outlined.BookmarkBorder
 import androidx.compose.material.icons.outlined.Movie
 import com.themovieviewer.core.common.navigation.Destination
 import com.themovieviewer.feature.favorites.R.string.favorites
-import com.themovieviewer.feature.movielist.R.string.movie
 import com.themovieviewer.feature.favorites.navigation.FavoritesDestination
+import com.themovieviewer.feature.movielist.R.string.movie
 import com.themovieviewer.feature.movielist.navigation.MovieListDestination
 
 val BOTTOM_BAR_DESTINATIONS = listOf(

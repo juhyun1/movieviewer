@@ -17,7 +17,7 @@ class MovieRecommendationsAdapter : PagingDataAdapter<Movie, MovieRecommendation
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding =  WidgetMovieRecommendationsBinding.inflate(inflater, parent, false)
+        val binding = WidgetMovieRecommendationsBinding.inflate(inflater, parent, false)
         val viewHolder = ViewHolder(binding)
 
         with(viewHolder.itemView) {

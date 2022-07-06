@@ -38,7 +38,6 @@ class TopRatedFragment : Fragment() {
         return root
     }
     private fun initAdapter() {
-
     }
 
     private fun initObserve() {
@@ -58,5 +57,4 @@ class TopRatedFragment : Fragment() {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
-
 }

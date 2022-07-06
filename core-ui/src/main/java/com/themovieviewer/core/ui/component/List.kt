@@ -30,22 +30,22 @@ import com.themovieviewer.core.ui.util.imagePath
 import com.themovieviewer.core.ui.util.score
 
 @Composable
-fun MovieInfoItem(movieId: Int, imageSrc: String, title: String, date: String, checkBookMark: suspend (Int) -> Boolean, onClickBookMark: (Int) -> Unit, navigateToDetails: (String) -> Unit) {
+fun MovieInfoItem(movie: Movie, checkBookMark: suspend (Int) -> Boolean, onClickBookMark: (Movie) -> Unit, navigateToDetails: (String) -> Unit) {
 
     var saved by remember { mutableStateOf(false) }
 
     LaunchedEffect(key1 = true) {
-        saved = checkBookMark(movieId)
+        saved = checkBookMark(movie.id)
     }
 
     Column(modifier = Modifier
         .width(width = 150.dp)
-        .clickable { navigateToDetails.invoke(movieId.toString()) }
+        .clickable { navigateToDetails.invoke(movie.id.toString()) }
     ) {
         Box {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(imageSrc)
+                    .data(movie.poster_path?.imagePath())
                     .crossfade(true)
                     .build(),
                 placeholder = painterResource(R.drawable.placeholder),
@@ -59,7 +59,7 @@ fun MovieInfoItem(movieId: Int, imageSrc: String, title: String, date: String, c
                 .align(alignment = Alignment.TopEnd)
                 .clickable {
                     saved = !saved
-                    onClickBookMark(movieId)
+                    onClickBookMark(movie)
                 },
                 imageVector = if (saved) Icons.Filled.Bookmark else Icons.Filled.BookmarkBorder,
                 contentDescription = null,
@@ -68,12 +68,12 @@ fun MovieInfoItem(movieId: Int, imageSrc: String, title: String, date: String, c
 
         Spacer(modifier = Modifier.height(5.dp))
         Text(
-            text = title,
+            text = movie.title ?: "",
             color = Color.Black,
             style = MaterialTheme.typography.titleMedium
         )
         Text(
-            text = date,
+            text = movie.release_date ?: "",
             color = MaterialTheme.colorScheme.onPrimary,
             style = MaterialTheme.typography.titleSmall
         )

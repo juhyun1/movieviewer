@@ -13,5 +13,4 @@ class MoviePopularViewModel @Inject constructor() : ViewModel() {
 //
 //    @Inject
 //    lateinit var getMoviePopularPagerUseCase: GetMoviePopularPagerUseCase
-
 }

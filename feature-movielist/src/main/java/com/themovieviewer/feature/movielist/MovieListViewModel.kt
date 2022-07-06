@@ -16,10 +16,12 @@ import com.themovieviewer.core.datastore.Language
 import com.themovieviewer.core.data.repository.PreferencesRepository
 import com.themovieviewer.core.model.data.Movie
 import com.themovieviewer.feature.movielist.model.PreferenceState
+import com.themovieviewer.feature.movielist.usecase.GetFavoriteUC
+import com.themovieviewer.feature.movielist.usecase.InsertFavoriteUC
 import com.themovieviewer.feature.movielist.util.title
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.IO
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,6 +31,8 @@ class MovieListViewModel @Inject constructor(
     private val upcomingDataSource: UpcomingDataSource,
     private val topRatedListDataSource: TopRatedListDataSource,
     private val preferencesRepository: PreferencesRepository,
+    private val insertFavoriteUC: InsertFavoriteUC,
+    private val getFavoriteUC: GetFavoriteUC,
 ) : ViewModel() {
 
     private val _preferenceState = mutableStateOf<PreferenceState>(PreferenceState.Hide)
@@ -125,12 +129,16 @@ class MovieListViewModel @Inject constructor(
         }
     }
 
-    fun onClickBookMark(movieId: Int) {
-
+    fun onClickBookMark(movie: Movie) {
+        viewModelScope.launch {
+            insertFavoriteUC(movie = movie)
+        }
     }
 
     suspend fun checkBookMark(movieId: Int): Boolean {
-
-        return false
+        val job = CoroutineScope(Dispatchers.IO).async {
+            getFavoriteUC(movieId = movieId)
+        }
+        return job.await()
     }
 }

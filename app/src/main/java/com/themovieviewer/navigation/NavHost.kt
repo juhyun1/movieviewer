@@ -27,11 +27,18 @@ fun NavHost(
         startDestination = startDestination,
         modifier = modifier,
     ) {
-        movieListGraph(windowSizeClass = windowSizeClass, navigateToDetails = {
-            val intent = Intent(context, DetailsActivity::class.java)
-            intent.putExtra(DetailsDestination.detailsArg, it.toInt())
-            context.startActivity(intent)
-        })
-        favoritesGraph(windowSizeClass = windowSizeClass)
+        movieListGraph(
+            windowSizeClass = windowSizeClass,
+            navigateToDetails = {
+                val intent = Intent(context, DetailsActivity::class.java)
+                intent.putExtra(DetailsDestination.detailsArg, it.toInt())
+                context.startActivity(intent)
+            }
+        )
+        favoritesGraph(
+            windowSizeClass = windowSizeClass,
+            navigateToDetails = {
+            }
+        )
     }
 }

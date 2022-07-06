@@ -8,24 +8,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.themovieviewer.BaseApplication
-import com.themovieviewer.core.data.DaoMapper
 import com.themovieviewer.databinding.FragmentNowPalyingBinding
 import com.themovieviewer.presentation.paging.MovieOneRowAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
-class NowPlayingFragment @Inject constructor(
-
-) : Fragment() {
+class NowPlayingFragment @Inject constructor() : Fragment() {
 
     @Inject
     lateinit var oneRowAdapter: MovieOneRowAdapter
     @Inject
     lateinit var application: BaseApplication
-    @Inject
-    lateinit var daoMapper: DaoMapper
 
     private val viewModel: NowPlayingViewModel by viewModels()
     private var _binding: FragmentNowPalyingBinding? = null
@@ -46,7 +40,6 @@ class NowPlayingFragment @Inject constructor(
     }
 
     private fun initAdapter() {
-
     }
 
     private fun initObserve() {
@@ -63,6 +56,5 @@ class NowPlayingFragment @Inject constructor(
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
-
     }
 }

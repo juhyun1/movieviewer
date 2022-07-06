@@ -49,7 +49,6 @@ object NetworkModule {
         return MovieDetailMapper()
     }
 
-
     @Singleton
     @Provides
     fun provideMovieService(): MovieService {

@@ -95,7 +95,6 @@ class MovieOneRowAdapter : PagingDataAdapter<Movie, MovieOneRowAdapter.ViewHolde
             binding.executePendingBindings()
 
             setSelected(isSelect)
-
         }
     }
     //endregion
