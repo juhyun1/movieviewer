@@ -24,6 +24,7 @@ import com.themovieviewer.core.datastore.Category
 import com.themovieviewer.core.datastore.Language
 import com.themovieviewer.core.model.data.Movie
 import com.themovieviewer.core.ui.component.*
+import com.themovieviewer.core.ui.theme.Theme
 import com.themovieviewer.core.ui.util.imagePath
 import com.themovieviewer.feature.movielist.model.PreferenceState
 import com.themovieviewer.feature.movielist.util.category
@@ -53,9 +54,9 @@ fun MovieListScreen(
     navigateToDetails: (String) -> Unit,
 ) {
     val scaffoldState = rememberBottomSheetScaffoldState()
-    val vm: MovieListViewModel = hiltViewModel()
 
     BottomSheetScaffold(
+        sheetBackgroundColor = MaterialTheme.colorScheme.onBackground,
         sheetContent = {
             MovieBottomSheetPart(scaffoldState = scaffoldState)
         },

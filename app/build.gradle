@@ -107,6 +107,7 @@ dependencies {
 
     //material
     implementation("com.google.android.material:material:${Versions.MATERIAL}")
+    implementation("androidx.compose.material:material:${Versions.COMPOSE}")
     implementation("androidx.compose.material:material-icons-extended:${Versions.COMPOSE}")
     implementation("androidx.compose.material3:material3:${Versions.MATERIAL3}")
     implementation("androidx.compose.material3:material3-window-size-class:${Versions.MATERIAL3}")
