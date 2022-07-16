@@ -1,7 +1,7 @@
 package com.themovieviewer.di
 
 import android.content.Context
-import com.themovieviewer.presentation.BaseApplication
+import com.themovieviewer.BaseApplication
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

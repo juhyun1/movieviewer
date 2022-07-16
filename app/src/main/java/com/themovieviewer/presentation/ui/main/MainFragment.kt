@@ -8,9 +8,8 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.themovieviewer.databinding.FragmentMainBinding
 import com.themovieviewer.presentation.ui.nowplaying.NowPlayingFragment
-import com.themovieviewer.presentation.ui.toprated.TopRatedFragment
 import com.themovieviewer.presentation.ui.popular.MoviePopularFragment
-import com.themovieviewer.presentation.ui.favorite.FavoriteFragment
+import com.themovieviewer.presentation.ui.toprated.TopRatedFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -20,7 +19,6 @@ class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     @Inject lateinit var topRatedFragment: TopRatedFragment
     @Inject lateinit var nowPlayingFragment: NowPlayingFragment
-    @Inject lateinit var favoriteFragment: FavoriteFragment
     @Inject lateinit var moviePopularFragment: MoviePopularFragment
 
     private val binding get() = _binding!!
@@ -36,7 +34,6 @@ class MainFragment : Fragment() {
         fragmentList.add(nowPlayingFragment)
         fragmentList.add(topRatedFragment)
         fragmentList.add(moviePopularFragment)
-        fragmentList.add(favoriteFragment)
 
         binding.viewPager.adapter = MainFragmentAdapter(requireActivity(), fragmentList)
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->

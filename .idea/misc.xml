@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="../../../../layout/compose-model-1653558811515.xml" value="0.8202247191011236" />
+        <entry key="../../../../layout/compose-model-1655799193815.xml" value="0.3956639566395664" />
+        <entry key="..\:/workspace/example/movieviewer/app/src/main/res/drawable/ic_trailer_payler.xml" value="0.1" />
+        <entry key="..\:/workspace/example/movieviewer/app/src/main/res/layout/fragment_movie_details.xml" value="0.15096251266464034" />
+        <entry key="..\:/workspace/example/movieviewer/app/src/main/res/layout/widget_movie_recommendations.xml" value="0.18110435663627153" />
+        <entry key="..\:/workspace/example/movieviewer/app/src/main/res/layout/widget_video.xml" value="0.18110435663627153" />
+        <entry key="..\:/workspace/example/movieviewer/core-ui/src/main/res/drawable/ic_trailer_payler.xml" value="0.1" />
+        <entry key="..\:/workspace/example/movieviewer/feature-details/src/main/res/drawable/ic_trailer_payler.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_movie_details.xml" value="0.43125" />
+        <entry key="app/src/main/res/layout/widget_movie_recommendations.xml" value="0.43125" />
+        <entry key="app/src/main/res/layout/widget_people_acting.xml" value="0.43125" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

@@ -6,8 +6,8 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.themovieviewer.R
+import com.themovieviewer.core.model.data.Movie
 import com.themovieviewer.databinding.WidgetMovieRecommendationsBinding
-import com.themovieviewer.domain.model.Movie
 
 class MovieRecommendationsAdapter : PagingDataAdapter<Movie, MovieRecommendationsAdapter.ViewHolder>(diffCallback) {
     //region PagingDataAdapter
@@ -17,7 +17,7 @@ class MovieRecommendationsAdapter : PagingDataAdapter<Movie, MovieRecommendation
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding =  WidgetMovieRecommendationsBinding.inflate(inflater, parent, false)
+        val binding = WidgetMovieRecommendationsBinding.inflate(inflater, parent, false)
         val viewHolder = ViewHolder(binding)
 
         with(viewHolder.itemView) {

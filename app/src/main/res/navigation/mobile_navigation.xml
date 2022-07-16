@@ -10,28 +10,6 @@
         android:name="com.themovieviewer.presentation.ui.main.MainFragment"
         android:label="@string/menu_main"
         tools:layout="@layout/fragment_main" >
-        <action
-            android:id="@+id/action_MainFragment_to_MovieDetailsFragment"
-            app:destination="@+id/nav_movie_details" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/nav_movie_details"
-        android:name="com.themovieviewer.presentation.ui.moviedetails.MovieDetailsFragment"
-        android:label="@string/menu_movie_details"
-        tools:layout="@layout/fragment_movie_details" >
-        <action
-            android:id="@+id/action_movie_details_to_movie_details"
-            app:destination="@+id/nav_movie_details" />
-        <action
-            android:id="@+id/action_movie_details_to_people_details"
-            app:destination="@+id/nav_people_details" />
-        <argument
-            android:name="movie"
-            app:argType="com.themovieviewer.domain.model.Movie" />
-        <argument
-            android:name="fromFavoriteScreen"
-            app:argType="boolean" />
     </fragment>
 
     <fragment
@@ -64,15 +42,6 @@
         tools:layout="@layout/fragment_now_palying">
         <action
             android:id="@+id/action_NowPlayingFragment_to_MovieDetailsFragment"
-            app:destination="@+id/nav_movie_details" />
-    </fragment>
-    <fragment
-        android:id="@+id/nav_favorite"
-        android:name="com.themovieviewer.presentation.ui.favorite.FavoriteFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_favorite" >
-        <action
-            android:id="@+id/action_FavoriteFragment_to_MovieDetailsFragment"
             app:destination="@+id/nav_movie_details" />
     </fragment>
     <fragment

@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.themovieviewer.core.data.network.model.CreditsCastCrewDto
 import com.themovieviewer.databinding.WidgetCreditsVerticalBinding
-import com.themovieviewer.network.model.CreditsCastCrewDto
 
 class CreditsAdapter : PagingDataAdapter<CreditsCastCrewDto, CreditsAdapter.ViewHolder>(diffCallback) {
 

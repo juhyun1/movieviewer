@@ -7,19 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.themovieviewer.data.DaoMapper
+import com.themovieviewer.BaseApplication
 import com.themovieviewer.databinding.FragmentPeopleBinding
-import com.themovieviewer.network.response.PeopleMapper
-import com.themovieviewer.presentation.BaseApplication
 import com.themovieviewer.presentation.paging.ActingAdapter
 import com.themovieviewer.presentation.paging.MovieRecommendationsAdapter
 import com.themovieviewer.util.TAG
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -34,8 +28,6 @@ class PeopleDetailsFragment : Fragment() {
     lateinit var movieRecommendationsAdapter: MovieRecommendationsAdapter
     @Inject
     lateinit var actingAdapter: ActingAdapter
-    @Inject
-    lateinit var daoMapper: DaoMapper
 
     private val binding get() = _binding!!
 
@@ -56,43 +48,26 @@ class PeopleDetailsFragment : Fragment() {
     }
 
     private fun initAdapter() {
-
-        binding.moviesRecyclerView.adapter = movieRecommendationsAdapter
-        movieRecommendationsAdapter.onItemClick = {
-            Log.d(TAG, it.toString())
-            application.selectedMovie = it
-            try {
-                val action = PeopleDetailsFragmentDirections.actionPeopleDetailsToMovieDetails(it, false)
-                findNavController().navigate(action)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-
-        binding.actingList.adapter = actingAdapter
-        actingAdapter.onItemClick = {
-            Log.d(TAG, it.toString())
-        }
     }
 
     private fun initObserve() {
-        lifecycleScope.launch {
-            viewModel.movieList.collectLatest { pagedData ->
-                movieRecommendationsAdapter.submitData(pagedData)
-            }
-        }
-
-        lifecycleScope.launch {
-            viewModel.actingList.collectLatest { pagedData ->
-                actingAdapter.submitData(pagedData)
-            }
-        }
-
-        viewModel.initModelDone.observe(viewLifecycleOwner) {
-            if (it) {
-                binding.model = viewModel.model
-            }
-        }
+//        lifecycleScope.launch {
+//            viewModel.movieList.collectLatest { pagedData ->
+//                movieRecommendationsAdapter.submitData(pagedData)
+//            }
+//        }
+//
+//        lifecycleScope.launch {
+//            viewModel.actingList.collectLatest { pagedData ->
+//                actingAdapter.submitData(pagedData)
+//            }
+//        }
+//
+//        viewModel.initModelDone.observe(viewLifecycleOwner) {
+//            if (it) {
+//                binding.model = viewModel.model
+//            }
+//        }
     }
 
     override fun onDestroyView() {

@@ -12,8 +12,8 @@ import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.themovieviewer.R
+import com.themovieviewer.core.model.data.Movie
 import com.themovieviewer.databinding.WidgetMovieMainHorizontalBinding
-import com.themovieviewer.domain.model.Movie
 
 class MovieOneRowAdapter : PagingDataAdapter<Movie, MovieOneRowAdapter.ViewHolder>(diffCallback) {
     var tracker: SelectionTracker<Long>? = null
@@ -95,7 +95,6 @@ class MovieOneRowAdapter : PagingDataAdapter<Movie, MovieOneRowAdapter.ViewHolde
             binding.executePendingBindings()
 
             setSelected(isSelect)
-
         }
     }
     //endregion

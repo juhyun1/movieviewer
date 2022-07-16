@@ -6,8 +6,8 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.themovieviewer.R
+import com.themovieviewer.core.model.data.Trailer
 import com.themovieviewer.databinding.WidgetVideoBinding
-import com.themovieviewer.domain.model.Trailer
 
 class VideosAdapter : PagingDataAdapter<Trailer, VideosAdapter.ViewHolder>(diffCallback) {
 

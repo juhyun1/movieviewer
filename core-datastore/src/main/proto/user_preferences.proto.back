@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option java_package = "com.themovieviewer.core.datastore";
+option java_multiple_files = true;
+
+message UserPreferences {
+    Category category = 1;
+
+    enum Category {
+        NOW_PLAYING = 0;
+        POPULAR = 1;
+        UPCOMING = 2;
+        TOP_RATED = 3;
+    }
+}

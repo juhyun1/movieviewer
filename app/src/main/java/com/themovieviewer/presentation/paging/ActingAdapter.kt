@@ -1,13 +1,12 @@
 package com.themovieviewer.presentation.paging
 
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.themovieviewer.core.model.data.CastCrew
 import com.themovieviewer.databinding.WidgetPeopleActingBinding
-import com.themovieviewer.domain.model.CastCrew
 
 class ActingAdapter : PagingDataAdapter<CastCrew, ActingAdapter.ViewHolder>(diffCallback) {
 
@@ -54,7 +53,7 @@ class ActingAdapter : PagingDataAdapter<CastCrew, ActingAdapter.ViewHolder>(diff
 
     class ViewHolder(
         private val binding: WidgetPeopleActingBinding
-        ) : RecyclerView.ViewHolder(binding.root) {
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bindTo(item: CastCrew?) {
             binding.model = item
             binding.executePendingBindings()
