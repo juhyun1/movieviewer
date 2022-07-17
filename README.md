@@ -6,9 +6,14 @@
 프로젝트는 MVVM, AAC, Clean Architecture 구조를 따릅니다
 Core, Feature Module 분리되어 있습니다.
  
+XML로 구현된 UI를 Compose로 변경하면서 Refactoring를 수행하였습니다.
+(XML UI 구조: Migrating_build.gradle_from_Groovy_to_Kotlin branch)
+
+Now in Android의 Material3 Theme를 사용하였습니다.
 
 # 프로젝트 구조 
 
+## app
 ## Core
 - Common
 - data
